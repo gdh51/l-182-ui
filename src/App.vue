@@ -2,7 +2,9 @@
     <div>
         <virtual-rolling-fixed
             :listItems="genArrayDataByNumber(100)"/>
-        <virtual-rolling-flexible/>
+        <virtual-rolling-flexible
+            :listItems="genArrayDataByNumber(100)"
+            :visibleView="300"/>
     </div>
 </template>
 
