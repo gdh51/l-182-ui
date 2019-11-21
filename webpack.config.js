@@ -45,6 +45,15 @@ module.exports = {
                 ]
             },
 
+            // 处理CSS文件
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+
             {
                 test: /\.js?$/,
                 loader: 'babel-loader',
@@ -63,7 +72,7 @@ module.exports = {
             },
 
             {
-                test: /\.(gif|jpg|jpeg|png|svg)$/,
+                test: /\.(gif|jpg|jpeg|png|svg|woff|woff2|eot|ttf|otf)$/,
                 loader: 'file-loader'
             }
         ]

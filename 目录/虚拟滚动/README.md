@@ -54,7 +54,7 @@
 
 所以真实`DOM`相对于滚动条视图的位移为`topOffset - topOffset % itemHeight`，再仔细看一下就会发现，即**视图中第一个项目`DOM`节点的上顶在滚动条视图中的位置**。
 
-具体代码实现：[等高虚拟列表](../src/components/demo1/virtual-rolling-fixed.vue)
+具体代码实现：[等高虚拟列表](../../src/components/demo1/virtual-rolling-fixed.vue)
 
 ## 高级版本原理——不定高度
 
