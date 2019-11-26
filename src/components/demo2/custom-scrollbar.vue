@@ -25,7 +25,6 @@
 .scrollbar_wrap-container
     position relative
     overflow hidden
-    border 1px dashed red
 
     .scrollbar_wrap-content
         overflow scroll
@@ -59,9 +58,9 @@ export default {
         },
 
         viewClass: {
-            type: Object,
+            type: [Array, String],
             default () {
-                return {};
+                return '';
             }
         },
 
@@ -74,9 +73,9 @@ export default {
         },
 
         wrapClass: {
-            type: Object,
+            type: [Array, String],
             default () {
-                return {};
+                return '';
             }
         }
 

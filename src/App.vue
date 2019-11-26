@@ -1,6 +1,6 @@
 <template>
     <div>
-        <virtual-rolling-fixed
+        <!-- <virtual-rolling-fixed
             :listItems="genArrayDataByNumber(100)"
             v-show="isShow"/>
         <virtual-rolling-flexible
@@ -13,20 +13,13 @@
                 :style="{width: '100px'}">
                 {{item}} 我是内容
             </div>
-        </custom-scrollbar>
-        <el-scrollbar wrap-class="list" wrap-style="color: red;" view-style="font-weight: bold;" view-class="view-box" :native="false">
-            <div v-for="value in 30" :key="value">
-                {{ value }}
-            </div>
-        </el-scrollbar>
+        </custom-scrollbar>-->
+        <!-- <btn @action=""></btn> -->
+        <!-- <wrapper></wrapper> -->
     </div>
 </template>
 
 <style lang="stylus" scoped>
-/*展示列表的区域，超过200px出现滚动条*/
->>>.list
-    max-height 200px
-
 </style>
 
 <style lang="stylus">
@@ -39,6 +32,9 @@
     text-overflow ellipsis
     white-space nowrap
     overflow hidden
+
+.global-padding
+    padding 10px 15px
 </style>
 
 <script>
@@ -59,6 +55,17 @@ export default {
         return {
             isShow: false
         };
+    },
+
+    created() {
+        this.$modal({
+            title: '测试标题',
+            message: '测试信息',
+            type: 'confirm',
+            callback: function () {
+
+            }
+        });
     },
 
     methods: {

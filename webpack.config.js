@@ -41,7 +41,13 @@ module.exports = {
                 use: [
                     'vue-style-loader',
                     'css-loader',
-                    'stylus-loader'
+                    'stylus-loader',
+                    {
+                        loader: 'stylus-resources-loader',
+                        options: {
+                            resources: './src/common/assets/common.styl'
+                        }
+                    }
                 ]
             },
 
