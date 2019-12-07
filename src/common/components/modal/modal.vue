@@ -46,7 +46,7 @@
         width 420px
         border 1px solid $lgy
         border-radius 4px
-        box-shadow 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+        box-shadow $shadow
         overflow hidden
         backface-visibility hidden
         vertical-align middle

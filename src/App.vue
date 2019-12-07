@@ -16,6 +16,10 @@
         </custom-scrollbar>-->
         <!-- <btn @action=""></btn> -->
         <!-- <wrapper></wrapper> -->
+        <!-- <lazy-loading></lazy-loading> -->
+        <tip :type="'top'" :width="70" style="height: 656px;">
+            <btn></btn>
+        </tip>
     </div>
 </template>
 
@@ -41,6 +45,8 @@
 import VirtualRollingFixed from './components/demo1/virtual-rolling-fixed';
 import VirtualRollingFlexible from './components/demo1/virtual-rolling-flexible';
 import CustomScrollbar from './components/demo2/custom-scrollbar';
+import LazyComponent from './components/demo3/lazy-component'
+import ContentArea from './components/demo3/components/content-area'
 
 export default {
     name: 'App',
@@ -48,24 +54,15 @@ export default {
     components: {
         VirtualRollingFixed,
         VirtualRollingFlexible,
-        CustomScrollbar
+        CustomScrollbar,
+        LazyComponent,
+        ContentArea
     },
 
     data () {
         return {
             isShow: false
         };
-    },
-
-    created() {
-        this.$modal({
-            title: '测试标题',
-            message: '测试信息',
-            type: 'confirm',
-            callback: function () {
-
-            }
-        });
     },
 
     methods: {

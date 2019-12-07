@@ -31,9 +31,10 @@ export function $modal (VueComponent, options = {}) {
     const m_mounted_el = document.createElement('div');
     const ModalCtor = Vue.extend(Modal);
     const WrapperCtor = Vue.extend(Wrapper);
+    const body = document.body;
 
-    document.body.appendChild(w_mounted_el);
-    document.body.appendChild(m_mounted_el);
+    body.appendChild(w_mounted_el);
+    body.appendChild(m_mounted_el);
 
     const instanceW = new WrapperCtor().$mount(w_mounted_el);
     const instanceM = new ModalCtor({
@@ -46,6 +47,10 @@ export function $modal (VueComponent, options = {}) {
             instanceW.$emit('destroy');
         });
     }
+
+    instanceM.$once('cancel-callback', function () {
+        instanceW.$emit('destroy');
+    });
 
     if (isVNode(VueComponent) || isVNode(VueComponent.message)) {
         instanceM.$slots.default = [VueComponent];

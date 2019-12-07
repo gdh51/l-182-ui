@@ -47,8 +47,9 @@
 import Btn from './components/button/btn.vue'
 import Modal from './components/modal/modal.vue'
 import Wrapper from './components/wrapper/wrapper.vue'
+import Tip from './components/tip/tip.vue'
 
-const Components = [Btn, Modal, Wrapper];
+const Components = [Btn, Modal, Wrapper, Tip];
 
 export function registeComponents(Vue) {
     Components.forEach(component => {
