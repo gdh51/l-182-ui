@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="app">
         <!-- <virtual-rolling-fixed
             :listItems="genArrayDataByNumber(100)"
             v-show="isShow"/>
@@ -17,13 +17,25 @@
         <!-- <btn @action=""></btn> -->
         <!-- <wrapper></wrapper> -->
         <!-- <lazy-loading></lazy-loading> -->
-        <tip :type="'top'" :width="70" style="height: 656px;">
+        <!-- <tip :type="'top'" :width="70" style="height: 656px;">
             <btn></btn>
-        </tip>
+        </tip> -->
+        <div class="app_container">
+            <drag-bar :enableControl="true" disabled/>
+        </div>
     </div>
 </template>
 
 <style lang="stylus" scoped>
+    #app
+        width 100%
+
+        .app_container
+            width 80%
+            height 500px
+            padding-top 220px
+            margin 0 auto
+            background-size cover
 </style>
 
 <style lang="stylus">
@@ -39,6 +51,12 @@
 
 .global-padding
     padding 10px 15px
+
+.grabbing
+    cursor grabbing
+
+.disabled
+    cursor not-allowed!important
 </style>
 
 <script>

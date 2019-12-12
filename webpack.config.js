@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
@@ -78,7 +80,7 @@ module.exports = {
             },
 
             {
-                test: /\.(gif|jpg|jpeg|png|svg|woff|woff2|eot|ttf|otf)$/,
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
                 loader: 'file-loader'
             }
         ]
