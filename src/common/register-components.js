@@ -50,8 +50,9 @@ import Wrapper from './components/wrapper/wrapper.vue'
 import Tip from './components/tip/tip.vue'
 import DragBar from './components/dragbar/drag-bar.vue'
 import ProgressBar from './components/progress-bar/index.vue'
+import Icon from './components/icon/index.vue'
 
-const Components = [Btn, Modal, Wrapper, Tip, DragBar, ProgressBar];
+const Components = [Btn, Modal, Wrapper, Tip, DragBar, ProgressBar, Icon];
 
 export function registeComponents(Vue) {
     Components.forEach(component => {

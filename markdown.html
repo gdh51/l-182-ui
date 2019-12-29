@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="marked.js"></script>
+</head>
+
+<body>
+    <script>
+        class Markdown {
+            constructor({
+                toRenderFunction,
+                levelClass
+            }) {
+
+                // 默认情况下编译为模版
+                this.toRenderFunction = toRenderFunction;
+
+                // h标签的class
+                this.levelClass = levelClass;
+            }
+        }
+
+        class MarkAst {
+            constructor(symbol, raw, text, closed) {
+                this.symbol = symbol;
+                this.children = [];
+                this.tag = symbol2Tag[symbol];
+
+                // 文本内容，仅纯文本具有该属性
+                this.text = text;
+                this.raw = raw;
+                this.closed = closed;
+                this.parent = null;
+            }
+        }
+
+        let unicodeRegExp =
+            /a-zA-Z\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD/,
+            asteriskRegExp = /\*{1,2}/,
+            spSymbol = /`*/;
+
+        // 匹配#标签，匹配到当前排的换行符之前 $1为# $2为匹配的文本
+        const titleLevelRE = /^(\#{1,5})\s/,
+            shortCodeRE = /^(`{1,2})/,
+
+            // 匹配1~2个*，且它们后面不能跟空格否则无效
+            asteriskRE = /^(\*{1,2})(?![\s\*])/,
+            text = /^(.+?)(?![^`*\n])/,
+            newline = /^(\n+)/;
+
+        let symbol2Tag = {
+            '#': 'h1',
+            '##': 'h2',
+            '###': 'h3',
+            '####': 'h4',
+            '#####': 'h5',
+            '`': 'code',
+            '``': 'code',
+            'text': 'p'
+        };
+
+        function parseCotent(template) {
+            let unhandleTemplate = template,
+                index = 0,
+                stack = [new MarkAst('root')],
+                [lastAst] = stack;
+
+            while (!!unhandleTemplate) {
+
+                // 匹配#题目标签
+                if (titleLevelRE.test(unhandleTemplate)) {
+
+                    // 匹配到的对象
+                    let titleMatch = unhandleTemplate.match(titleLevelRE);
+
+                    stack.push(new MarkAst(titleMatch[1], titleMatch[0], null, true));
+                    updateLastAst();
+
+                    // 截取剩余的模版
+                    advance(index, titleMatch[0].length);
+                    continue;
+                }
+
+                // 处理``xx``或`xx`的短代码标签
+                if (shortCodeRE.test(unhandleTemplate)) {
+                    let shortCodeMatch = unhandleTemplate.match(shortCodeRE),
+                        shouldCloseIndex = shouldCloseSymbol(shortCodeMatch[1]);
+
+                    // 遇到配对的标签时，就可以出栈了
+                    if (shouldCloseIndex !== false) {
+
+                        // 闭合标签
+                        closeSymbol(shouldCloseIndex);
+                    } else {
+                        let symbolAst = new MarkAst(shortCodeMatch[1], shortCodeMatch[0], null, false);
+
+                        // 遇到新的头标签时，加入栈中
+                        stack.push(symbolAst);
+
+                        setParent(symbolAst, lastAst);
+
+                        // 将该`推入栈中，因为它中间的内容将以它为父元素
+                        updateLastAst();
+                    }
+
+                    advance(index, shortCodeMatch[0].length);
+                    continue;
+                }
+
+                // 匹配*语法
+                if (asteriskRE.test(unhandleTemplate)) {
+                    let asteriskMatch = unhandleTemplate.match(asteriskRE),
+                        shouldCloseIndex = shouldCloseSymbol(asteriskMatch[1]);
+
+                    // 遇到配对的标签时，就可以出栈了
+                    if (shouldCloseIndex !== false) {
+
+                        // 闭合标签
+                        closeSymbol(shouldCloseIndex);
+                    } else {
+                        let symbolAst = new MarkAst(asteriskMatch[1], asteriskMatch[0], null, false);
+
+                        stack.push(symbolAst);
+
+                        setParent(symbolAst, lastAst);
+
+                        updateLastAst();
+                    }
+
+                    advance(index, asteriskMatch[0].length);
+                    continue;
+                }
+
+                // 如何截取文本？首先经过上面的排除，我们第一个字符肯定不为特殊符号。
+                // 那么我们只需要找到后面第一个特殊符号位置停止即可。
+                if (text.test(unhandleTemplate)) {
+                    let textMatch = unhandleTemplate.match(text);
+
+                    lastAst.children.push(new MarkAst('text', textMatch[0], textMatch[1], true));
+
+                    advance(index, textMatch[0].length);
+                    continue;
+                }
+
+                // 处理换行符号，普通文本时不进行处理直接跳过，因为它已经在文本中处理
+                // 当为h类标签时，我们要对其进行闭合。
+                if (newline.test(unhandleTemplate)) {
+
+                    let newlineMatch = unhandleTemplate.match(newline);
+
+                    if (titleLevelRE.test(lastAst.raw)) {
+
+                        lastAst.closed = true;
+                        setParent(stackPop(), lastAst);
+                    }
+
+                    advance(index, newlineMatch[1].length);
+                }
+            }
+
+            // if (stack.length !== 1) {
+            //     closeSymbol(1);
+            // }
+            debugger
+            // 更新模版，和当前在原始模版中的下标
+            function advance(start, step) {
+
+                // 更新当前模版在原模版中的下标b
+                index = start + step;
+
+                // 更新剩余要处理的模版
+                unhandleTemplate = template.slice(index);
+            }
+
+            // 更新父级AST对象
+            function updateLastAst() {
+                return lastAst = stack[stack.length - 1];
+            }
+
+            function stackPop() {
+                let popAst = stack.pop();
+
+                updateLastAst();
+                return popAst;
+            }
+
+            function setParent(target, parent) {
+                parent.children.push(target);
+            }
+
+            // 查找stack是否有与其成对的标签，如果存在则说明应该闭合它
+            function shouldCloseSymbol(symbol) {
+                let times = stack.length;
+                while (times--) {
+
+                    if (stack[times].symbol === symbol) {
+                        return times;
+                    }
+                }
+
+                return false;
+            }
+
+            // `sada*as·da~sd`
+            function closeSymbol(indexInStack) {
+
+                // 获取当前要闭合的符号的ast对象
+                let symbol = stack[indexInStack],
+                    children = symbol.children;
+
+                symbol.closed = true;
+
+                children = flatChildren(children);
+
+                // 遍历将其中所有未闭合的符号都转化为扁平的文本
+                children = children.map(childAst => {
+
+                    // 将未闭合的符号AST对象转化为文本
+                    if (!childAst.closed) {
+                        return new MarkAst('text', childAst.raw, childAst.symbol, true);
+                    }
+
+                    return childAst;
+                });
+
+                symbol.children = children;
+
+                // 清除已闭合的符号
+                stack.length = indexInStack;
+
+                // 手动截断stack后，要更新lastAst
+                symbol,updateLastAst();
+            }
+        }
+
+        // 扁平化未闭合的符号
+        function flatChildren(children) {
+
+            let result = [];
+
+            children.forEach(child => {
+
+                // 找到子ast数组中未闭合的
+                if (child.closed) {
+
+                    // 闭合的直接返回
+                    return result.push(child);
+
+                    // 未闭合的标签将其当作文本，与其他闭合节点扁平化
+                } else {
+                    result = result.concat(child, ...flatChildren(child.children));
+                }
+            });
+
+            return result;
+        }
+
+        parseCotent(`# 标题
+第二*个文章\`sds\``);
+    </script>
+</body>
+
+</html>

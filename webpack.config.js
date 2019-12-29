@@ -47,7 +47,7 @@ module.exports = {
                     {
                         loader: 'stylus-resources-loader',
                         options: {
-                            resources: './src/common/assets/common.styl'
+                            resources: './src/common/assets/common-variable.styl'
                         }
                     }
                 ]
@@ -90,7 +90,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'several demos',
             hash: true,
-            template: './src/index.html'
+            template: './src/index.html',
+            meta: {
+                viewport: "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+            }
         }),
 
         new CleanWebpackPlugin(),
