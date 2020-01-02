@@ -1,5 +1,6 @@
 import { timer } from '../../utils/timer'
 import { RESOLVED } from '../../utils/constants'
+import { releaseState } from '../../utils/activeQueue'
 import { handleInnerInstance } from '../../handleInnerInstance/index'
 
 /**
@@ -65,7 +66,7 @@ function resolveInstance(val, instance) {
             if (instance.isInternal) return;
 
             // 因为没有调用then()方法，所以这里要手动清空activePromise
-            return activePromise = null;
+            return releaseState();
         };
 
         // 改变下一个promise实例的状态

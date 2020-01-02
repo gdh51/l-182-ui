@@ -6,8 +6,6 @@
     left 0
     right 0
     background-color #000
-    transition all .3s linear
-
 </style>
 
 <script>
@@ -75,7 +73,7 @@ export default {
 
     created() {
 
-        // 将用户传入的值作为opacity
+        // 普通的遮布，z-index属性由用户自己定义
         if (this.type === 'normal') return;
 
         this.axis = generateLevel();

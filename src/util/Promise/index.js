@@ -1,12 +1,9 @@
 import { resolve } from './staticMethods/resolve/index'
 import { reject } from './staticMethods/reject/index'
-
-// 记录当前处理的最顶层promise，以便来确认那些promise是内部的
-let activePromise = null;
+import { setActiveState, hasActiveState } from './utils/activeQueue'
 
 // 测试用uuid，来追踪每个Promise实例
 let uuid = 0;
-
 export function Promise1(executor) {
     if (typeof executor !== 'function') throw new Error('???');
 
@@ -16,8 +13,8 @@ export function Promise1(executor) {
     this.uuid = uuid++;
 
     // 存储一个当前正在处理的promise，
-    if (activePromise === null) {
-        activePromise = this;
+    if (hasActiveState()) {
+        setActiveState(this);
 
         // 如果里面包含另一个promise，则赋予其isInternal属性，来定位其在内部
     } else {

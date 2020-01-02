@@ -1,8 +1,7 @@
 <template>
     <div class="music_bar">
-        <div class="music_poster-container">
-            <div class="music_poster-img"></div>
-        </div>
+        <!-- 虽然html中对属性大小写不敏感，但这也仅限于html中，vue模版中会按原模版解析 -->
+        <circle-box innerClass="music_poster-img"></circle-box>
         <div class="music_info ellipsis">
             <div class="music_info-title">
                 Kiss & Tell
@@ -30,16 +29,9 @@
     padding 10px
     border-top 1px solid $lw1
 
-    .music_poster-container
-        width 1.2rem
-        height 1.2rem
-
-        .music_poster-img
-            width 100%
-            height 100%
-            border-radius 50%
-            background-image url('./香蕉猫.jpg')
-            background-size cover
+    >>>.music_poster-img
+        background-image url('./香蕉猫.jpg')
+        background-size cover
 
     .music_info
         flex 1

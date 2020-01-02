@@ -1,3 +1,5 @@
+import { releaseState } from '../../utils/activeQueue'
+
 /**
  * 用于处理Promise实例的后续结果
  * @param {Function} onFulfilled 处理resolve的回调函数
@@ -13,7 +15,7 @@ export function then (onFulfilled, onRejected) {
 
     // 仅在顶层Promise更新activePromise
     if (!prevInstance.isInternal) {
-        activePromise = null;
+        releaseState();
     }
 
     // 完成状态的promise再次连接then时，需要我们手动启动任务
