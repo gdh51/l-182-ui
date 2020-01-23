@@ -1,6 +1,6 @@
 export default {
     state: {
-        sideWrapperVisibility: true
+        sideWrapperVisibility: false
     },
 
     mutations: {

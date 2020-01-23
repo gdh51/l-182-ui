@@ -3,6 +3,7 @@
         <header-area/>
         <music-bar/>
         <sidebar-container/>
+        <playing-panel/>
     </div>
 </template>
 
@@ -30,6 +31,7 @@ import Markdown from './components/markdown/index';
 import HeaderArea from './components/header/header';
 import MusicBar from './components/music-bar/index';
 import SidebarContainer from './components/sidebar-container/index'
+import PlayingPanel from './components/playing-panel/index'
 
 export default {
     name: 'App',
@@ -43,7 +45,8 @@ export default {
         Markdown,
         HeaderArea,
         MusicBar,
-        SidebarContainer
+        SidebarContainer,
+        PlayingPanel
     },
 
     data () {

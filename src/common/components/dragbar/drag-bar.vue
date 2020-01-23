@@ -96,6 +96,7 @@ export default {
         },
 
         startDrag (e) {
+            console.log(this.disabled)
             if (this.disabled) return;
             e.stopImmediatePropagation();
             on(document, 'mousemove', this.mousemoveHandler);

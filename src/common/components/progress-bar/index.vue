@@ -3,6 +3,8 @@
         :class="disabled ? 'disabled' : ''"
         :style="size"
         @click="changeProgress">
+        <div v-if="deputy"
+             class="deputy-bar"></div>
         <div class="progress-bar"
             :class="disabled ? 'disabled' : ''"
             :style="progressBarStyle">
@@ -20,7 +22,6 @@
             position relative
             height 100%
             border-radius 5px
-            // transition all 0 linear
             background-color $lg2
 
         >.disabled
@@ -48,6 +49,11 @@ export default {
         },
 
         disabled: {
+            type: Boolean,
+            default: false
+        },
+
+        deputy: {
             type: Boolean,
             default: false
         }

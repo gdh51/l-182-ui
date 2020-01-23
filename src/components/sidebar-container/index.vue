@@ -99,6 +99,9 @@ export default {
 
         // 存起来方便查询
         this.state = this.$store.state;
+    },
+    mounted () {
+        this.initSidebarSize();
 
         // 这里就很方便了，如果外部组件要收起侧边栏，只需要向vuex提交变量信息即可
         this.$watch( 'wrapperVisibility',(newVal) => {
@@ -107,10 +110,7 @@ export default {
             } else {
                 this.left = this.sidebarSize;
             }
-        });
-    },
-    mounted () {
-        this.initSidebarSize();
+        }, { immediate: true });
     },
 
     methods: {

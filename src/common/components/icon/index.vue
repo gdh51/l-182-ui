@@ -58,7 +58,7 @@
 .playing:before
     content "\ed51"
 
-.message:before
+.comments:before
     content "\ed52"
 
 .download:before
