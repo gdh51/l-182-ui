@@ -32,7 +32,7 @@ import HeaderArea from './components/header/header';
 import MusicBar from './components/music-bar/index';
 import SidebarContainer from './components/sidebar-container/index'
 import PlayingPanel from './components/playing-panel/index'
-
+import { compile } from '../markdown/compiler/index'
 export default {
     name: 'App',
 
@@ -66,6 +66,19 @@ export default {
                 uuid: index
             }));
         }
-    }
+    },
+
+    created() {
+        console.log(compile({
+            text: `# 标题第二个文章
+## asdas
+1111111
+\`sada*as**da**sd
+### as\`sdsd\`dsd
+asdsd
+`,
+mode: 'dom'
+        }))
+    },
 }
 </script>
