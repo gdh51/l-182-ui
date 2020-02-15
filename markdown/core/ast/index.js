@@ -1,4 +1,4 @@
-import { symbol2Tag, unarySymbol } from './constants'
+import { symbol2Tag, unarySymbol } from '../constants'
 
 export class MarkAst {
     constructor(symbol, raw, text, closed) {
@@ -33,4 +33,33 @@ export function isTextSymbol(ast) {
 
 export function createTextSymbol(text) {
     return new MarkAst('text', text, text, true);
+}
+
+const H_RE = /^(#{1,5})$/;
+
+export function completeHInnerText (ast) {
+    let children = ast.children;
+
+    if (H_RE.test(ast.symbol)) {
+        ast._innerText = collectInnerText(ast, '');
+    }
+
+    children.forEach(ast => {
+        if (!isTextSymbol(ast)) {
+            completeHInnerText(ast, '');
+        }
+    });
+
+    function collectInnerText (ast, text) {
+        let children = ast.children;
+
+        text += children.map(ast => {
+            if (isTextSymbol(ast)) {
+                return ast.text;
+            }
+            return collectInnerText(ast, '');
+        }).join('');
+
+        return text;
+    }
 }

@@ -1,31 +1,67 @@
-<style lang="stylus" scoped>
-
-</style>
-
 <script>
-import { throws } from 'assert';
+/**
+ * Markdown 组件，接收一个文本信息，将其格式化为DOM元素返回，
+ * 可以接收两个可选参数，第一个即markdown文本
+ * 第二个是对应DOM元素时添加的Class
+ */
+import { Markdown } from '../../../markdown/index'
+
 export default {
     name: 'Markdown',
 
-    abstrict: true,
-
     props: {
-        template: {
+        text: {
             type: String,
-            required: true
+            default: ''
+        },
+
+        // 定义渲染出来的DOM元素上添加的class
+        renderClass: {
+            type: Object,
+            default () {
+                return {};
+            }
         }
     },
 
-    render () {
+    render (c) {
         if (this.$slots.default && Object.keys(this.$scopedSlots).length > 0) {
             throw Error('不能设置插槽');
-            return;
+            return null;
         }
 
+        const md = new Markdown({
+            mode: 'vnode',
+            createElement: c,
+            renderClass: this.renderClass
+        });
+
+        this.mkRenderHelper = md.compile(this.text);
+        return this.mkRenderHelper.rootVNode;
     },
 
     data () {
-        return {}
+        return {
+            mkRenderHelper: null
+        };
+    },
+
+    mounted () {
+        this.initNodesOfDOM();
+    },
+
+    updated () {
+        this.initNodesOfDOM();
+    },
+
+    methods: {
+        initNodesOfDOM () {
+            let mkRenderHelper = this.mkRenderHelper;
+            mkRenderHelper.bindElement(mkRenderHelper.nodesTreeMap ,this.$refs);
+
+            // 挂载完毕后将文章的标题元素暴露接口给外部
+            this.$emit('mk-dom-tree', mkRenderHelper.nodesTreeRoot);
+        }
     }
 }
 </script>

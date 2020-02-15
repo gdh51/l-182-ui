@@ -3,7 +3,7 @@ export const titleLevelRE = /^(\#{1,5})\s/,
     shortCodeRE = /^(`{1,2})/,
 
     // 匹配1~2个*，且它们后面不能跟空格否则无效
-    asteriskRE = /^(\*{1,2})(?![\s\*])/,
+    asteriskRE = /^(\*{1,2})/,
     text = /^(.+?)(?![^`*(**)\n])/,
     newline = /^(\n+)/;
 
@@ -17,7 +17,8 @@ export const symbol2Tag = {
     '``': 'code',
     'p': 'p',
     '*': 'i',
-    '**': 'b'
+    '**': 'b',
+    'root': 'article'
 };
 
 export const unarySymbol = ['#', '##', '###', '####', '#####'];

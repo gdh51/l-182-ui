@@ -1,9 +1,10 @@
 <template>
     <div id="app">
-        <header-area/>
+        <!-- <header-area/>
         <music-bar/>
         <sidebar-container/>
-        <playing-panel/>
+        <playing-panel/> -->
+        <mk-article/>
     </div>
 </template>
 
@@ -27,12 +28,12 @@ import VirtualRollingFlexible from './components/demo1/virtual-rolling-flexible'
 import CustomScrollbar from './components/demo2/custom-scrollbar';
 import LazyComponent from './components/demo3/lazy-component'
 import ContentArea from './components/demo3/components/content-area';
-import Markdown from './components/markdown/index';
 import HeaderArea from './components/header/header';
 import MusicBar from './components/music-bar/index';
 import SidebarContainer from './components/sidebar-container/index'
 import PlayingPanel from './components/playing-panel/index'
-import { compile } from '../markdown/compiler/index'
+import MkArticle from './components/mk-article/index'
+
 export default {
     name: 'App',
 
@@ -42,11 +43,13 @@ export default {
         CustomScrollbar,
         LazyComponent,
         ContentArea,
-        Markdown,
+
         HeaderArea,
         MusicBar,
         SidebarContainer,
-        PlayingPanel
+        PlayingPanel,
+
+        MkArticle
     },
 
     data () {
@@ -66,19 +69,6 @@ export default {
                 uuid: index
             }));
         }
-    },
-
-    created() {
-        console.log(compile({
-            text: `# 标题第二个文章
-## asdas
-1111111
-\`sada*as**da**sd
-### as\`sdsd\`dsd
-asdsd
-`,
-mode: 'dom'
-        }))
-    },
+    }
 }
 </script>

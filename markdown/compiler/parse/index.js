@@ -1,12 +1,19 @@
-import { reviseEndNewline, isUndefined } from '../core/uitl'
-import { MarkAst, createTextSymbol, isUnarySymbol } from '../core/mark-ast'
+import {
+    reviseEndNewline,
+    isUndefined
+} from '../../core/uitl'
+import {
+    MarkAst,
+    createTextSymbol,
+    isUnarySymbol
+} from '../../core/ast/index'
 import {
     titleLevelRE,
     shortCodeRE,
     asteriskRE,
     text,
     newline
-} from '../core/constants'
+} from '../../core/constants'
 
 export function parseLexer(template) {
 

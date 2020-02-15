@@ -1,57 +1,27 @@
-import { isTextSymbol } from '../core/mark-ast'
-import { symbol2Tag } from '../core/constants'
-import { addClass } from '../core/handle-class'
 
-export function generate(options = {}) {
+import { generateRenderFn } from './generate-vnode/index'
+import { generateDocFragment, generateInnerHTML } from './gen-doc-fragment'
+
+export function generate(root, options) {
     let result = null;
 
-    result = generateDocFragment(options);
+    switch (options.mode) {
+        case 'text':
+            result = generateInnerHTML(root, options);
+            break;
 
-    if (options.mode === 'text') {
-        result = generateInnerHTML(result);
+        case 'vnode':
+
+            // 在VNode模式下返回的是一个节点，其中包含规划好的DOM结构，
+            // 在DOM生成完毕后调用配套该接口的方法即可自动注入对应DOM元素
+            result = generateRenderFn(root, options);
+            break;
+
+        // 默认为dom模式，解析为dom片段
+        default:
+            result = generateDocFragment(root, options);
+            break;
     }
 
     return result;
-}
-
-function generateDocFragment(options) {
-    let frame = document.createDocumentFragment(),
-        rootEle = document.createElement('article');
-
-    frame.appendChild(rootEle);
-
-    transform2Node(options.root, rootEle, options.renderClass);
-
-    return frame;
-}
-
-function transform2Node(ast, parent, renderClass) {
-    let children = ast.children;
-
-    for (let i = 0; i < children.length; i++) {
-        let curAst = children[i],
-            tag = '',
-            node = null;
-
-        // 处理文本节点
-        if (isTextSymbol(curAst)) {
-            node = document.createTextNode(curAst.text);
-
-            // 普通元素节点
-        } else {
-            tag = symbol2Tag[curAst.symbol];
-            node = document.createElement(tag);
-
-            // 如果用户定义各元素的类，那么为元素添加类
-            renderClass[tag] && addClass(node, renderClass[tag]);
-        }
-
-        parent.appendChild(node);
-
-        transform2Node(curAst, node, renderClass);
-    }
-}
-
-function generateInnerHTML (doc) {
-    return doc.firstElementChild.outerHTML;
 }

@@ -1,6 +1,7 @@
-import { complie } from './compiler/index'
+import { initMarkdown } from './core/index'
+import { compile } from './compiler/index'
 
-class Markdown {
+export class Markdown {
     constructor(options = {}) {
         if (!(this instanceof Markdown)) {
             throw TypeError('use Constructor');
@@ -8,7 +9,16 @@ class Markdown {
         this._init(options);
     }
 
-    complie (text) {
-        return complie.call(this ,text);
+    compile (text) {
+        const cached = this.$options.cached;
+
+        if (cached[text]) {
+            return cached[text];
+        }
+
+        return cached[text] = compile.call(this, text);
     }
 }
+
+// 初始化Markdown构造函数
+initMarkdown();

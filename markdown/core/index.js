@@ -1,3 +1,5 @@
 import { initMixin } from './instance/init'
 
-initMixin();
+export function initMarkdown () {
+    initMixin();
+}

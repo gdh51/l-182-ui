@@ -1,16 +1,16 @@
 var whitespaceRE = /\s+/;
 
-export function initClass (options) {
-    normalizeClass(options);
+export function initClass(renderClass) {
+    normalizeClass(renderClass);
 }
 
 /**
  * 将用户传入的Class标准化为完整的字符串形式
- * @param {Object} options 初始化的配置
+ * @param {Object} renderClass 初始配置中配置的Cls
  */
-export function normalizeClass(options = {}) {
-    let renderClass = options.renderClass,
-        keys = Object.keys(renderClass);
+function normalizeClass(renderClass = {}) {
+
+    let keys = Object.keys(renderClass);
 
     if (!keys.length) return {};
 

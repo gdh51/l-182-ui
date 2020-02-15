@@ -1,4 +1,4 @@
-import { createTextSymbol, isTextSymbol } from '../core/mark-ast'
+import { createTextSymbol, isTextSymbol } from '../../core/ast/index'
 
 export function optimize(root) {
 

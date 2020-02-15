@@ -1,13 +1,14 @@
 
-import { parseLexer } from './parse'
-import { optimize } from './optimize'
-import { generate } from './generate'
+import { parseLexer } from './parse/index'
+import { optimize } from './optimize/index'
+import { generate } from './generate/index'
 
 export function compile (text) {
-    let options = this.options;
-    options.root = parseLexer(text || '');
+    let options = this.$options,
+        root = parseLexer(text || '');
 
-    optimize(options.root);
+    // 优化root树中的文本节点
+    optimize(root);
 
-    return generate(options);
+    return generate(root, options);
 }
