@@ -6,6 +6,7 @@ class TreeNode {
         this.order = order;
         this.parentNode = null;
         this.children = [];
+        this.selected = false;
     }
 }
 

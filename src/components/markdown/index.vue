@@ -36,13 +36,13 @@ export default {
             renderClass: this.renderClass
         });
 
-        this.mkRenderHelper = md.compile(this.text);
-        return this.mkRenderHelper.rootVNode;
+        this.mdRenderHelper = md.compile(this.text);
+        return this.mdRenderHelper.rootVNode;
     },
 
     data () {
         return {
-            mkRenderHelper: null
+            mdRenderHelper: null
         };
     },
 
@@ -56,11 +56,11 @@ export default {
 
     methods: {
         initNodesOfDOM () {
-            let mkRenderHelper = this.mkRenderHelper;
-            mkRenderHelper.bindElement(mkRenderHelper.nodesTreeMap ,this.$refs);
+            let mdRenderHelper = this.mdRenderHelper;
+            mdRenderHelper.bindElement(mdRenderHelper.nodesTreeMap ,this.$refs);
 
             // 挂载完毕后将文章的标题元素暴露接口给外部
-            this.$emit('mk-dom-tree', mkRenderHelper.nodesTreeRoot);
+            this.$emit('md-dom-tree', mdRenderHelper.nodesTreeRoot);
         }
     }
 }
