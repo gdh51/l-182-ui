@@ -1,6 +1,7 @@
 <template>
     <div>
-        <MdCatalog :md-root-node="mdRootNode"/>
+        <MdCatalog :md-root-node="mdApi.nodesTreeRoot"
+                   :md-nodes-map="mdApi.nodesTreeMap"/>
         <Markdown :text="`# asdasd
 ## 二级标题1
 s
@@ -101,7 +102,7 @@ s
 s
 s
 s`"
-@md-dom-tree="receiveRootEle"/>
+@md-dom-tree="exposeMDApi"/>
     </div>
 </template>
 
@@ -112,6 +113,7 @@ s`"
 <script>
 import Markdown from '../markdown/index'
 import MdCatalog from './components/md-catalog'
+import './components/components/util/ob-scroll.js'
 
 export default {
     name: 'MkArticle',
@@ -130,16 +132,20 @@ export default {
 
     data () {
         return {
-            mdRootNode: {
-                text: '无标题',
-                children: []
+            mdApi: {
+                nodesTreeRoot: {
+                    text: '无标题',
+                    children: []
+                },
+
+                nodesTreeMap: []
             }
         };
     },
 
     methods: {
-        receiveRootEle (root) {
-            this.mdRootNode = root;
+        exposeMDApi (mdApi) {
+            this.mdApi = mdApi;
         }
     }
 }

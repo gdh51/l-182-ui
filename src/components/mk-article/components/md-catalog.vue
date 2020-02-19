@@ -1,8 +1,14 @@
 <template>
     <nav class="catalog-container">
-        <div class="catalog-title">{{ mdRootNode.text }}</div>
+        <gradient-color class="sub_item-subtitle catalog-title"
+                           :selected="mdRootNode.selected"
+                           @click.native="focusHeading(mdRootNode)">
+            {{ mdRootNode.text }}
+        </gradient-color>
+
         <!-- 这里用递归组件生成子项目 -->
-        <sub-list :subChildren="mdRootNode.children"/>
+        <sub-list :subChildren="mdRootNode.children"
+                  :state-interface="stateInterface"/>
     </nav>
 </template>
 
@@ -21,23 +27,39 @@
 
 <script>
 import SubList from './components/sub-list'
+import GradientColor from './components/gradient-color'
+import { initCatalogCom } from './components/util/state'
+
 export default {
     name: 'MdCatalog',
 
     props: {
         mdRootNode: {
             type: Object
+        },
+
+        mdNodesMap: {
+            type: Array
         }
     },
 
     components: {
-        SubList
+        SubList,
+        GradientColor
     },
 
     data () {
-        return {
-            index: 0
-        };
+        return {};
+    },
+
+    computed: {
+        stateInterface () {
+
+            // 无其他作用，收集依赖项
+            this.mdNodesMap;
+
+            return initCatalogCom(this.mdNodesMap);
+        }
     }
 }
 </script>
