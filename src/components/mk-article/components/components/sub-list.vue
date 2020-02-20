@@ -59,14 +59,10 @@ export default {
     data () {
         return {};
     },
+
     methods: {
         focusHeading (node) {
-            if (!this.stateInterface) return;
-            let { scrollTo, updatePrevNode } = this.stateInterface;
-            scrollTo(node.order);
-
-            // 清空上一个节点被点击的状态
-            updatePrevNode(node);
+            this.stateInterface && this.stateInterface.jumpToHeading(node);
         }
     }
 }

@@ -18,25 +18,24 @@ let scrollToY = initScrollTo();
 // 点击标题跳转到对应的元素
 export function initScroll (orderToNodeMap) {
 
-    return function scrollToOrder (heading) {
-        scrollToY(scrollCachedFn(heading));
-    };
+    return {
+        scrollToOrder (node) {
+            scrollToY(scrollCachedFn(node));
+        },
+        scrollCachedFn
+    }
 
-    function scrollCachedFn (heading) {
-        let node = orderToNodeMap[heading],
-            hit = node.y;
-
-        // 不忘更新被选中的状态
-        node.selected = true;
+    function scrollCachedFn (node) {
+        let hit = node.y;
 
         // 命中缓存，直接返回
-        return hit || (node.y = gainElementRect(node.el).y);
+        return hit || (node.y = gainEleScrollTop(node.el));
     }
 }
 
 // 封装Rect Api
-function gainElementRect(el) {
-    return el.getBoundingClientRect();
+function gainEleScrollTop (el) {
+    return el.getBoundingClientRect().top + window.scrollY;
 }
 
 export function initSelectedNode (NodesMap) {
@@ -47,14 +46,19 @@ export function initSelectedNode (NodesMap) {
         index = 0,
         currentNode;
 
+    // // 如果初始化时在屏幕顶部，则要单独获取
+    // if (ScrollY <= 0) currentNode.y = gainEleScrollTop(currentNode.el);
+
     // 找到第一个出现屏幕上的元素，那么上一个元素则为当前目录处于的位置
     while (currentNodeScrollY < ScrollY) {
-        currentNode = NodesMap[index];
-        currentNodeScrollY = currentNode.y = gainElementRect(currentNode.el);
+        currentNode = NodesMap[index++];
+
+        // 存储当前节点的高度，用于下一次计算
+        currentNodeScrollY = currentNode.y = gainEleScrollTop(currentNode.el);
     }
 
     // 当为顶级标题时，返回顶级标题
-    index = --index >= 0 ? index : 0;
+    index = (index-= 2) >= 0 ? index : 0;
 
     return {
         selectedNode: NodesMap[index],

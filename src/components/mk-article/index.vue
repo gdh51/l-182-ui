@@ -1,7 +1,8 @@
 <template>
     <div>
         <MdCatalog :md-root-node="mdApi.nodesTreeRoot"
-                   :md-nodes-map="mdApi.nodesTreeMap"/>
+                   :md-nodes-map="mdApi.nodesTreeMap"
+                   :threshhold="threshhold"/>
         <Markdown :text="`# asdasd
 ## 二级标题1
 s
@@ -113,7 +114,6 @@ s`"
 <script>
 import Markdown from '../markdown/index'
 import MdCatalog from './components/md-catalog'
-import './components/components/util/ob-scroll.js'
 
 export default {
     name: 'MkArticle',
@@ -122,6 +122,11 @@ export default {
         text: {
             type: String,
             default: ''
+        },
+
+        threshhold: {
+            type: Number,
+            default: 0
         }
     },
 

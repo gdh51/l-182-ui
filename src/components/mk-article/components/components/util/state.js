@@ -3,6 +3,8 @@ import {
     initSelectedNode,
     initScroll
 } from './scroll'
+import { initObserveScroll } from './ob-scroll'
+import { extend } from './uitl'
 
 // 存储observable接口
 const observable = Vue.observable;
@@ -37,8 +39,13 @@ function initNodeState (NodesMap) {
 
         // 将被选中的节点设为被选中状态
         updatePrevNode (node) {
+
+            // 解除之前节点的选中状态
             listState.prevSelectedNode.selected = false;
             listState.prevSelectedNode = node;
+
+            // 不忘更新被选中的状态，但要在最后更新，防止是同一节点
+            node.selected = true;
         },
 
         getOrderMap () {
@@ -66,19 +73,30 @@ function initOrderMap (NodesMap) {
 }
 
 // 初始目录组件接口，只需要传入MD文章的节点Map
-export function initCatalogCom (NodesMap) {
+export function initCatalogCom (NodesMap, opts = {}) {
 
     // 返回undefined，好让其他组件使用默认值
     if (NodesMap.length === 0) return void 0;
 
     const NodeState = initNodeState(NodesMap);
 
-    return extend(NodeState, { scrollTo: initScroll(NodeState.getOrderMap()) })
+    // 合并接口
+    extend(NodeState, initScroll(NodeState.getOrderMap()));
+    extend(NodeState, initObserveScroll(NodeState, opts.threshhold));
+
+    return {
+
+        // 用于点击跳转至指定的node
+        jumpToHeading (node) {
+            let {
+                scrollToOrder,
+                updatePrevNode
+            } = NodeState;
+            scrollToOrder(node);
+
+            // 清空上一个节点被点击的状态，并选中当前节点
+            updatePrevNode(node);
+        }
+    };
 }
 
-function extend(to, _from) {
-    for (var key in _from) {
-        to[key] = _from[key];
-    }
-    return to
-}

@@ -17,6 +17,7 @@
     width 250px
     font-size 14px
     border 1px solid black
+    position fixed
 
     .catalog-title
         padding 4px
@@ -40,6 +41,11 @@ export default {
 
         mdNodesMap: {
             type: Array
+        },
+
+        threshhold: {
+            type: Number,
+            default: 0
         }
     },
 
@@ -58,7 +64,15 @@ export default {
             // 无其他作用，收集依赖项
             this.mdNodesMap;
 
-            return initCatalogCom(this.mdNodesMap);
+            return initCatalogCom(this.mdNodesMap, {
+                threshhold: this.threshhold
+            });
+        }
+    },
+
+    methods: {
+        focusHeading (node) {
+            this.stateInterface && this.stateInterface.jumpToHeading(node);
         }
     }
 }
