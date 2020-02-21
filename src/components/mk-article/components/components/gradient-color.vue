@@ -1,8 +1,10 @@
 <template>
-    <div class="gradient-bg"
-        :class="[warpperClass, selected ? 'active' : '']">
+    <a class="gradient-bg ellipsis"
+      :class="[warpperClass, selected ? 'active' : '']"
+       href="javascript:void 0;"
+      :title="title">
         <slot></slot>
-    </div>
+    </a>
 </template>
 
 <style lang="stylus" scoped>
@@ -23,7 +25,10 @@ gradientColor()
 }
 
 .gradient-bg
+    display block
     cursor pointer
+    color inherit
+    text-decoration none
 
     &:hover
         gradientColor()
@@ -31,6 +36,10 @@ gradientColor()
 .active
     color #fff
     gradientColor()
+
+.ellipsis
+    word-wrap none
+    text-overflow ellipsis
 </style>
 
 <script>
@@ -45,7 +54,11 @@ export default {
 
         selected: {
             type: Boolean,
-            dafault: false
+            default: false
+        },
+
+        title: {
+            type: String
         }
     },
 

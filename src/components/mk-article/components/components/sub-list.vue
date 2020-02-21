@@ -5,6 +5,7 @@
            :key="index">
             <gradient-color class="sub_item-subtitle"
                            :selected="child.selected"
+                           :title="child.text"
                            @click.native="focusHeading(child)">
                 <span class="sub_item-level">{{ child.order }}</span>{{ child.text }}
             </gradient-color>

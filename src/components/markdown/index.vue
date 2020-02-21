@@ -1,3 +1,58 @@
+<style lang="stylus">
+.article-content
+    word-break break-word
+    line-height 1.75
+    font-weight 400
+    font-size 15px
+    overflow-x hidden
+
+    .h1,.h2,.h3,.h4,.h6
+        color $dg2
+        line-height 1.5
+        padding-bottom 5px
+        margin-top 35px
+        margin-bottom 10px
+        border-bottom 1px solid $lw1
+
+    .p
+        line-height inherit
+        margin-top 22px
+        margin-bottom 22px
+
+    .article-title
+        margin 20px 0
+        font-size 30px
+        font-weight 700
+        line-height 1.5
+
+    .h2
+        font-size 24px
+
+    .h3
+        font-size 21px
+
+    .h4
+        font-size 18px
+
+    .h5
+        font-size 16px
+
+    .code
+        padding 1px 5px
+        background-color $lw1
+        border-radius 2px
+        word-break break-word
+        color $lo3
+        font-size 13px
+        overflow-x auto
+
+    .italic
+        font-style italic
+
+    .bold
+        font-weight 700
+</style>
+
 <script>
 /**
  * Markdown 组件，接收一个文本信息，将其格式化为DOM元素返回，
@@ -19,7 +74,20 @@ export default {
         renderClass: {
             type: Object,
             default () {
-                return {};
+                return {
+                    'article': 'article-content',
+                    'h1': 'article-title',
+                    'h2': 'h2',
+                    'h3': 'h3',
+                    'h4': 'h4',
+                    'h5': 'h5',
+                    'p': 'p',
+                    'code': 'code',
+
+                    'strong': 'bold',
+
+                    'i': 'italic'
+                };
             }
         }
     },

@@ -2,6 +2,7 @@
     <nav class="catalog-container">
         <gradient-color class="sub_item-subtitle catalog-title"
                            :selected="mdRootNode.selected"
+                           :title="mdRootNode.text"
                            @click.native="focusHeading(mdRootNode)">
             {{ mdRootNode.text }}
         </gradient-color>
@@ -18,6 +19,7 @@
     font-size 14px
     border 1px solid black
     position fixed
+    right 0
 
     .catalog-title
         padding 4px

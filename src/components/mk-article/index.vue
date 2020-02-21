@@ -3,106 +3,11 @@
         <MdCatalog :md-root-node="mdApi.nodesTreeRoot"
                    :md-nodes-map="mdApi.nodesTreeMap"
                    :threshhold="threshhold"/>
-        <Markdown :text="`# asdasd
-## 二级标题1
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-### 三级标题1
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-### 三级标题2
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-## 二级标题2
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-### 三级标题3
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-## 二级标题3
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-### 三级标题4
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-### 三级标题5
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s
-#### 四级标题
-s
-s
-s
-s
-s
-s
-s
-s
-s
-s`"
+        <Markdown :text="`# asdasddsaasdsadasdsadsdsdsd
+## sdsd
+### 二级标题1
+### asdasd
+## sdsd`"
 @md-dom-tree="exposeMDApi"/>
     </div>
 </template>

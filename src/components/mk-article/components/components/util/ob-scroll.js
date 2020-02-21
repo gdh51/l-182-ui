@@ -6,7 +6,7 @@ export function initObserveScroll (nodeState, threshhold) {
     let nodesMap = nodeState.getNodesMap(),
         firstNodeY = nodesMap[0].y,
         lastNode = nodesMap[nodesMap.length - 1],
-        invoker = throttle(scrollArticle, null, 1000);
+        invoker = throttle(scrollArticle, null, 500);
 
     window.addEventListener('scroll', invoker);
 
