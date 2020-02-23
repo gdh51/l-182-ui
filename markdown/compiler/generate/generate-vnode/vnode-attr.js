@@ -20,6 +20,11 @@ export function handleEleAttr(tag, ast, stack) {
         attr.ref = genHRef(stack, tag, ast);
     }
 
+    // 处理一元标签的属性
+    if (ast.unary) {
+        attr.attrs = ast.unary;
+    }
+
     return attr;
 }
 

@@ -19,12 +19,19 @@ export class MarkAst {
         this.closed = closed || false;
         this.parent = null;
         this.children = [];
+
+        // 是否为一元标签
+        this.unary = false;
     }
+}
+
+export function createEleSymbol (symbol = '', raw = '', closed = false) {
+    return new MarkAst(symbol, raw, void 0, closed);
 }
 
 export function isUnarySymbol(ast) {
 
-    return ast && ast.symbol && unarySymbol.indexOf(ast.symbol) > -1;
+    return !!(ast && ast.symbol && unarySymbol[ast.symbol]);
 }
 
 export function isTextSymbol(ast) {
@@ -37,6 +44,7 @@ export function createTextSymbol(text) {
 
 const H_RE = /^(#{1,5})$/;
 
+// 收集h标签内部的文本消息
 export function completeHInnerText (ast) {
     let children = ast.children;
 

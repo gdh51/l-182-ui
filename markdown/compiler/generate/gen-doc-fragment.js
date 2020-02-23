@@ -1,6 +1,7 @@
 import { isTextSymbol } from '../../core/ast/index'
 import { symbol2Tag } from '../../core/constants'
 import { addClass } from '../../core/handle-class'
+import { setAttr } from '../../core/uitl/index'
 
 export function generateDocFragment(root, options) {
     let frame = document.createDocumentFragment(),
@@ -32,6 +33,11 @@ function transform2Node(ast, parent, renderClass) {
 
             // 如果用户定义各元素的类，那么为元素添加类
             renderClass[tag] && addClass(node, renderClass[tag]);
+
+            // 处理一元标签的属性
+            if (ast.unary) {
+                setAttr(node, ast.unary);
+            }
         }
 
         parent.appendChild(node);

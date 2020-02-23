@@ -10,3 +10,21 @@ export function reviseEndNewline(str) {
         return str += '\n';
     }
 }
+
+const _toString = Object.prototype.toString;
+
+function isPlainObject(obj) {
+    return _toString.call(obj) === '[object Object]'
+}
+
+export function setAttr (el, key, value) {
+
+    // 传入对象形式的属性时
+    if (isPlainObject(key)) {
+        return Object.keys(key).forEach(attrKey => {
+            el.setAttribute(attrKey, key[attrKey]);
+        });
+    }
+
+    el.setAttribute(key, value);
+}
