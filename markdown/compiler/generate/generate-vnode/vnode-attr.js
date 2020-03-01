@@ -11,16 +11,16 @@ export function handleEleAttr(tag, ast, stack) {
     let opts = stack.opts;
 
     // 处理class
-    const attr = assignRenderClass(opts.renderClass, ast, ast.innerClass);
+    const attr = assignRenderClass(opts.renderClass, ast);
 
     // 处理顶级标签，Vue中自动获取h标签对应的元素，除非用户主动关闭
-    if (opts.relToH !== false && titleRE.test(ast.symbol)) {
+    if (opts.transformTotree && titleRE.test(ast.symbol)) {
         attr.ref = genHRef(stack, tag, ast);
     }
 
     // 处理一元标签的属性
-    if (ast.unary) {
-        attr.attrs = ast.unary;
+    if (ast.special) {
+        attr.attrs = ast.special;
     }
 
     return attr;

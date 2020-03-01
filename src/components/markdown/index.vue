@@ -119,6 +119,11 @@ export default {
             default () {
                 return defaultClass;
             }
+        },
+
+        transformTotree: {
+            type: Boolean,
+            dafault: false
         }
     },
 
@@ -128,19 +133,26 @@ export default {
             return null;
         }
 
-        const md = new Markdown({
-            mode: 'vnode',
-            createElement: c,
-            renderClass: this.renderClass
-        });
+        // 初始化一次Markdown实例
+        if (!this.md) {
+            this.md = new Markdown({
+                mode: 'vnode',
+                createElement: c,
+                renderClass: this.renderClass,
+                transformTotree: this.transformTotree
+            });
+        }
 
-        this.mdRenderHelper = md.compile(this.text);
+        this.mdRenderHelper = this.md.compile(this.text);
         return this.mdRenderHelper.rootVNode;
     },
 
     data () {
         return {
-            mdRenderHelper: null
+
+            // 一个函数，用于将生成的ast树和元素绑定
+            mdRenderHelper: null,
+            md: null
         };
     },
 
@@ -155,13 +167,16 @@ export default {
     methods: {
         initNodesOfDOM () {
             let mdRenderHelper = this.mdRenderHelper;
-            mdRenderHelper.bindElement(mdRenderHelper.nodesTreeMap ,this.$refs);
 
-            // 挂载完毕后将文章的标题元素暴露接口给外部
-            this.$emit('md-dom-tree', {
-                nodesTreeMap: mdRenderHelper.nodesTreeMap,
-                nodesTreeRoot: mdRenderHelper.nodesTreeRoot
-            });
+            if (this.transformTotree && mdRenderHelper.nodesTreeRoot) {
+                mdRenderHelper.bindElement(mdRenderHelper.nodesTreeMap ,this.$refs);
+
+                // 挂载完毕后将文章的标题元素暴露接口给外部
+                this.$emit('md-dom-tree', {
+                    nodesTreeMap: mdRenderHelper.nodesTreeMap,
+                    nodesTreeRoot: mdRenderHelper.nodesTreeRoot
+                });
+            }
         }
     }
 }

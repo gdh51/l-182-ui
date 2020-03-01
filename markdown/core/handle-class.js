@@ -49,12 +49,13 @@ export function addClass(el, cls) {
     }
 }
 
-export function assignRenderClass(renderClass, ast, inner) {
+// 用于处理VNode class
+export function assignRenderClass(renderClass, ast) {
     let attr = {},
         tag = ast.tag;
 
     // 如果是被包含的函数
-    if (!inner) {
+    if (!ast.innerClass) {
         renderClass[tag] && (attr.class = renderClass[tag]);
     } else {
         tag = ast.parent.tag + '.' + tag;
@@ -62,4 +63,19 @@ export function assignRenderClass(renderClass, ast, inner) {
     }
 
     return attr;
+}
+
+export function assignTextClass (ast, renderClass) {
+    let cls = '',
+        tag = ast.tag;
+
+    // 如果是被包含的函数
+    if (!ast.innerClass) {
+        renderClass[tag] && (cls = ` class="${renderClass[tag]}"`);
+    } else {
+        tag = ast.parent.tag + '.' + tag;
+        renderClass[tag] && (cls = ` class="${renderClass[tag]}"`);
+    }
+
+    return cls;
 }

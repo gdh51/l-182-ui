@@ -1,11 +1,12 @@
 import {
     reviseEndNewline,
-    isUndefined
+    isUndefined,
+    reviseTopic
 } from '../../core/uitl'
 import {
     createEleSymbol,
     createTextSymbol,
-    isUnarySymbol
+    isSingleSideSymbol
 } from '../../core/ast/index'
 import {
     escapeRE,
@@ -28,7 +29,7 @@ import {
     generateParagraph
 } from './parse-helper'
 
-export function parseLexer(template, inline = false) {
+export function parseLexer(template, inline = false, init = false) {
 
     // 规范语法
     template = reviseEndNewline(template);
@@ -44,6 +45,11 @@ export function parseLexer(template, inline = false) {
         // 定义一个根节点，方便处理数据
         lastAst = createEleSymbol('root'),
         stack = [lastAst];
+
+    if (init) {
+        // 用户必须传入一级标题
+        reviseTopic(lastAst, template);
+    }
 
     while (!!unhandleTemplate) {
 
@@ -210,10 +216,10 @@ export function parseLexer(template, inline = false) {
             indexInStack = 1;
 
             // 首先确认我们要闭合的标签的类型，二元标签要作为文本
-            let isUnary = isUnarySymbol(stack[1]);
+            let isSingleSide = isSingleSideSymbol(stack[1]);
 
             // 对于除#这种一元标题外，其他要闭合的对象要当作文本处理
-            if (!isUnary) {
+            if (!isSingleSide) {
                 indexInStack = 0;
             } else {
 
@@ -325,13 +331,13 @@ export function parseLexer(template, inline = false) {
         // 如果当前的[]()语法成立
         if (inlineResult.isEstablish) {
             let ast = createEleSymbol(symbol, match[0], true),
-                unary = {};
+                special = {};
 
             attrs.forEach((attr, index) => {
-                unary[attr] = match[index === 0 ? 2 : 4];
+                special[attr] = match[index === 0 ? 2 : 4];
             });
 
-            ast.unary = unary;
+            ast.special = special;
 
             setParent(ast, lastAst);
             if (symbol === 'link') {

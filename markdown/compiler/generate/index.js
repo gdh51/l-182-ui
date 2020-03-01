@@ -1,13 +1,14 @@
 
 import { generateRenderFn } from './generate-vnode/index'
-import { generateDocFragment, generateInnerHTML } from './gen-doc-fragment'
+import { generateDocFragment } from './gen-doc-fragment'
+import { genSRContent } from './gen-sr-content'
 
 export function generate(root, options) {
     let result = null;
 
     switch (options.mode) {
-        case 'text':
-            result = generateInnerHTML(root, options);
+        case 'dom':
+            result = generateDocFragment(root, options);
             break;
 
         case 'vnode':
@@ -19,7 +20,7 @@ export function generate(root, options) {
 
         // 默认为dom模式，解析为dom片段
         default:
-            result = generateDocFragment(root, options);
+            result = genSRContent(root, options);
             break;
     }
 

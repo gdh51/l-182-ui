@@ -4,7 +4,7 @@
         <music-bar/>
         <sidebar-container/>
         <playing-panel/> -->
-        <mk-article/>
+        <div v-html="text"></div>
     </div>
 </template>
 
@@ -32,7 +32,7 @@ import HeaderArea from './components/header/header';
 import MusicBar from './components/music-bar/index';
 import SidebarContainer from './components/sidebar-container/index'
 import PlayingPanel from './components/playing-panel/index'
-import MkArticle from './components/mk-article/index'
+import { Markdown } from '../markdown/index.js'
 
 export default {
     name: 'App',
@@ -48,8 +48,6 @@ export default {
         MusicBar,
         SidebarContainer,
         PlayingPanel,
-
-        MkArticle
     },
 
     data () {
@@ -58,7 +56,9 @@ export default {
             barSize: {
                 height: '.2rem',
                 width: '1rem'
-            }
+            },
+
+            text: ''
         };
     },
 

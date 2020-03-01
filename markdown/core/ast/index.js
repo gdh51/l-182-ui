@@ -1,4 +1,4 @@
-import { symbol2Tag, unarySymbol } from '../constants'
+import { symbol2Tag, SingleSideSymbol, unarySymbol, specialRE } from '../constants'
 
 export class MarkAst {
     constructor(symbol, raw, text, closed) {
@@ -21,7 +21,7 @@ export class MarkAst {
         this.children = [];
 
         // 是否为一元标签
-        this.unary = false;
+        this.special = false;
     }
 }
 
@@ -29,8 +29,12 @@ export function createEleSymbol (symbol = '', raw = '', closed = false) {
     return new MarkAst(symbol, raw, void 0, closed);
 }
 
-export function isUnarySymbol(ast) {
+export function isSingleSideSymbol(ast) {
 
+    return !!(ast && ast.symbol && SingleSideSymbol[ast.symbol]);
+}
+
+export function isUnarySymbol (ast) {
     return !!(ast && ast.symbol && unarySymbol[ast.symbol]);
 }
 
@@ -52,6 +56,10 @@ export function isUlistSymbol (ast) {
 
 export function isListItem(ast, parent) {
     return parent.raw.test(ast.symbol);
+}
+
+export function isSpecialSymbol (ast) {
+    return specialRE.test(ast.symbol);
 }
 
 export function createTextSymbol(text) {

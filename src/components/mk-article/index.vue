@@ -3,19 +3,12 @@
         <MdCatalog :md-root-node="mdApi.nodesTreeRoot"
                    :md-nodes-map="mdApi.nodesTreeMap"
                    :threshhold="threshhold"/>
-        <Markdown :text="`# as
-## sadsa
-### sadasd
-## asdas
-## sdsd
-### asda`"
-@md-dom-tree="exposeMDApi"/>
+        <Markdown :text="text"
+                  :render-class="renderClass"
+                  :transformTotree="true"
+                  @md-dom-tree="exposeMDApi"/>
     </div>
 </template>
-
-<style lang="stylus" scoped>
-
-</style>
 
 <script>
 import Markdown from '../markdown/index'
@@ -25,14 +18,22 @@ export default {
     name: 'MkArticle',
 
     props: {
+
+        // 传入的用于解析markdown的文本
         text: {
             type: String,
             default: ''
         },
 
+        // 设置阈值当屏幕上方到达元素什么位置时开始切换标题
         threshhold: {
             type: Number,
             default: 0
+        },
+
+        // 用于定义渲染出的markdown的class
+        renderClass: {
+            type: Object
         }
     },
 
@@ -46,7 +47,8 @@ export default {
             mdApi: {
                 nodesTreeRoot: {
                     text: '无标题',
-                    children: []
+                    children: [],
+                    selected: true
                 },
 
                 nodesTreeMap: []

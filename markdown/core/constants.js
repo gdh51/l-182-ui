@@ -27,7 +27,8 @@ export const
 
 
     // 文段结束
-    newline = /^(\n+)/;
+    newline = /^(\n+)/,
+    specialRE = /img|link/;
 
 export const symbol2Tag = {
     '#': 'h1',
@@ -55,7 +56,7 @@ export const symbol2Tag = {
     'root': 'article'
 };
 
-export const unarySymbol = {
+export const SingleSideSymbol = {
     '#': true,
     '##': true,
     '###': true,
@@ -66,4 +67,8 @@ export const unarySymbol = {
     '-': true,
     '+': true,
     'num': true
+};
+
+export const unarySymbol = {
+    'img': true
 };

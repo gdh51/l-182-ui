@@ -18,7 +18,8 @@ export function generateRenderFn (root, opts) {
         prevHlevel: null,
         nodesTreeMap: [],
         nodesTreeRoot: null,
-        prevNode: null
+        prevNode: null,
+        transformTotree: opts.transformTotree
     };
 
     // 为标题标签获取其文本标题信息
