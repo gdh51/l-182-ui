@@ -3,17 +3,15 @@ import {
     isSameType,
     setParent
 } from './tree-node';
+import { assignRenderClass } from '../../../core/handle-class'
 
 const titleRE = /^(\#{1,5})$/;
 
 export function handleEleAttr(tag, ast, stack) {
-    const attr = {};
     let opts = stack.opts;
 
     // 处理class
-    if (opts.renderClass[tag]) {
-        attr.class = opts.renderClass[tag];
-    }
+    const attr = assignRenderClass(opts.renderClass, ast, ast.innerClass);
 
     // 处理顶级标签，Vue中自动获取h标签对应的元素，除非用户主动关闭
     if (opts.relToH !== false && titleRE.test(ast.symbol)) {
@@ -39,33 +37,16 @@ function genHRef(stack, tag, ast) {
         return '0';
     }
 
-    let refStack = stack.hRefs,
-        ref = '',
-
-        // 当前标签的等级，即h几
-        target = Number(tag.substr(1)),
-
-        // 仅生成到h2，即h1不生成
-        origin = 2,
-        node = null;
-
-    // 每次进入时，增加当前h标签的计数
-    refStack[tag] += 1;
-
-    // 假如为h5，则生成1-1-1-1-
-    while (target >= origin) {
-        ref += `${refStack['h' + origin]}-`;
-        origin++;
-    }
-
-    ref = ref.slice(0, -1);
+    // 当前标签的等级，即h几
+    let target = Number(tag.substr(1)),
+        node = null,
+        ref;
 
     // 创建节点
-    node = createTreeNode(tag, ast._innerText, ref);
+    node = createTreeNode(tag, ast._innerText);
 
-    // 当回溯h标签等级时，清空下级的所有标签
+
     if (stack.prevHlevel > target) {
-        resetHRefStack(refStack, target);
 
         // 因为此时不能定位其父节点，所以要重新查找
         setParent(node, redirectParentNode(node, stack));
@@ -78,6 +59,11 @@ function genHRef(stack, tag, ast) {
     } else {
         setParent(node, stack.prevNode.parentNode);
     }
+
+    // 要待节点生成后来处理ref，因为用户书写等级标签可能不会按1-5顺序书写，
+    // 可能会存在跳跃，上面已经处理外节点的属性结构，此时我们只需要知道深度即可
+    // 假如为h5，则生成1-1-1-1-
+    ref = sniffRealRef(node, stack, target);
 
     // 处理完当前节点后更新上一个节点，并将其加入map中
     stack.nodesTreeMap.push(node);
@@ -117,4 +103,38 @@ function redirectParentNode(node, stack) {
 
     // 当无法找到同级节点时返回h1节点
     return nodesTreeMap[0];
+}
+
+function sniffRealRef(node, stack, target) {
+    let start = 2,
+        end = 1,
+        refStack = stack.hRefs,
+        originNode = node,
+        ref = '';
+
+    // 真正的要处理的标签应该为差集，比如h1 - h2 - h4，
+    // 那么当前起始等级为2, 目标等级应该为3
+    while (node.tag !== 'h1') {
+        end++;
+        node = node.parentNode;
+    }
+
+    // 每次进入时，增加嗅探出来的计数增加1
+    refStack['h' + end] += 1;
+
+    while (end >= start) {
+        ref += `${refStack['h' + start]}-`;
+        start++;
+    }
+
+    ref = ref.slice(0, -1);
+    originNode.order = ref;
+
+    if (stack.prevHlevel > target) {
+
+        // 当回溯h标签等级时，清空下级的所有标签
+        resetHRefStack(refStack, target);
+    }
+
+    return ref;
 }

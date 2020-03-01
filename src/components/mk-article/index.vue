@@ -3,16 +3,12 @@
         <MdCatalog :md-root-node="mdApi.nodesTreeRoot"
                    :md-nodes-map="mdApi.nodesTreeMap"
                    :threshhold="threshhold"/>
-        <Markdown :text="`# asdasddsaasdsadasdsadsdsdsd
+        <Markdown :text="`# as
+## sadsa
+### sadasd
+## asdas
 ## sdsd
-**dsa***sdsd*\`sdsd\`
->sdsd*sdsdsd*
->sdsd>sdsd
-~sdsd~sadasdsad
-[链接](www) ![]()
-### 二级标题1
-### asdasd
-## sdsd`"
+### asda`"
 @md-dom-tree="exposeMDApi"/>
     </div>
 </template>

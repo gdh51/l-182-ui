@@ -8,6 +8,7 @@ import {
     isUnarySymbol
 } from '../../core/ast/index'
 import {
+    escapeRE,
     titleLevelRE,
     quoteRE,
     shortCodeRE,
@@ -16,16 +17,25 @@ import {
     text,
     newline,
     imgRE,
-    linkRE
+    linkRE,
+    olistRE,
+    ulistRE,
+    codeRE
 } from '../../core/constants'
+import {
+    parselinkctx,
+    setParent,
+    generateParagraph
+} from './parse-helper'
 
-export function parseLexer(template) {
+export function parseLexer(template, inline = false) {
 
     // 规范语法
     template = reviseEndNewline(template);
 
     let unhandleTemplate = template,
         index = 0,
+        times = 0,
 
         // 从栈底开始数，第一个文本标签的前一个标签的下标，
         // 用于将后面的文本生成段落，记录的是在root对象子数组中的下标
@@ -37,16 +47,52 @@ export function parseLexer(template) {
 
     while (!!unhandleTemplate) {
 
-        // 匹配#题目标签
-        if (titleLevelRE.test(unhandleTemplate)) {
-            singleMatch(titleLevelRE);
+        times++
+        if (times >= 100) return new Error('???');
+
+        // 处理转义字符
+        if (escapeRE.test(unhandleTemplate.match(escapeRE))) {
+            let match = unhandleTemplate.match(escapeRE),
+                ast = createTextSymbol(match[1]);
+
+            // 标记当前AST对象为转义对象
+            ast.escape = true;
+            setParent(ast, lastAst);
+            advance(index, match[0].length);
             continue;
         }
 
-        // 匹配>引用内容
-        if (quoteRE.test(unhandleTemplate)) {
-            singleMatch(quoteRE);
-            continue;
+        // 在内联解析时，块级元素的解析进行参与
+        if (!inline) {
+
+            // 匹配#题目标签
+            if (titleLevelRE.test(unhandleTemplate)) {
+                singleMatch(titleLevelRE);
+                continue;
+            }
+
+            // 匹配>引用内容
+            if (quoteRE.test(unhandleTemplate)) {
+                singleMatch(quoteRE, true);
+                continue;
+            }
+
+            // 匹配无序列表
+            if (ulistRE.test(unhandleTemplate)) {
+                singleMatch(ulistRE).innerClass = true;
+                continue;
+            }
+
+            // 匹配有序列表
+            if (olistRE.test(unhandleTemplate)) {
+                singleMatch(olistRE, null, 'num').innerClass = true;
+                continue;
+            }
+
+            if (codeRE.test(unhandleTemplate)) {
+                codeMatch(codeRE);
+                continue;
+            }
         }
 
         // 处理`xx`的短代码标签
@@ -67,13 +113,15 @@ export function parseLexer(template) {
             continue;
         }
 
+        // 处理[]()
         if (linkRE.test(unhandleTemplate)) {
-            unaryMatch(linkRE, 'link', ['title', 'href']);
+            linkMatch(linkRE, 'link', ['title', 'href'])
             continue;
         }
 
+        // 处理![]()
         if (imgRE.test(unhandleTemplate)) {
-            unaryMatch(imgRE, 'img', ['alt', 'src']);
+            linkMatch(imgRE, 'img', ['alt', 'src']);
             continue;
         }
 
@@ -199,11 +247,12 @@ export function parseLexer(template) {
             if (!stackSize) {
                 stack.length = 1;
 
-                // 为文本生成段落
+                // 为文本生成段落，仅在非内联元素中生成
+                if (!inline) {
+                    generateParagraph(stack[0], pStartIndex);
 
-                generateParagraph(stack[0], pStartIndex);
-
-                pStartIndex += 1;
+                    pStartIndex += 1;
+                }
             } else {
 
                 // 对于正常配对闭合的标签，直接闭合即可，然后截断stack栈。
@@ -252,62 +301,69 @@ export function parseLexer(template) {
      * 单行匹配， 即占整行的， 以换行符结尾
      * @param {RegExp} reg 匹配的正则表达式
      * @param {Boolean} isSame 匹配的对象是否就是符号，比如# 就要多匹配个空格，所以它不是
+     * @param {String} symbol 是否直接指定了生成标签ast对象的符号，如有有则直接使用
      */
-    function singleMatch (reg, isSame) {
+    function singleMatch(reg, isSame, symbol) {
         // 匹配到的对象
-        let match = unhandleTemplate.match(reg);
+        let match = unhandleTemplate.match(reg),
+            ast = createEleSymbol(symbol || match[isSame ? 0 : 1], match[0], true);
 
         // Match[1] 存放#，Match[0]存放#及其空格
-        updateLastAst(createEleSymbol(match[isSame ? 0 : 1], match[0], true));
+        updateLastAst(ast);
+
+        // 截取剩余的模版
+        advance(index, match[0].length);
+
+        return ast;
+    }
+
+    function linkMatch(reg, symbol, attrs) {
+        // 获取匹配及其内容的处理结果
+        let inlineResult = parselinkctx(reg, unhandleTemplate, parseLexer),
+            match = inlineResult.match;
+
+        // 如果当前的[]()语法成立
+        if (inlineResult.isEstablish) {
+            let ast = createEleSymbol(symbol, match[0], true),
+                unary = {};
+
+            attrs.forEach((attr, index) => {
+                unary[attr] = match[index === 0 ? 2 : 4];
+            });
+
+            ast.unary = unary;
+
+            setParent(ast, lastAst);
+            if (symbol === 'link') {
+                setParent(inlineResult.title, ast);
+            }
+
+        // 如果当前语法不成立，则全部转化为文本
+        } else {
+            setParent([createTextSymbol(match[1]),
+                ...inlineResult.title,
+                createTextSymbol(match[3]),
+                ...inlineResult.link,
+                createTextSymbol(match[5])
+            ], lastAst);
+        }
 
         // 截取剩余的模版
         advance(index, match[0].length);
     }
 
-    // 匹配一元的匹配对象，暂未做递归处理内部标签
-    function unaryMatch (reg, symbol, attrs) {
+    function codeMatch (reg) {
         let match = unhandleTemplate.match(reg),
-            ast = createEleSymbol(symbol, match[0], true),
-            unary = {};
+            OuterAst = createEleSymbol(match[1], match[0], true),
+            innerAst = createEleSymbol('`', null, true);;
 
-        // 占位，好让match对象匹配的位置下标正好匹配
-        attrs.unshift(void 0);
+        innerAst.innerClass = true;
 
-        attrs.forEach((attr, index) => {
-            if (index === 0) return;
-            unary[attr] = match[index];
-        });
-
-        ast.unary = unary;
-
-        setParent(ast, lastAst);
-        setParent(createTextSymbol(match[1]), ast)
+        // 设置pre->code->文本这种结构
+        setParent(innerAst, OuterAst);
+        setParent(createTextSymbol(match[3]), innerAst);
+        setParent(OuterAst, lastAst);
 
         advance(index, match[0].length);
     }
-}
-
-// target加入parent的children数组中
-function setParent(targets, parent) {
-
-    // 统一为数组处理
-    if (!Array.isArray(targets)) {
-        targets = [targets];
-    }
-
-    targets.forEach(target => {
-        parent.children.push(target);
-        target.parent = parent;
-    });
-}
-
-function generateParagraph(root, startIndex) {
-    let textArray = root.children.splice(startIndex),
-        pAst = createEleSymbol('p', '', true);
-
-    // 为这些文本设置父节点为段落节点
-    setParent(textArray, pAst);
-
-    // 将锻炼节点添加到根节点数组中
-    setParent(pAst, root);
 }

@@ -9,8 +9,8 @@ export function generateRenderFn (root, opts) {
         c: opts.createElement,
         hRefs: {
             h2: 0,
-            h2: 0,
             h3: 0,
+            h4: 0,
             h5: 0
         },
 

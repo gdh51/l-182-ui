@@ -46,11 +46,53 @@
         font-size 13px
         overflow-x auto
 
+    .img
+        max-width 100%
+
     .italic
         font-style italic
 
     .bold
         font-weight 700
+
+    .ul-list
+        padding-left 30px
+
+        .ul-list-item
+            list-style disc
+    .ol-list
+        padding-left 30px
+
+        .ol-list-item
+            list-style decimal
+
+    .quote
+        padding-left 15px
+        border-left 4px solid #70b991
+        background-color #eee7da
+
+    .link
+        text-decoration none
+        color #0366d6
+
+        &:hover
+            text-decoration underline
+
+        &:active
+            outline-width 0
+
+    .pre
+        border-radius 2px
+        font-size 14px
+
+        .pre-code
+            display block
+            padding 16px 20px
+            background-color #fcce77
+            overflow-x auto
+            color #289b7c
+            line-height 24px
+            white-space pre
 </style>
 
 <script>
@@ -60,6 +102,7 @@
  * 第二个是对应DOM元素时添加的Class
  */
 import { Markdown } from '../../../markdown/index'
+import { defaultClass } from './constants'
 
 export default {
     name: 'Markdown',
@@ -74,20 +117,7 @@ export default {
         renderClass: {
             type: Object,
             default () {
-                return {
-                    'article': 'article-content',
-                    'h1': 'article-title',
-                    'h2': 'h2',
-                    'h3': 'h3',
-                    'h4': 'h4',
-                    'h5': 'h5',
-                    'p': 'p',
-                    'code': 'code',
-
-                    'strong': 'bold',
-
-                    'i': 'italic'
-                };
+                return defaultClass;
             }
         }
     },

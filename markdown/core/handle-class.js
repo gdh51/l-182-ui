@@ -48,3 +48,18 @@ export function addClass(el, cls) {
         }
     }
 }
+
+export function assignRenderClass(renderClass, ast, inner) {
+    let attr = {},
+        tag = ast.tag;
+
+    // 如果是被包含的函数
+    if (!inner) {
+        renderClass[tag] && (attr.class = renderClass[tag]);
+    } else {
+        tag = ast.parent.tag + '.' + tag;
+        renderClass[tag] && (attr.class = renderClass[tag]);
+    }
+
+    return attr;
+}

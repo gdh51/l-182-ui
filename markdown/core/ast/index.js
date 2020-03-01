@@ -38,6 +38,22 @@ export function isTextSymbol(ast) {
     return ast && (typeof ast.text === 'string');
 }
 
+export function isQuoteSymbol (ast) {
+    return ast && ast.symbol === '>';
+}
+
+export function isOlistSymbol (ast) {
+    return ast && (ast.symbol === 'num');
+}
+
+export function isUlistSymbol (ast) {
+    return ast && (ast.symbol === '+' || ast.symbol === '-');
+}
+
+export function isListItem(ast, parent) {
+    return parent.raw.test(ast.symbol);
+}
+
 export function createTextSymbol(text) {
     return new MarkAst('text', text, text, true);
 }
