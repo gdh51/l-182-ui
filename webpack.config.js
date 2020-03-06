@@ -21,7 +21,10 @@ module.exports = {
 
     devServer: {
         contentBase: './dist',
-        hot: true
+        hot: true,
+        proxy: {
+            '/upload': 'http://localhost:3000/upload'
+        }
     },
 
     resolve: {

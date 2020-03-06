@@ -4,7 +4,7 @@
         <music-bar/>
         <sidebar-container/>
         <playing-panel/> -->
-        <div v-html="text"></div>
+        <file-upload/>
     </div>
 </template>
 
@@ -31,8 +31,8 @@ import ContentArea from './components/demo3/components/content-area';
 import HeaderArea from './components/header/header';
 import MusicBar from './components/music-bar/index';
 import SidebarContainer from './components/sidebar-container/index'
-import PlayingPanel from './components/playing-panel/index'
-import { Markdown } from '../markdown/index.js'
+import PlayingPanel from './components/playing-panel/index';
+import FileUpload from './components/file-upload/index';
 
 export default {
     name: 'App',
@@ -48,6 +48,7 @@ export default {
         MusicBar,
         SidebarContainer,
         PlayingPanel,
+        FileUpload
     },
 
     data () {
