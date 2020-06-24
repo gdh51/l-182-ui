@@ -4,7 +4,12 @@
         <music-bar/>
         <sidebar-container/>
         <playing-panel/> -->
-        <file-upload/>
+        <!-- <file-upload/> -->
+        <loading-mask>
+            <!-- <template v-slot:title>
+                sdsd
+            </template> -->
+        </loading-mask>
     </div>
 </template>
 
@@ -23,32 +28,34 @@
 
 <script>
 import './common/assets/common-style.styl';
-import VirtualRollingFixed from './components/demo1/virtual-rolling-fixed';
-import VirtualRollingFlexible from './components/demo1/virtual-rolling-flexible';
-import CustomScrollbar from './components/demo2/custom-scrollbar';
-import LazyComponent from './components/demo3/lazy-component'
-import ContentArea from './components/demo3/components/content-area';
-import HeaderArea from './components/header/header';
-import MusicBar from './components/music-bar/index';
-import SidebarContainer from './components/sidebar-container/index'
-import PlayingPanel from './components/playing-panel/index';
-import FileUpload from './components/file-upload/index';
+// import VirtualRollingFixed from './components/demo1/virtual-rolling-fixed';
+// import VirtualRollingFlexible from './components/demo1/virtual-rolling-flexible';
+// import CustomScrollbar from './components/demo2/custom-scrollbar';
+// import LazyComponent from './components/demo3/lazy-component'
+// import ContentArea from './components/demo3/components/content-area';
+// import HeaderArea from './components/header/header';
+// import MusicBar from './components/music-bar/index';
+// import SidebarContainer from './components/sidebar-container/index'
+// import PlayingPanel from './components/playing-panel/index';
+// import FileUpload from './components/file-upload/index';
+import LoadingMask from '../src/components/loading-mask/index'
 
 export default {
     name: 'App',
 
     components: {
-        VirtualRollingFixed,
-        VirtualRollingFlexible,
-        CustomScrollbar,
-        LazyComponent,
-        ContentArea,
+        // VirtualRollingFixed,
+        // VirtualRollingFlexible,
+        // CustomScrollbar,
+        // LazyComponent,
+        // ContentArea,
 
-        HeaderArea,
-        MusicBar,
-        SidebarContainer,
-        PlayingPanel,
-        FileUpload
+        // HeaderArea,
+        // MusicBar,
+        // SidebarContainer,
+        // PlayingPanel,
+        // FileUpload
+        LoadingMask
     },
 
     data () {
