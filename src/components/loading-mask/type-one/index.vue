@@ -1,10 +1,10 @@
 <template>
     <div class="mask_type_one">
         <div class="mask-box_top">
-            <slot name="title">Authør</slot>
+            {{ title }}
         </div>
         <div class="mask-box_bottom">
-            <slot name="content">Lazybønes</slot>
+            {{ text }}
         </div>
     </div>
 </template>
@@ -32,8 +32,16 @@
 <script>
 export default {
     name: 'TypeOne',
-    data () {
-        return {};
+    props: {
+        title: {
+            type: String,
+            default: 'Authør'
+        },
+
+        text: {
+            type: String,
+            default: 'Lazybønes'
+        }
     }
 }
 </script>

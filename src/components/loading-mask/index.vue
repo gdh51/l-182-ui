@@ -10,6 +10,15 @@
         display inline-block
         vertical-align middle
 
+    .mask-box_wide
+        width 80vw
+
+    .mask-box-item_first
+        text-align left
+
+    .mask-box-item_last
+        text-align right
+
     &::after
         display inline-block
         content ''
@@ -35,19 +44,57 @@ export default {
         type: {
             type: Number,
             default: 0
+        },
+
+        textList: {
+            type: Array,
+            default: () => [{
+                title: 'Authør',
+                text: 'Lazybønes'
+            }]
         }
     },
 
     render (h) {
+        let isMultiple = this.textList.length > 1,
+            type = 'type-' + (isMultiple ? 'two' : (TYPE_MAP[this.type] || 'one')),
+            children;
+
+        if (isMultiple) {
+
+            // 为了排版美观仅保留三个
+            let handleList = this.textList.slice(0, 3);
+            children = h('div', {
+                    staticClass: 'mask-box_middle mask-box_wide',
+                },
+
+
+                handleList.map((textObj, index) => h(type, {
+
+                    // 为第一个和最后一个项目添加对齐
+                    staticClass: index === 0
+                        ? 'mask-box-item_first'
+                        :(index === handleList.length - 1 ? 'mask-box-item_last' : ''),
+                    props: {
+                        title: textObj.title,
+                        text: textObj.text
+                    }
+                }))
+
+            );
+        } else {
+            children = h(type, {
+                staticClass: 'mask-box_middle',
+                props: {
+                    title: (this.textList[0] || {}).title,
+                    text: (this.textList[0] || {}).text
+                }
+            });
+        }
+
         return h('div', {
             staticClass: 'mask-container'
-        }, [h('type-' + (TYPE_MAP[this.type] || 'one'), {
-            staticClass: 'mask-box_middle',
-            scopedSlots: {
-                title: () => this.$slots.title,
-                content: () => this.$slots.content
-            }
-        })])
+        }, [children])
     }
 }
 </script>

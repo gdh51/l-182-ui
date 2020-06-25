@@ -5,7 +5,18 @@
         <sidebar-container/>
         <playing-panel/> -->
         <!-- <file-upload/> -->
-        <loading-mask>
+        <loading-mask :textList="[{
+            title: 'Ahtsds',
+            text: 'Xsdsaf'
+        },
+        {
+            title: 'Geesd',
+            text: 'geggeg'
+        },
+        {
+            title: 'Usdsd',
+            text: 'XXXXX'
+        }]">
             <!-- <template v-slot:title>
                 sdsd
             </template> -->

@@ -1,16 +1,17 @@
 <template>
     <div class="mask_type_two">
         <div class="mask-box_left">
-            <slot name="title">Authør</slot>
+            {{ title }}
         </div>
         <div class="mask-box_right">
-            <slot name="content">Lazybønes</slot>
+            {{ text }}
         </div>
     </div>
 </template>
 
 <style lang="stylus" scoped>
 .mask_type_two
+    padding 5vw 0
     color #1b1b1b
 
     .mask-box_left
@@ -43,8 +44,17 @@
 <script>
 export default {
     name: 'TypeTwo',
-    data () {
-        return {};
+
+    props: {
+        title: {
+            type: String,
+            default: 'Authør'
+        },
+
+        text: {
+            type: String,
+            default: 'Lazybønes'
+        }
     }
 }
 </script>
