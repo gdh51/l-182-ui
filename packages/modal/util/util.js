@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Modal from '../modal.vue';
 import Wrapper from '../../wrapper/wrapper.vue';
-import { isVNode, cacheList } from '../../../util/util';
+import { isVNode, cacheList } from '../../../src/common/util/util';
 
 export const config = {
     confirm: {

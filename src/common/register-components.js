@@ -45,9 +45,9 @@
 // }
 
 import Btn from './components/button/btn.vue'
-import Modal from './components/modal/modal.vue'
+import Modal from '../../packages/modal/modal.vue'
 import Wrapper from './components/wrapper/wrapper.vue'
-import Tip from './components/tip/tip.vue'
+import Tip from '../../packages/tip/tip.vue'
 import DragBar from './components/dragbar/drag-bar.vue'
 import ProgressBar from './components/progress-bar/index.vue'
 import Icon from './components/icon/index.vue'

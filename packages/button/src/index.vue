@@ -1,11 +1,12 @@
 <template>
-    <button type="button"
-            class="button global-padding"
-           :class="[_btnSize]"
-           :disabled="_btnDisable"
-           @click="clickAction($event, type)"
-           >
-        <span>{{ value }}</span>
+    <button :type="type"
+             class="l-button global-padding"
+            :class="[_btnSize]"
+            :disabled="_disabled"
+            @click="clickAction($event, type)">
+            <span>
+                <slot></slot>
+            </span>
     </button>
 </template>
 
@@ -41,43 +42,30 @@
 </style>
 
 <script>
+import FormElMixin from '@/src/mixins/form-el-mixin'
 const SIZE_MAP = new Map()
-    .set('big', 'btn-big')
-    .set('medium', 'btn-medium')
-    .set('small', 'btn-small');
+    .set('medium', 'l-button_medium')
+    .set('small', 'l-button-small')
+    .set('mini', 'l-button-mini');
 
 export default {
-    name: 'Btn',
+    name: 'LButton',
+
+    mixins: [ FormElMixin ],
 
     props: {
 
-        // 用于按钮的文字
-        value: {
-            type: String,
-            default: 'None'
-        },
-
-        // 点击按钮后传入的名称，默认为close，主要用作点击事件的判断
         type: {
             type: String,
-            default: 'close'
+            default: 'button',
+            validator(v) {
+                return v === 'button' && v === 'textarea';
+            }
         },
 
         size: {
             type: String,
             default: 'medium'
-        },
-
-        // 用户自定义是否禁用按钮
-        disabled: {
-            type: Boolean,
-            default: false
-        },
-
-        // 默认情况下，在触发按钮点击期间会禁用按钮
-        withDisable: {
-            type: Boolean,
-            default: true
         }
     },
 
@@ -90,10 +78,6 @@ export default {
     computed: {
         _btnSize () {
             return SIZE_MAP.get(this.size) || 'medium';
-        },
-
-        _btnDisable () {
-            return this.builtInDis || this.disabled;
         }
     },
 
