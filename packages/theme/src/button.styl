@@ -1,0 +1,76 @@
+button-disabled($border, $background, $color)
+    if ($border)
+        border-color $border + 50%
+    if ($background)
+        background-color $background + 50%
+    if ($color)
+        color $color + 50%
+
+button-plain($border, $background, $color)
+    if ($border)
+        border-color $border - 20%
+    if ($background)
+        background-color $background + 80%
+    if ($color)
+        color $color - 15%
+
+.l-button
+    box-sizing border-box
+    display inline-block
+    padding 12px 20px
+    border-radius 4px
+    border 1px solid #fff
+    font-size 14px
+    font-weight 500
+    line-height 1
+    text-align center
+    white-space nowrap
+    outline none
+    cursor pointer
+
+    &_text
+        color $g
+        padding-left 0
+        padding-right 0
+        border-color transparent
+        background-color transparent
+
+        &:hover
+            color $g + 20%
+
+        &.disabled
+            button-disabled(false, false, $g + 20%)
+
+    &_eva
+        border-color $g
+        background-color $p
+        color $g
+
+        &:hover
+            background-color $p + 10%
+            border-color $o
+
+        &.disabled
+            button-disabled($g, $p, $g)
+
+        &.is-plain
+            button-plain($g, $p, $g)
+
+    &_default
+        border-color $p + 80%
+        background-color #fff
+        color $p + 15%
+
+        &:hover
+            border-color $p + 60%
+            background-color $p + 80%
+            color $p
+
+        &.disabled
+            button-disabled($p + 80%, #fff, $p + 15%)
+
+        &.is-plain
+            button-plain($p + 80%, #fff, $p + 15%)
+
+    &.disabled
+        cursor not-allowed

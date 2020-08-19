@@ -28,7 +28,11 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            '@': path.join(__dirname, './src'),
+            '@theme': path.join(__dirname, './packages/theme/src')
+        }
     },
 
     module: {
@@ -50,7 +54,7 @@ module.exports = {
                     {
                         loader: 'stylus-resources-loader',
                         options: {
-                            resources: './src/common/assets/common-variable.styl'
+                            resources: './packages/theme/eva-theme.styl'
                         }
                     }
                 ]

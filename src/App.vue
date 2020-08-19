@@ -1,31 +1,14 @@
 <template>
     <div id="app">
-        <!-- <header-area/>
-        <music-bar/>
-        <sidebar-container/>
-        <playing-panel/> -->
-        <!-- <file-upload/> -->
-        <loading-mask :textList="[{
-            title: 'Ahtsds',
-            text: 'Xsdsaf'
-        },
-        {
-            title: 'Geesd',
-            text: 'geggeg'
-        },
-        {
-            title: 'Usdsd',
-            text: 'XXXXX'
-        }]">
-            <!-- <template v-slot:title>
-                sdsd
-            </template> -->
-        </loading-mask>
+        <l-button type="eva" plain>这是一个按钮</l-button>
     </div>
 </template>
 
 <style lang="stylus" scoped>
     #app
+        display flex
+        justify-content center
+        align-items center
         width 100%
         height 100%
 
@@ -38,56 +21,9 @@
 </style>
 
 <script>
-import './common/assets/common-style.styl';
-// import VirtualRollingFixed from './components/demo1/virtual-rolling-fixed';
-// import VirtualRollingFlexible from './components/demo1/virtual-rolling-flexible';
-// import CustomScrollbar from './components/demo2/custom-scrollbar';
-// import LazyComponent from './components/demo3/lazy-component'
-// import ContentArea from './components/demo3/components/content-area';
-// import HeaderArea from './components/header/header';
-// import MusicBar from './components/music-bar/index';
-// import SidebarContainer from './components/sidebar-container/index'
-// import PlayingPanel from './components/playing-panel/index';
-// import FileUpload from './components/file-upload/index';
-import LoadingMask from '../src/components/loading-mask/index'
+import '../packages/theme/common-style.styl'
 
 export default {
-    name: 'App',
-
-    components: {
-        // VirtualRollingFixed,
-        // VirtualRollingFlexible,
-        // CustomScrollbar,
-        // LazyComponent,
-        // ContentArea,
-
-        // HeaderArea,
-        // MusicBar,
-        // SidebarContainer,
-        // PlayingPanel,
-        // FileUpload
-        LoadingMask
-    },
-
-    data () {
-        return {
-            isShow: false,
-            barSize: {
-                height: '.2rem',
-                width: '1rem'
-            },
-
-            text: ''
-        };
-    },
-
-    methods: {
-        genArrayDataByNumber (num) {
-            return Array.from({ length: num }, (item, index) => ({
-                text: '这是一条信息'.repeat(Math.random() * 10),
-                uuid: index
-            }));
-        }
-    }
+    name: 'App'
 }
 </script>

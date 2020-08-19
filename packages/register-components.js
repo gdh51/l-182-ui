@@ -44,16 +44,16 @@
 //     });
 // }
 
-import Btn from './components/button/btn.vue'
-import Modal from '../../packages/modal/modal.vue'
-import Wrapper from './components/wrapper/wrapper.vue'
-import Tip from '../../packages/tip/tip.vue'
-import DragBar from './components/dragbar/drag-bar.vue'
-import ProgressBar from './components/progress-bar/index.vue'
-import Icon from './components/icon/index.vue'
-import CirCleBox from './components/circle-box/index.vue'
+import LButton from './button/src/index.vue'
+// import Modal from '../../packages/modal/modal.vue'
+// import Wrapper from './components/wrapper/wrapper.vue'
+// import Tip from '../../packages/tip/tip.vue'
+// import DragBar from './components/dragbar/drag-bar.vue'
+// import ProgressBar from './components/progress-bar/index.vue'
+// import Icon from './components/icon/index.vue'
+// import CirCleBox from './components/circle-box/index.vue'
 
-const Components = [Btn, Modal, Wrapper, Tip, DragBar, ProgressBar, Icon, CirCleBox];
+const Components = [ LButton ];
 
 export function registeComponents(Vue) {
     Components.forEach(component => {
