@@ -56,6 +56,9 @@ button-plain($border, $background, $color)
         &.is-plain
             button-plain($g, $p, $g)
 
+            &:hover
+                
+
     &_default
         border-color $p + 80%
         background-color #fff
@@ -74,3 +77,29 @@ button-plain($border, $background, $color)
 
     &.disabled
         cursor not-allowed
+
+    &_medium
+        padding 10px 20px
+        border-radius 4px
+        font-size 14px
+
+    &_small
+        padding 9px 15px
+        border-radius 3px
+        font-size 12px
+
+    &_mini
+        padding 7px 15px
+        border-radius 3px
+        font-size 12px
+
+    &.is-round
+        padding 12px 23px
+        border-radius 20px
+
+    &.is-circle
+        padding 12px
+        border-radius 50%
+
+    & + &
+        margin-left 10px

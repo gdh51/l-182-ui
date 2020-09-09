@@ -5,9 +5,12 @@
                 _calcBtnSize,
                 _calcBtnType,
                 _disabled ? 'disabled' : '',
-                plain ? 'is-plain' : ''
+                plain ? 'is-plain' : '',
+                round ? 'is-round' : '',
+                circle ? 'is-circle' : ''
             ]"
-            :disabled="_disabled">
+            :disabled="_disabled"
+    >
             <span>
                 <slot></slot>
             </span>
@@ -19,8 +22,8 @@ import FormElMixin from '@/mixins/form-el-mixin'
 
 const SIZE_MAP = new Map()
     .set('medium', 'l-button_medium')
-    .set('small', 'l-button-small')
-    .set('mini', 'l-button-mini'),
+    .set('small', 'l-button_small')
+    .set('mini', 'l-button_mini'),
     NATIVE_TYPE_MAP = new Map()
         .set('button', true)
         .set('reset', true)
@@ -34,10 +37,15 @@ export default {
 
     props: {
 
+        // 按钮样式类型属性，支持eva/text
         type: String,
 
+        // 三个控制按钮形状的属性
         plain: Boolean,
+        circle: Boolean,
+        round: Boolean,
 
+        // 按钮类型, 原生属性:button/reset/submit
         nativeType: {
             type: String,
             default: 'button',
@@ -46,17 +54,15 @@ export default {
             }
         },
 
-        size: {
-            type: String,
-            default: 'medium'
-        }
+        // 按钮尺寸大小属性：medium/small/mini
+        size: String
     },
 
     computed: {
 
         // 计算按钮尺寸
         _calcBtnSize () {
-            return SIZE_MAP.get(this.size) || 'medium';
+            return SIZE_MAP.get(this.size) || '';
         },
 
         // 计算按钮皮肤

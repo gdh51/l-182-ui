@@ -38,6 +38,7 @@
         "clean-webpack-plugin": "^3.0.0",
         "html-webpack-plugin": "^3.2.0",
         "postcss-loader": "^3.0.0",
+        "prettier": "2.1.1",
         "style-loader": "^1.2.1",
         "stylus-resources-loader": "0.0.4",
         "webpack-cli": "^3.3.12",
