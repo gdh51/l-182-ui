@@ -5,7 +5,7 @@ export default {
 
     mutations: {
         toggleSwVibility(state, payload) {
-            this.state.sideWrapperVisibility = payload;
+            this.state.sideWrapperVisibility = payload
         }
     }
-};
+}

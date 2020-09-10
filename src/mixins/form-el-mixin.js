@@ -11,14 +11,14 @@ export default {
     data() {
         return {
             loading: false
-        };
+        }
     },
 
     computed: {
         _disabled() {
-
-            return this.loading || 
-                isFunction(this.disabled) ? this.disabled() : this.disabled;
+            return this.loading || isFunction(this.disabled)
+                ? this.disabled()
+                : this.disabled
         }
     }
 }
