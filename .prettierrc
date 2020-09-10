@@ -5,7 +5,7 @@
     "singleQuote": true,
     "quoteProps": "as-needed",
     "bracketSpacing": true,
-    "arrowParens": "aviod",
+    "arrowParens": "avoid",
     "trailingComma": "none",
     "htmlWhitespaceSensitivity": "css",
     "vueIndentScriptAndStyle": false,
