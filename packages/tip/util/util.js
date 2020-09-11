@@ -1,47 +1,47 @@
-export const TIP_DIR_MAP = {};
+export const TIP_DIR_MAP = {}
 TIP_DIR_MAP.left = TIP_DIR_MAP.right = {
     dir: 'top',
     side: 'height'
-};
+}
 TIP_DIR_MAP.top = TIP_DIR_MAP.bottom = {
     dir: 'left',
     side: 'width'
-};
+}
 
 const LEFT = 'left',
     RIGHT = 'right',
     TOP = 'top',
-    BOTTOM = 'bottom';
+    BOTTOM = 'bottom'
 
-const CALC_INFO_MAP = {};
+const CALC_INFO_MAP = {}
 CALC_INFO_MAP.left = CALC_INFO_MAP.right = {
     axis: 'mouseY',
     clientSize: 'innerHeight',
     tipSize: 'height',
     edge: 'top',
     pre: 'left'
-};
+}
 CALC_INFO_MAP.top = CALC_INFO_MAP.bottom = {
     axis: 'mouseX',
     clientSize: 'innerWidth',
     tipSize: 'width',
     edge: 'left',
     pre: 'top'
-};
+}
 
 export class Tip {
 
     constructor (opt) {
-        this.direction = this.originDirection = opt.direction || 'right';
-        this.width = opt.width || 0;
-        this.height = opt.height || 0;
+        this.direction = this.originDirection = opt.direction || 'right'
+        this.width = opt.width || 0
+        this.height = opt.height || 0
 
         // 误差范围
-        this.boundingRange = opt.boundingRange || 5;
-        this.top = 0;
-        this.left = 0;
-        this.targetRect = opt.targetRect;
-        this.visible = false;
+        this.boundingRange = opt.boundingRange || 5
+        this.top = 0
+        this.left = 0
+        this.targetRect = opt.targetRect
+        this.visible = false
     }
 
 
@@ -53,27 +53,27 @@ export class Tip {
             tipHeight = this.height,
             tipWidth = this.width,
             originDirection = this.originDirection,
-            arrowSize = Tip.ARROW_SIZE;
-        let res;
+            arrowSize = Tip.ARROW_SIZE
+        let res
 
         if (originDirection === LEFT && tipWidth + arrowSize + range > mouseX) {
-            res = RIGHT;
+            res = RIGHT
         }
 
         if (originDirection === TOP && tipHeight + arrowSize + range > mouseY) {
-            res = BOTTOM;
+            res = BOTTOM
         }
 
         if (originDirection === RIGHT && tipWidth + arrowSize + mouseX + range > window.innerWidth) {
-            res = LEFT;
+            res = LEFT
         }
 
         if (originDirection === BOTTOM && tipHeight + arrowSize + mouseY + range > window.innerHeight) {
-            res = TOP;
+            res = TOP
         }
 
-        this.direction = res || this.originDirection;
-        return this;
+        this.direction = res || this.originDirection
+        return this
     }
 
     calcPositionInfo (mouseX, mouseY) {
@@ -82,23 +82,23 @@ export class Tip {
             mouseY,
             top: mouseY - this.targetRect.top,
             left: mouseX - this.targetRect.left
-        };
+        }
         const curDirection = this.direction,
-            arrowSize = Tip.ARROW_SIZE;
+            arrowSize = Tip.ARROW_SIZE
         let currentCalcDir = CALC_INFO_MAP[curDirection],
-            halfTipSize = this[currentCalcDir.tipSize] / 2;
+            halfTipSize = this[currentCalcDir.tipSize] / 2
 
         if (mouseInfo[currentCalcDir.axis] <= halfTipSize) {
-            mouseInfo[currentCalcDir.edge] = halfTipSize - arrowSize;
+            mouseInfo[currentCalcDir.edge] = halfTipSize - arrowSize
         } else if (mouseInfo[currentCalcDir.axis] + halfTipSize >= window[currentCalcDir.clientSize]) {
-            mouseInfo[currentCalcDir.edge] = window[currentCalcDir.clientSize] - halfTipSize - arrowSize;
+            mouseInfo[currentCalcDir.edge] = window[currentCalcDir.clientSize] - halfTipSize - arrowSize
         } else {
-            mouseInfo[currentCalcDir.edge] = mouseInfo[currentCalcDir.edge] - arrowSize;
+            mouseInfo[currentCalcDir.edge] = mouseInfo[currentCalcDir.edge] - arrowSize
         }
 
         // bug处理
         if (curDirection === LEFT || curDirection === TOP) {
-            mouseInfo[currentCalcDir.pre] = mouseInfo[currentCalcDir.pre] - arrowSize - 4;
+            mouseInfo[currentCalcDir.pre] = mouseInfo[currentCalcDir.pre] - arrowSize - 4
         }
 
         // 上面为下面代码的简化
@@ -145,12 +145,12 @@ export class Tip {
         //     }
         // }
 
-        this.top = mouseInfo.top;
-        this.left = mouseInfo.left;
+        this.top = mouseInfo.top
+        this.left = mouseInfo.left
 
-        return this;
+        return this
     }
 };
 
-Tip.ARROW_SIZE = 5;
+Tip.ARROW_SIZE = 5
 

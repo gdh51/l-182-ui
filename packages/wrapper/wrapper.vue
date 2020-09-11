@@ -1,12 +1,4 @@
-<style lang="stylus" scoped>
-.modal_wrapper
-    position fixed
-    top 0
-    bottom 0
-    left 0
-    right 0
-    background-color #000
-</style>
+
 
 <script>
 import { generateLevel } from '../../util/util'
@@ -31,8 +23,8 @@ export default {
         }
     },
 
-    render (h) {
-        let { bind, unbind, update } = this.$options.directives.show;
+    render(h) {
+        let { bind, unbind, update } = this.$options.directives.show
 
         let options = {
             staticClass: 'modal_wrapper',
@@ -48,21 +40,25 @@ export default {
                     update
                 }
             ]
-        };
+        }
 
         if (this.type !== 'normal') {
             options.style = {
                 zIndex: this.axis.axisZ
-            };
+            }
         }
 
-        return h('transition', {
-            attrs: {
-                duration: 300
-            }
-        }, [h('div', options)]);
+        return h(
+            'transition',
+            {
+                attrs: {
+                    duration: 300
+                }
+            },
+            [h('div', options)]
+        )
     },
-    data () {
+    data() {
         return {
             visible: true,
             axis: {
@@ -72,29 +68,38 @@ export default {
     },
 
     created() {
-
         // 普通的遮布，z-index属性由用户自己定义
-        if (this.type === 'normal') return;
+        if (this.type === 'normal') return
 
-        this.axis = generateLevel();
+        this.axis = generateLevel()
 
         // 暴露销毁该遮布的接口
-        this.$once('destroy', this._destroy);
+        this.$once('destroy', this._destroy)
     },
 
     methods: {
-        _destroy () {
-            this.visible = false;
+        _destroy() {
+            this.visible = false
             this.$nextTick(() => {
-                this.$destroy();
-            });
+                this.$destroy()
+            })
         }
     },
 
     destroyed() {
-        if (this.type === 'normal') return;
+        if (this.type === 'normal') return
 
-        this.axis.destroy();
+        this.axis.destroy()
     }
 }
 </script>
+
+<style lang="stylus" scoped>
+.modal_wrapper
+    position fixed
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-color #000
+</style>

@@ -24,6 +24,8 @@ module.exports = {
         quotes: ['error', 'single'],
         semi: ['error', 'never'],
 
+        'eol-last': ['error', 'always'],
+
         // 数组头和尾前后空格1个
         'vue/array-bracket-spacing': ['error', 'always'],
 

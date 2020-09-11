@@ -21,14 +21,14 @@
 import FormElMixin from '@/mixins/form-el-mixin'
 
 const SIZE_MAP = new Map()
-    .set('medium', 'l-button_medium')
-    .set('small', 'l-button_small')
-    .set('mini', 'l-button_mini'),
-    NATIVE_TYPE_MAP = new Map()
-        .set('button', true)
-        .set('reset', true)
-        .set('submit', true),
-    TYPE_PREFIX = 'l-button_';
+          .set('medium', 'l-button_medium')
+          .set('small', 'l-button_small')
+          .set('mini', 'l-button_mini'),
+      NATIVE_TYPE_MAP = new Map()
+          .set('button', true)
+          .set('reset', true)
+          .set('submit', true),
+      TYPE_PREFIX = 'l-button_'
 
 export default {
     name: 'LButton',
@@ -50,7 +50,7 @@ export default {
             type: String,
             default: 'button',
             validator(v) {
-                return NATIVE_TYPE_MAP.get(v);
+                return NATIVE_TYPE_MAP.get(v)
             }
         },
 
@@ -62,27 +62,27 @@ export default {
 
         // 计算按钮尺寸
         _calcBtnSize () {
-            return SIZE_MAP.get(this.size) || '';
+            return SIZE_MAP.get(this.size) || ''
         },
 
         // 计算按钮皮肤
         _calcBtnType() {
-            let type = this.type;
+            let type = this.type
 
             switch (type) {
-                case 'text':
-                    type = TYPE_PREFIX + 'text'
-                    break;
+            case 'text':
+                type = TYPE_PREFIX + 'text'
+                break
 
-                case 'eva':
-                    type = TYPE_PREFIX + 'eva'
-                    break;
-                default:
-                    type = TYPE_PREFIX + 'default'
-                    break;
+            case 'eva':
+                type = TYPE_PREFIX + 'eva'
+                break
+            default:
+                type = TYPE_PREFIX + 'default'
+                break
             }
 
-            return type;
+            return type
         }
     },
 

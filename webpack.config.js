@@ -1,9 +1,9 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {
     CleanWebpackPlugin
-} = require('clean-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+} = require('clean-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     mode: 'development',
@@ -99,7 +99,7 @@ module.exports = {
             hash: true,
             template: './src/index.html',
             meta: {
-                viewport: "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"
+                viewport: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
             }
         }),
 

@@ -1,22 +1,10 @@
 <template>
     <div class="wrapper-box">
-        <div class="circle_box"
-            :class="innerClass">
+        <div class="circle_box" :class="innerClass">
             <slot></slot>
         </div>
     </div>
 </template>
-
-<style lang="stylus" scoped>
-.wrapper-box
-    width 1.2rem
-    height 1.2rem
-
-    .circle_box
-        width 100%
-        height 100%
-        border-radius 50%
-</style>
 
 <script>
 /**
@@ -29,3 +17,15 @@ export default {
     props: ['innerClass']
 }
 </script>
+
+<style lang="stylus" scoped>
+.wrapper-box
+    width 1.2rem
+    height 1.2rem
+
+    .circle_box
+        width 100%
+        height 100%
+        border-radius 50%
+</style>
+

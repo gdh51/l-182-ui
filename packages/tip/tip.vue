@@ -22,52 +22,7 @@
     </div>
 </template>
 
-<style lang="stylus" scoped>
-.tip-container
-    position relative
 
-    .tip-arrow
-        position absolute
-        width 0
-        height 0
-        border 5px dashed transparent
-
-        .tip
-            position absolute
-            // z-index -1
-            display inline-block
-            padding 5px 8px
-            border 1px dashed $lo2
-            border-radius 5px
-            background-color $lg1
-            box-shadow $shadow
-            color $lo1
-            font-size 14px
-
-        .tip-left
-            right 4px
-
-        .tip-right
-            left 4px
-
-        .tip-top
-            bottom 4px
-
-        .tip-bottom
-            top 4px
-
-    .tip-arrow-left
-        border-left 5px dashed $lg1
-
-    .tip-arrow-right
-        border-right 5px dashed $lg1
-
-    .tip-arrow-top
-        border-top 5px dashed $lg1
-
-    .tip-arrow-bottom
-        border-bottom 5px solid $lg1
-</style>
 
 <script>
 import { TIP_DIR_MAP, Tip } from './util/util'
@@ -158,7 +113,7 @@ export default {
             let unwatch = this.$watch('tip.visible', val => {
                 if (val) {
                     const tip = this.$refs.tip,
-                        tipContainer = this.$refs.container
+                          tipContainer = this.$refs.container
                     this.tipRect = tip.getBoundingClientRect()
 
                     // 在此处才初始化tip对象
@@ -179,3 +134,50 @@ export default {
     }
 }
 </script>
+
+<style lang="stylus" scoped>
+.tip-container
+    position relative
+
+    .tip-arrow
+        position absolute
+        width 0
+        height 0
+        border 5px dashed transparent
+
+        .tip
+            position absolute
+            // z-index -1
+            display inline-block
+            padding 5px 8px
+            border 1px dashed $lo2
+            border-radius 5px
+            background-color $lg1
+            box-shadow $shadow
+            color $lo1
+            font-size 14px
+
+        .tip-left
+            right 4px
+
+        .tip-right
+            left 4px
+
+        .tip-top
+            bottom 4px
+
+        .tip-bottom
+            top 4px
+
+    .tip-arrow-left
+        border-left 5px dashed $lg1
+
+    .tip-arrow-right
+        border-right 5px dashed $lg1
+
+    .tip-arrow-top
+        border-top 5px dashed $lg1
+
+    .tip-arrow-bottom
+        border-bottom 5px solid $lg1
+</style>
