@@ -24,9 +24,36 @@ module.exports = {
         quotes: ['error', 'single'],
         semi: ['error', 'never'],
 
+        // 禁止if语句中return后，else/else if继续return
+        'no-else-return': [
+            'warn',
+            {
+                allowElseIf: true
+            }
+        ],
+
+        // 禁止意义不明的数字
+        'no-magic-numbers': [
+            'error',
+            {
+                // 忽略数组下标
+                ignoreArrayIndexes: true,
+                enforceConst: true,
+                detectObjects: false
+            }
+        ],
+
+        // 注释前空一行
+        'lines-around-comment': [2, {
+            beforeBlockComment: true
+        }],
+
+        // 文件末尾必须要空一行
         'eol-last': ['error', 'always'],
 
-        // 数组头和尾前后空格1个
+        'array-bracket-spacing': ['error', 'always'],
+
+        // template中数组头和尾前后空格1个
         'vue/array-bracket-spacing': ['error', 'always'],
 
         // 箭头函数的箭头前后保持空格

@@ -55,7 +55,7 @@ export default {
                     duration: 300
                 }
             },
-            [h('div', options)]
+            [ h('div', options) ]
         )
     },
     data() {
