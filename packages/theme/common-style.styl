@@ -1,26 +1,29 @@
 @import './icons/iconfont.css'
 
 html
-    font-family 'Audiowide', sans-serif
     color $dg2
+    font-family 'Audiowide', sans-serif
 
 *
     box-sizing border-box
-    padding 0
     margin 0
+    padding 0
 
-body, html
+body,
+html
     height 100%
     background-color #fff
     -webkit-tap-highlight-color transparent
 
-ul, ol, li
+ul,
+ol,
+li
     list-style none
 
 .ellipsis
+    overflow hidden
     text-overflow ellipsis
     white-space nowrap
-    overflow hidden
 
 .global-padding
     padding 10px 15px
@@ -29,4 +32,4 @@ ul, ol, li
     cursor grabbing
 
 .disabled
-    cursor not-allowed!important
+    cursor not-allowed !important

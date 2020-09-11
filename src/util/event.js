@@ -9,10 +9,10 @@ export const on = (function () {
 
     return function (el, event, handler) {
         if (el && event && handler) {
-            el.attachEvent('on' + event, handler);
+            el.attachEvent('on' + event, handler)
         }
     }
-})();
+})()
 
 export const off = (function () {
     if (document.removeEventListener) {
@@ -25,7 +25,7 @@ export const off = (function () {
 
     return function (el, event, handler) {
         if (el && event && handler) {
-            el.removeEvent('on' + event, handler);
+            el.removeEvent('on' + event, handler)
         }
     }
-})();
+})()

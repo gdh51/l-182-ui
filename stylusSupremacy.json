@@ -27,5 +27,5 @@
     "stylusSupremacy.alwaysUseNoneOverZero": false,
     "stylusSupremacy.alwaysUseZeroWithoutUnit": false,
     "stylusSupremacy.reduceMarginAndPaddingValues": false,
-    "stylusSupremacy.ignoreFiles": [],
+    "stylusSupremacy.ignoreFiles": []
 }

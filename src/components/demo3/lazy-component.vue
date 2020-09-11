@@ -1,30 +1,15 @@
 <template>
-    <div id="lazy_loading-container"
-         ref="lazy">
-    </div>
+    <div id="lazy_loading-container" ref="lazy"></div>
 </template>
+
+<script>
+export default {
+    name: 'LazyComponent'
+}
+</script>
 
 <style lang="stylus" scoped>
 #lazy_loading-container
     overflow scroll
 </style>
 
-<script>
-import ContentArea from './components/content-area';
-
-export default {
-    name: 'LazyComponent',
-
-    props: {
-
-    },
-
-    data () {
-       return {}
-    },
-
-    mounted () {
-
-    }
-}
-</script>

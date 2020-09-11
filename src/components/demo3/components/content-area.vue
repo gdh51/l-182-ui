@@ -1,15 +1,8 @@
 <template>
-    <div class="content_area"
-         ref="ctx">
-        <slot :class="ctxClass"
-              :style="ctxStyle">Content Required</slot>
+    <div class="content_area" ref="ctx">
+        <slot :class="ctxClass" :style="ctxStyle">Content Required</slot>
     </div>
 </template>
-
-<style lang="stylus" scoped>
-.content_area
-    width 100%
-</style>
 
 <script>
 export default {
@@ -17,8 +10,14 @@ export default {
 
     props: ['ctxClass', 'ctxStyle'],
 
-    data () {
+    data() {
         return {}
     }
 }
 </script>
+
+<style lang="stylus" scoped>
+.content_area
+    width 100%
+</style>
+

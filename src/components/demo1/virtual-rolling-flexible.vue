@@ -19,41 +19,12 @@
                 :key="index"
                 :data-uuid="item.uuid"
                 ref="items"
-            >
-                {{ item.uuid }} : {{ item.text }}
-            </div>
+            >{{ item.uuid }} : {{ item.text }}</div>
         </div>
     </div>
 </template>
 
-<style lang="stylus" scoped>
-.rolling_container {
-    position: relative;
-    width: 200px;
-    overflow: auto;
 
-    .rolling_scroll-bar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-
-    .rolling_items {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        border-bottom: 1px dashed black;
-
-        .rolling_items-item {
-            border: 1px dashed black;
-            border-bottom: none;
-            text-align: center;
-        }
-    }
-}
-</style>
 
 <script>
 /**
@@ -340,3 +311,28 @@ export default {
     }
 }
 </script>
+
+<style lang="stylus" scoped>
+.rolling_container
+    position relative
+    overflow auto
+    width 200px
+
+    .rolling_scroll-bar
+        position absolute
+        top 0
+        right 0
+        left 0
+
+    .rolling_items
+        position absolute
+        top 0
+        right 0
+        left 0
+        border-bottom 1px dashed black
+
+        .rolling_items-item
+            border 1px dashed black
+            border-bottom none
+            text-align center
+</style>

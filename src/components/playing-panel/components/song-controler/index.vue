@@ -1,39 +1,46 @@
 <template>
     <div class="song_controler">
         <div class="song_command">
-            <icon icon="download1"
-                  class="other"/>
-            <icon icon="comments"
-                  class="other"/>
+            <icon icon="download1" class="other" />
+            <icon icon="comments" class="other" />
         </div>
         <div class="playing_progress">
-            <drag-bar :size="dragbarSize"/>
+            <drag-bar :size="dragbarSize" />
             <div class="progress_time"></div>
         </div>
         <div class="playing_command">
-            <icon icon="one_repeat"
-                  class="other"/>
+            <icon icon="one_repeat" class="other" />
             <div class="playing_command-song">
-                <icon icon="prev"
-                  class="other"/>
-                <icon icon="playing"
-                      class="playing"/>
-                <icon icon="next"
-                      class="other"/>
+                <icon icon="prev" class="other" />
+                <icon icon="playing" class="playing" />
+                <icon icon="next" class="other" />
             </div>
-            <icon icon="queue_music"
-                  class="other"/>
+            <icon icon="queue_music" class="other" />
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: 'SongControler',
+    data() {
+        return {
+            dragbarSize: {
+                width: '100%',
+                height: '5px'
+            }
+        }
+    }
+}
+</script>
 
 <style lang="stylus" scoped>
 .song_controler
     position absolute
     bottom 0
+    padding-bottom 20px
     width calc(100% - 60px)
     height 160px
-    padding-bottom 20px
     background-color red
 
     .song_command
@@ -62,16 +69,3 @@
         font-size 37.5px
 </style>
 
-<script>
-export default {
-    name: 'SongControler',
-    data () {
-        return {
-            dragbarSize: {
-                width: '100%',
-                height: '5px'
-            }
-        }
-    }
-}
-</script>

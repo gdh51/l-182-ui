@@ -1,12 +1,7 @@
-import {
-    timer
-} from '../utils/timer'
-import {
-    REJECTED
-} from '../utils/constants'
-import {
-    handleInnerInstance
-} from '../handleInnerInstance/index'
+import { timer } from '../utils/timer'
+import { REJECTED } from '../utils/constants'
+import { handleInnerInstance } from '../handleInnerInstance/index'
+import { Promise1 } from '../../index'
 
 /**
  * 作为Promise的reject API， 它有两个作用：
@@ -15,24 +10,21 @@ import {
  * @param {any} val 任意值
  */
 Promise1.reject = function (val) {
-    let instance = this;
+    let instance = this
 
     // Promise初始化resolve后
     if (instance instanceof Promise1) {
-
         // ...调用回调
         return rejectInstance(val, instance)
     }
 
     // 构造函数Promise.reject API
     instance = new Promise1((resolve, reject) => {
-        reject(val);
-    });
+        reject(val)
+    })
 
-    return instance;
-
-
-};
+    return instance
+}
 
 /**
  * 可以理解为真正的reject函数， 将Promise实例的状态转化为reject
@@ -44,58 +36,57 @@ Promise1.reject = function (val) {
  */
 function rejectInstance(val, instance) {
     timer(() => {
-
-        let thenExecutor = null;
+        let thenExecutor = null
 
         // reject了一个Promise实例时，要等到其传入的Promise状态改变，
         // 来trigger当前Promise实例的回调函数
         if (val instanceof Promise1) {
-
             // 将Promise最终的值用来继续启动当前promise的任务
-            return val.then(handleInnerInstance.bind(null, instance, 'resolve'),
-                handleInnerInstance.bind(null, instance, 'reject'));
+            return val.then(
+                handleInnerInstance.bind(null, instance, 'resolve'),
+                handleInnerInstance.bind(null, instance, 'reject')
+            )
         }
 
-        thenExecutor = instance.thenExecutor;
-        instance.state = REJECTED;
-        instance.value = val;
+        thenExecutor = instance.thenExecutor
+        instance.state = REJECTED
+        instance.value = val
 
         // 这里只能return, 暂时无法判断Promise内部返回resolve一个promise的情况
         if (!thenExecutor) {
-
             // 如果是内部的未捕获的promise，则跳过
             if (instance.isInternal) {
-                return;
+                return
             }
 
             // (外部)最后一个promise状态为rejcet但未捕获时报错
-            throw Error('Uncaught (???)  ' + instance.value);
-        };
+            throw Error('Uncaught (???)  ' + instance.value)
+        }
 
         // 有捕获函数时，我们就要新的promise resolve掉
         if (thenExecutor.onRejected) {
-
-            let result = null;
+            let result = null
 
             try {
-                result = thenExecutor.onRejected(instance.value);
+                result = thenExecutor.onRejected(instance.value)
 
-            // 如果捕获函数出错，那么将错误冒泡到下一个promise
+                // 如果捕获函数出错，那么将错误冒泡到下一个promise
             } catch (e) {
-                thenExecutor.reject(e);
+                thenExecutor.reject(e)
             }
 
             // 返回promise实例时，在递归中处理
             if (result instanceof Promise1) {
-                return result.then(handlerInstance.bind(null, result, 'resolve'),
-                    handlerInstance.bind(null, result, 'reject'));
+                return result.then(
+                    handleInnerInstance.bind(null, result, 'resolve'),
+                    handleInnerInstance.bind(null, result, 'reject')
+                )
             }
 
-            thenExecutor.resolve(result);
+            thenExecutor.resolve(result)
         } else {
-
             // 没有设置catch类型的函数时，冒泡到下一个promise
-            thenExecutor.reject(instance.value);
+            thenExecutor.reject(instance.value)
         }
-    });
+    })
 }

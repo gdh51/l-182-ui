@@ -3,19 +3,24 @@
         <!-- 虽然html中对属性大小写不敏感，但这也仅限于html中，vue模版中会按原模版解析 -->
         <circle-box innerClass="music_poster-img"></circle-box>
         <div class="music_info ellipsis">
-            <div class="music_info-title">
-                Kiss & Tell
-            </div>
-            <div class="music_info-author">
-                Blink 182
-            </div>
+            <div class="music_info-title">Kiss & Tell</div>
+            <div class="music_info-author">Blink 182</div>
         </div>
         <div class="music_icons">
-            <icon icon="playing"/>
-            <icon icon="queue_music"/>
+            <icon icon="playing" />
+            <icon icon="queue_music" />
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: 'MusicBar',
+    data() {
+        return {}
+    }
+}
+</script>
 
 <style lang="stylus" scoped>
 .music_bar
@@ -24,9 +29,9 @@
     left 0
     display flex
     align-items center
+    padding 10px
     width 100%
     height 1.733333rem
-    padding 10px
     border-top 1px solid $lw1
 
     >>>.music_poster-img
@@ -35,8 +40,8 @@
 
     .music_info
         flex 1
-        height 1.2rem
         padding 0 10px
+        height 1.2rem
 
         .music_info-title
             height 60%
@@ -47,11 +52,3 @@
             font-size .373333rem
 </style>
 
-<script>
-export default {
-    name: 'MusicBar',
-    data () {
-        return {}
-    }
-}
-</script>

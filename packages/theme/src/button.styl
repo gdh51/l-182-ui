@@ -1,39 +1,43 @@
 button-disabled($border, $background, $color)
     if ($border)
         border-color $border + 50%
+
     if ($background)
         background-color $background + 50%
+
     if ($color)
         color $color + 50%
 
 button-plain($border, $background, $color)
     if ($border)
         border-color $border - 20%
+
     if ($background)
         background-color $background + 80%
+
     if ($color)
         color $color - 15%
 
 .l-button
-    box-sizing border-box
     display inline-block
+    box-sizing border-box
     padding 12px 20px
-    border-radius 4px
+    outline none
     border 1px solid #fff
-    font-size 14px
-    font-weight 500
-    line-height 1
+    border-radius 4px
     text-align center
     white-space nowrap
-    outline none
+    font-weight 500
+    font-size 14px
+    line-height 1
     cursor pointer
 
     &_text
-        color $g
-        padding-left 0
         padding-right 0
+        padding-left 0
         border-color transparent
         background-color transparent
+        color $g
 
         &:hover
             color $g + 20%
@@ -47,8 +51,8 @@ button-plain($border, $background, $color)
         color $g
 
         &:hover
-            background-color $p + 10%
             border-color $o
+            background-color $p + 10%
 
         &.disabled
             button-disabled($g, $p, $g)
@@ -57,7 +61,7 @@ button-plain($border, $background, $color)
             button-plain($g, $p, $g)
 
             &:hover
-                
+                button-plain($g + 80%, #fff, $g + 15%)
 
     &_default
         border-color $p + 80%

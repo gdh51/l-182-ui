@@ -1,6 +1,6 @@
-export const PENDING = 'pending';
-export const RESOLVED = 'resolved';
-export const REJECTED = 'rejected';
+export const PENDING = 'pending'
+export const RESOLVED = 'resolved'
+export const REJECTED = 'rejected'
 export const TYPE_MAP = {
     resolve: {
         type: 'resolve',
@@ -12,4 +12,4 @@ export const TYPE_MAP = {
         handler: 'onRejected',
         status: REJECTED
     }
-};
+}

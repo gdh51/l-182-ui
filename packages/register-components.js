@@ -53,10 +53,10 @@ import LButton from './button/src/index.vue'
 // import Icon from './components/icon/index.vue'
 // import CirCleBox from './components/circle-box/index.vue'
 
-const Components = [ LButton ];
+const Components = [LButton]
 
 export function registeComponents(Vue) {
     Components.forEach(component => {
-        Vue.component(component.name, component);
-    });
+        Vue.component(component.name, component)
+    })
 }

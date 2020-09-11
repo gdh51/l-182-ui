@@ -23,13 +23,13 @@ export const BAR_MAP = {
 
 // 节流函数
 export function lazyHandler (fn, time, ctx) {
-    let timer;
+    let timer
 
     return function (...arg) {
 
-        clearTimeout(timer);
+        clearTimeout(timer)
         timer = setTimeout(() => {
-            fn.call(ctx, ...arg);
-        }, time);
+            fn.call(ctx, ...arg)
+        }, time)
     }
 }

@@ -8,16 +8,16 @@
 function calcAbOfEle (event, elRect, el) {
 
     // 提供Rect时，就使用当前的Rect
-    elRect = elRect || el.getBoundingClientRect();
+    elRect = elRect || el.getBoundingClientRect()
     let top = event.clientY - elRect.top,
-        left = event.clientX - elRect.left;
+        left = event.clientX - elRect.left
 
     return {
         top: top <= 0 ? 0 : top,
         left: left <= 0 ? 0 : left
-    };
+    }
 }
 
 export {
     calcAbOfEle
-};
+}

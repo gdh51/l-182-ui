@@ -1,19 +1,23 @@
 <template>
-    <div class="tip-container"
+    <div
+        class="tip-container"
         @mousemove="showTip"
         @mouseleave="hideTip"
-        ref="container">
+        ref="container"
+    >
         <slot></slot>
-        <div class="tip-arrow"
+        <div
+            class="tip-arrow"
             :class="`tip-arrow-${tip.direction}`"
             :style="arrowPosition"
-            v-show="tip.visible">
-            <div class="tip"
+            v-show="tip.visible"
+        >
+            <div
+                class="tip"
                 :class="`tip-${tip.direction}`"
                 :style="tipPosition"
-                 ref="tip">
-                {{ message }}
-            </div>
+                ref="tip"
+            >{{ message }}</div>
         </div>
     </div>
 </template>
@@ -35,10 +39,10 @@
             padding 5px 8px
             border 1px dashed $lo2
             border-radius 5px
-            box-shadow $shadow
-            font-size 14px
-            color $lo1
             background-color $lg1
+            box-shadow $shadow
+            color $lo1
+            font-size 14px
 
         .tip-left
             right 4px
@@ -66,7 +70,7 @@
 </style>
 
 <script>
-import { TIP_DIR_MAP, Tip } from './util/util';
+import { TIP_DIR_MAP, Tip } from './util/util'
 
 export default {
     name: 'Tip',
@@ -95,7 +99,7 @@ export default {
         }
     },
 
-    data () {
+    data() {
         return {
             tip: {
                 direction: 'right',
@@ -114,16 +118,16 @@ export default {
     },
 
     mounted() {
-        this.initRect();
+        this.initRect()
     },
 
     computed: {
-        tipPosition () {
-            let { dir, side } = TIP_DIR_MAP[this.tip.direction];
+        tipPosition() {
+            let { dir, side } = TIP_DIR_MAP[this.tip.direction]
             return `${dir}: -${this.tipRect[side] / 2}px;`
         },
 
-        arrowPosition () {
+        arrowPosition() {
             return {
                 top: `${this.tip.top}px`,
                 left: `${this.tip.left}px`
@@ -132,31 +136,30 @@ export default {
     },
 
     methods: {
-        showTip (e) {
-            this.tip.visible = true;
+        showTip(e) {
+            this.tip.visible = true
 
             this.$nextTick(() => {
-                this.tip.reviseTipDirection(e.clientX, e.clientY)
-                    .calcPositionInfo(e.clientX, e.clientY);
-            });
+                this.tip
+                    .reviseTipDirection(e.clientX, e.clientY)
+                    .calcPositionInfo(e.clientX, e.clientY)
+            })
         },
 
-        followCursor () {
+        followCursor() {},
 
-        },
-
-        hideTip () {
-            this.tip.visible = false;
+        hideTip() {
+            this.tip.visible = false
         },
 
         // 封装以复用
-        initRect () {
+        initRect() {
             // 这里注册个一次性的watcher用来获取一次元素的大小
-            let unwatch = this.$watch('tip.visible', (val) => {
+            let unwatch = this.$watch('tip.visible', val => {
                 if (val) {
                     const tip = this.$refs.tip,
-                    tipContainer = this.$refs.container;
-                    this.tipRect = tip.getBoundingClientRect();
+                        tipContainer = this.$refs.container
+                    this.tipRect = tip.getBoundingClientRect()
 
                     // 在此处才初始化tip对象
                     this.tip = new Tip({
@@ -168,10 +171,10 @@ export default {
                         width: this.tipRect.width,
                         height: this.tipRect.height,
                         targetRect: tipContainer.getBoundingClientRect()
-                    });
-                    unwatch();
+                    })
+                    unwatch()
                 }
-            });
+            })
         }
     }
 }
