@@ -99,4 +99,3 @@ export default {
     >.disabled
         background-color $dgy1
 </style>
-

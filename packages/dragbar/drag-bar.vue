@@ -15,8 +15,6 @@
     </progress-bar>
 </template>
 
-
-
 <script>
 import { on, off } from '../../../util/event'
 

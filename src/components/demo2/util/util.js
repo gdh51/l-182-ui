@@ -1,5 +1,4 @@
 export const BAR_MAP = {
-
     // 垂直
     vertical: {
         axis: 'Y',
@@ -22,11 +21,10 @@ export const BAR_MAP = {
 }
 
 // 节流函数
-export function lazyHandler (fn, time, ctx) {
+export function lazyHandler(fn, time, ctx) {
     let timer
 
-    return function (...arg) {
-
+    return function(...arg) {
         clearTimeout(timer)
         timer = setTimeout(() => {
             fn.call(ctx, ...arg)

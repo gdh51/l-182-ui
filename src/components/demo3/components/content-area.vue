@@ -8,7 +8,7 @@
 export default {
     name: 'ContentArae',
 
-    props: ['ctxClass', 'ctxStyle'],
+    props: [ 'ctxClass', 'ctxStyle' ],
 
     data() {
         return {}
@@ -20,4 +20,3 @@ export default {
 .content_area
     width 100%
 </style>
-

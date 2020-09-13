@@ -68,4 +68,3 @@ export default {
     .other
         font-size 37.5px
 </style>
-

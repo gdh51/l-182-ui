@@ -7,7 +7,9 @@
                 v-for="(item, index) in navs"
                 :key="index"
                 @click="changePlate(index)"
-            >{{ item }}</li>
+            >
+                {{ item }}
+            </li>
         </ul>
     </nav>
 </template>
@@ -52,4 +54,3 @@ export default {
         transition all .5s ease
         transform scale(1.2)
 </style>
-

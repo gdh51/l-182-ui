@@ -54,4 +54,3 @@ export default {
             content ''
             transform rotateZ(15deg)
 </style>
-

@@ -24,8 +24,6 @@
     </div>
 </template>
 
-
-
 <script>
 import Bar from './components/bar'
 import { lazyHandler } from './util/util'
@@ -48,7 +46,7 @@ export default {
         },
 
         viewClass: {
-            type: [Array, String],
+            type: [ Array, String ],
             default() {
                 return ''
             }
@@ -63,7 +61,7 @@ export default {
         },
 
         wrapClass: {
-            type: [Array, String],
+            type: [ Array, String ],
             default() {
                 return ''
             }

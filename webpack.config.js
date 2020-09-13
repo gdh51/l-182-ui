@@ -26,7 +26,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: [ '.js', '.vue', '.json' ],
+        extensions: ['.js', '.vue', '.json'],
         alias: {
             '@': path.join(__dirname, './src'),
             '@theme': path.join(__dirname, './packages/theme/src')
@@ -60,12 +60,12 @@ module.exports = {
             // 处理CSS文件
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: ['style-loader', 'css-loader']
             },
 
             {
                 test: /\.js?$/,
-                loader: [ 'babel-loader', 'eslint-loader' ],
+                loader: ['babel-loader', 'eslint-loader'],
                 exclude: file =>
                     /node_modules/.test(file) && !/\.vue\.js/.test(file)
             },

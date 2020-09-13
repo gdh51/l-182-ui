@@ -11,7 +11,7 @@
         ></div>
         <div
             class="rolling_items"
-            :style="{ transform: 'translateY(' + viewTranslate + 'px)'}"
+            :style="{ transform: 'translateY(' + viewTranslate + 'px)' }"
         >
             <div
                 class="rolling_items-item"
@@ -19,14 +19,16 @@
                 :key="index"
                 :data-uuid="item.uuid"
                 ref="items"
-            >{{ item.uuid }} : {{ item.text }}</div>
+            >
+                {{ item.uuid }} : {{ item.text }}
+            </div>
         </div>
     </div>
 </template>
 
-
-
 <script>
+/* eslint-disable */
+
 /**
  * @description 虚拟滚动列表
  * @author gdh51
@@ -218,14 +220,13 @@ export default {
                     conditionCallback,
                     true
                 )
-            } else {
-                // 不符合条件，则直接取后面的
-                return this.binaryFindRecursion(
-                    list.slice(middle + 1),
-                    conditionCallback,
-                    false
-                )
             }
+            // 不符合条件，则直接取后面的
+            return this.binaryFindRecursion(
+                list.slice(middle + 1),
+                conditionCallback,
+                false
+            )
         },
 
         /**

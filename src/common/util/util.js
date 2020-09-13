@@ -1,20 +1,23 @@
 const hasOwnProperty = Object.prototype.hasOwnProperty
 
-export function hasOwn (obj, property) {
+export function hasOwn(obj, property) {
     return hasOwnProperty.call(obj, property)
 }
 
 export function isVNode(node) {
-    return node !== null && typeof node === 'object' && hasOwn(node, 'componentOptions')
-};
+    return (
+        node !== null &&
+        typeof node === 'object' &&
+        hasOwn(node, 'componentOptions')
+    )
+}
 
 // 生成当前z-index层级关系
 export const generateLevel = (function axisZCache() {
-
     // 存放一个基础z-index等级
-    const state = [0]
+    const state = [ 0 ]
 
-    return function () {
+    return function() {
         const curLevel = state[state.length - 1] + 1
         state.push(curLevel)
 

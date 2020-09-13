@@ -26,4 +26,3 @@ export default {
     color $lg2
     font-size 20px
 </style>
-

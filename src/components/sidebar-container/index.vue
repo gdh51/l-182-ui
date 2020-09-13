@@ -136,6 +136,7 @@ export default {
             let leftOffset = this.startLeftOffset - e.changedTouches[0].clientX
 
             // 开始滑动时向右滑动无效
+            // eslint-disable-next-line
             if (leftOffset <= 0) {
                 return
             }
@@ -154,6 +155,8 @@ export default {
 
             // 获取滑动条一半位置的X轴位置
             let middleOfSidebar =
+
+                // eslint-disable-next-line
                 this.sidebarRect.left + this.sidebarRect.width / 2
 
             // 超过一半时结束，自动展开
@@ -188,4 +191,3 @@ export default {
     .sidebar-content-click
         transition all .3s linear
 </style>
-

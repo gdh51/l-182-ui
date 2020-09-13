@@ -12,4 +12,3 @@ export default {
 #lazy_loading-container
     overflow scroll
 </style>
-

@@ -51,4 +51,3 @@ export default {
             height 40%
             font-size .373333rem
 </style>
-

@@ -4,6 +4,7 @@
 
     // 保存时执行的动作
     "editor.codeActionsOnSave": {
+        
         // For ESLint
         "source.fixAll.eslint": true
     }

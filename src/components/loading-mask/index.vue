@@ -1,10 +1,7 @@
-
-
-
 <script>
 import TypeOne from './type-one/index'
 import TypeTwo from './type-two/index'
-const TYPE_MAP = ['one', 'two']
+const TYPE_MAP = [ 'one', 'two' ]
 
 export default {
     name: 'LoadingMask',
@@ -77,7 +74,7 @@ export default {
             {
                 staticClass: 'mask-container'
             },
-            [children]
+            [ children ]
         )
     }
 }

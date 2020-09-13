@@ -1,4 +1,5 @@
 // 如果调度任务队列，优先微任务
+/* eslint-disable */
 export function timer(callback) {
     if (MutationObserver) {
         var counter = 1

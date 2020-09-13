@@ -55,4 +55,3 @@ export default {
             background-image url('./ablum_img.jpg')
             background-size cover
 </style>
-

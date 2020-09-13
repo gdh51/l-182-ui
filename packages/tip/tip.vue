@@ -17,12 +17,12 @@
                 :class="`tip-${tip.direction}`"
                 :style="tipPosition"
                 ref="tip"
-            >{{ message }}</div>
+            >
+                {{ message }}
+            </div>
         </div>
     </div>
 </template>
-
-
 
 <script>
 import { TIP_DIR_MAP, Tip } from './util/util'

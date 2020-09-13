@@ -3,7 +3,7 @@ import { isFunction } from '../util/type'
 export default {
     props: {
         disabled: {
-            type: [Boolean, Function],
+            type: [ Boolean, Function ],
             default: false
         }
     },

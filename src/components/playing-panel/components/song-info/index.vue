@@ -15,4 +15,3 @@ export default {
 .song_info
     padding 0 30px
 </style>
-

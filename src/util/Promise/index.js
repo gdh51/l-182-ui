@@ -4,11 +4,14 @@ import { setActiveState, hasActiveState } from './utils/activeQueue'
 import { PENDING } from './utils/constants'
 
 // 测试用uuid，来追踪每个Promise实例
+// eslint-disable-next-line
 let uuid = 0
 export function Promise1(executor) {
     if (typeof executor !== 'function') throw new Error('???')
 
     this.state = PENDING
+
+    // eslint-disable-next-line
     this.value = void 0
     this.thenExecutor = null
     this.uuid = uuid++
@@ -39,7 +42,7 @@ Promise1.resolve = resolve
 Promise1.reject = reject
 
 // 这里必须手动定义该函数，因为catch是保留字
-Promise1.prototype.catch = function (onRejected) {
+Promise1.prototype.catch = function(onRejected) {
     return this.then(val => {
         return val
     }, onRejected)

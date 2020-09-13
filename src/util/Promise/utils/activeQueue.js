@@ -13,4 +13,6 @@ function hasActiveState() {
     return activePromise !== null
 }
 
-export { activePromise, setActiveState, releaseState, hasActiveState }
+export {
+    activePromise, setActiveState, releaseState, hasActiveState
+}

@@ -41,4 +41,3 @@ export default {
         font-weight 700
         font-size 6vw
 </style>
-

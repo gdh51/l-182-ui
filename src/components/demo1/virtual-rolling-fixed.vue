@@ -10,21 +10,25 @@
         ></div>
         <div
             class="rolling_items"
-            :style="{ transform: 'translateY(' + viewTranslate + 'px)'}"
+            :style="{ transform: 'translateY(' + viewTranslate + 'px)' }"
         >
             <div
                 class="rolling_items-item ellipsis"
                 v-for="(item, index) of renderItems"
                 :key="index"
-                :style="{ height: itemHeight + 'px', lineHeight: itemHeight + 'px' }"
-            >{{ item.uuid }} : {{ item.text }}</div>
+                :style="{
+                    height: itemHeight + 'px',
+                    lineHeight: itemHeight + 'px'
+                }"
+            >
+                {{ item.uuid }} : {{ item.text }}
+            </div>
         </div>
     </div>
 </template>
 
-
-
 <script>
+
 /**
  * @description 虚拟滚动列表
  * @author gdh51

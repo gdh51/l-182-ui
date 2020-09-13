@@ -54,8 +54,8 @@ export default {
 
         // 滚动条在移动时的位置样式
         barPosStyle() {
-            const style = {}
-            const bar = this.bar
+            const style = {},
+                  bar = this.bar
 
             style[bar.rectSize] = this.barSize
             style.transform = `translate${bar.axis}(${this.movePercentage}%)`
@@ -166,4 +166,3 @@ export default {
     &>div
         width 100%
 </style>
-

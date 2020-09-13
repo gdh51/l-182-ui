@@ -30,8 +30,7 @@ CALC_INFO_MAP.top = CALC_INFO_MAP.bottom = {
 }
 
 export class Tip {
-
-    constructor (opt) {
+    constructor(opt) {
         this.direction = this.originDirection = opt.direction || 'right'
         this.width = opt.width || 0
         this.height = opt.height || 0
@@ -44,11 +43,8 @@ export class Tip {
         this.visible = false
     }
 
-
-
     // 根据鼠标所在屏幕位置，调整tip相对于容器的方向
-    reviseTipDirection (mouseX, mouseY) {
-
+    reviseTipDirection(mouseX, mouseY) {
         const range = this.boundingRange,
             tipHeight = this.height,
             tipWidth = this.width,
@@ -64,11 +60,17 @@ export class Tip {
             res = BOTTOM
         }
 
-        if (originDirection === RIGHT && tipWidth + arrowSize + mouseX + range > window.innerWidth) {
+        if (
+            originDirection === RIGHT &&
+            tipWidth + arrowSize + mouseX + range > window.innerWidth
+        ) {
             res = LEFT
         }
 
-        if (originDirection === BOTTOM && tipHeight + arrowSize + mouseY + range > window.innerHeight) {
+        if (
+            originDirection === BOTTOM &&
+            tipHeight + arrowSize + mouseY + range > window.innerHeight
+        ) {
             res = TOP
         }
 
@@ -76,7 +78,7 @@ export class Tip {
         return this
     }
 
-    calcPositionInfo (mouseX, mouseY) {
+    calcPositionInfo(mouseX, mouseY) {
         let mouseInfo = {
             mouseX,
             mouseY,
@@ -90,15 +92,21 @@ export class Tip {
 
         if (mouseInfo[currentCalcDir.axis] <= halfTipSize) {
             mouseInfo[currentCalcDir.edge] = halfTipSize - arrowSize
-        } else if (mouseInfo[currentCalcDir.axis] + halfTipSize >= window[currentCalcDir.clientSize]) {
-            mouseInfo[currentCalcDir.edge] = window[currentCalcDir.clientSize] - halfTipSize - arrowSize
+        } else if (
+            mouseInfo[currentCalcDir.axis] + halfTipSize >=
+            window[currentCalcDir.clientSize]
+        ) {
+            mouseInfo[currentCalcDir.edge] =
+                window[currentCalcDir.clientSize] - halfTipSize - arrowSize
         } else {
-            mouseInfo[currentCalcDir.edge] = mouseInfo[currentCalcDir.edge] - arrowSize
+            mouseInfo[currentCalcDir.edge] =
+                mouseInfo[currentCalcDir.edge] - arrowSize
         }
 
         // bug处理
         if (curDirection === LEFT || curDirection === TOP) {
-            mouseInfo[currentCalcDir.pre] = mouseInfo[currentCalcDir.pre] - arrowSize - 4
+            mouseInfo[currentCalcDir.pre] =
+                mouseInfo[currentCalcDir.pre] - arrowSize - 4
         }
 
         // 上面为下面代码的简化
@@ -150,7 +158,6 @@ export class Tip {
 
         return this
     }
-};
+}
 
 Tip.ARROW_SIZE = 5
-

@@ -157,5 +157,3 @@ export default {
             button:nth-child(2)
                 margin-left 10px
 </style>
-
-

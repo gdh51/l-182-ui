@@ -77,4 +77,3 @@ export default {
 .menu:before
     content '\ed6a'
 </style>
-

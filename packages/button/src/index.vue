@@ -1,19 +1,20 @@
 <template>
-    <button :type="nativeType"
-             class="l-button"
-            :class="[
-                _calcBtnSize,
-                _calcBtnType,
-                _disabled ? 'disabled' : '',
-                plain ? 'is-plain' : '',
-                round ? 'is-round' : '',
-                circle ? 'is-circle' : ''
-            ]"
-            :disabled="_disabled"
+    <button
+        :type="nativeType"
+        class="l-button"
+        :class="[
+            _calcBtnSize,
+            _calcBtnType,
+            _disabled ? 'disabled' : '',
+            plain ? 'is-plain' : '',
+            round ? 'is-round' : '',
+            circle ? 'is-circle' : ''
+        ]"
+        :disabled="_disabled"
     >
-            <span>
-                <slot></slot>
-            </span>
+        <span>
+            <slot></slot>
+        </span>
     </button>
 </template>
 
@@ -33,10 +34,9 @@ const SIZE_MAP = new Map()
 export default {
     name: 'LButton',
 
-    mixins: [ FormElMixin ],
+    mixins: [FormElMixin],
 
     props: {
-
         // 按钮样式类型属性，支持eva/text
         type: String,
 
@@ -59,9 +59,8 @@ export default {
     },
 
     computed: {
-
         // 计算按钮尺寸
-        _calcBtnSize () {
+        _calcBtnSize() {
             return SIZE_MAP.get(this.size) || ''
         },
 
@@ -86,8 +85,7 @@ export default {
         }
     },
 
-    methods: {
-    }
+    methods: {}
 }
 </script>
 

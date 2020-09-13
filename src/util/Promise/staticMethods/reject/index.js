@@ -9,7 +9,7 @@ import { Promise1 } from '../../index'
  * 2. 作为每个Promise传入的实例方法， 来调度promise任务
  * @param {any} val 任意值
  */
-Promise1.reject = function (val) {
+Promise1.reject = function(val) {
     let instance = this
 
     // Promise初始化resolve后

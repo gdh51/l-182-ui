@@ -6,8 +6,6 @@
     </header>
 </template>
 
-
-
 <script>
 import NavBar from './components/nav-bar'
 
@@ -20,7 +18,7 @@ export default {
 
     data() {
         return {
-            navsList: ['1', '2']
+            navsList: [ '1', '2' ]
         }
     },
 
