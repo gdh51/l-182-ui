@@ -1,9 +1,7 @@
 import App from './src/App'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {
-    registeComponents
-} from './packages/register-components'
+import { registeComponents } from './packages/register-components'
 // import { globalPlugin } from './src/common/global-plugin';
 // import state from './src/global-state/index';
 // import { initAxios } from './src/api/interceptor'

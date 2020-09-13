@@ -5,10 +5,20 @@ module.exports = {
         es2021: true,
         node: true
     },
+    
+    plugins: ['prettier', 'vue'],
+
+    // 推荐规则，优先级从下到上
     extends: [
+
+        // eslint推荐规则
         'eslint:recommended',
         'plugin:vue/essential',
+
+        // eslint-config-prettier
         'prettier',
+
+        // eslint-plugin-vue
         'prettier/vue'
     ],
     parserOptions: {
@@ -44,14 +54,20 @@ module.exports = {
         ],
 
         // 注释前空一行
-        'lines-around-comment': [2, {
-            beforeBlockComment: true
-        }],
+        'lines-around-comment': [
+            2,
+            {
+                beforeBlockComment: true
+            }
+        ],
 
         // 文件末尾必须要空一行
         'eol-last': ['error', 'always'],
 
-        'array-bracket-spacing': ['error', 'always'],
+        'prettier/prettier': 'error',
+
+        // 该选项与prettier冲突，请勿选择
+        // 'array-bracket-spacing': ['error', 'always'],
 
         // template中数组头和尾前后空格1个
         'vue/array-bracket-spacing': ['error', 'always'],

@@ -1,4 +1,5 @@
 function toType(val) {
+    /* eslint-disable-next-line */
     return Object.prototype.toString.call(val).slice(8, -1)
 }
 

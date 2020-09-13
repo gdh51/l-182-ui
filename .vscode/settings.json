@@ -1,5 +1,10 @@
 {
+    // 保存时自动格式化(通过插件)
+    "editor.formatOnSave": false,
+
+    // 保存时执行的动作
     "editor.codeActionsOnSave": {
-        "source.fixAll": true
+        // For ESLint
+        "source.fixAll.eslint": true
     }
 }

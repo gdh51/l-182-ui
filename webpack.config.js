@@ -1,8 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const {
-    CleanWebpackPlugin
-} = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
@@ -28,7 +26,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.js', '.vue', '.json'],
+        extensions: [ '.js', '.vue', '.json' ],
         alias: {
             '@': path.join(__dirname, './src'),
             '@theme': path.join(__dirname, './packages/theme/src')
@@ -37,7 +35,6 @@ module.exports = {
 
     module: {
         rules: [
-
             // 处理.vue单组件文件
             {
                 test: /\.vue$/,
@@ -63,19 +60,14 @@ module.exports = {
             // 处理CSS文件
             {
                 test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
+                use: [ 'style-loader', 'css-loader' ]
             },
 
             {
                 test: /\.js?$/,
-                loader: 'babel-loader',
-                exclude: file => (
-                    /node_modules/.test(file) &&
-                    !/\.vue\.js/.test(file)
-                )
+                loader: [ 'babel-loader', 'eslint-loader' ],
+                exclude: file =>
+                    /node_modules/.test(file) && !/\.vue\.js/.test(file)
             },
 
             {
@@ -99,7 +91,8 @@ module.exports = {
             hash: true,
             template: './src/index.html',
             meta: {
-                viewport: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
+                viewport:
+                    'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
             }
         }),
 
