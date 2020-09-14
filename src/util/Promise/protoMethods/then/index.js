@@ -11,6 +11,7 @@ import { RESOLVED, REJECTED } from '../../utils/constants'
  * 2. 对于已改变状态的Promise，则需要根据其状态手动启动挂载在then上的回调函数
  */
 export function then(onFulfilled, onRejected) {
+
     // 即调用该then方法的上一个Promise实例
     const prevInstance = this
 
@@ -26,8 +27,10 @@ export function then(onFulfilled, onRejected) {
         })
     } else if (prevInstance.state === REJECTED) {
         return new Promise1((resolve, reject) => {
+
             // 这里不一定有onRejected函数，所以我们要做判断
             if (onRejected) {
+
                 // 如果注册了onRejected函数，那么成功处理后，我们将
                 // resolve当前的Promise实例
                 try {
@@ -36,6 +39,7 @@ export function then(onFulfilled, onRejected) {
                     reject(e)
                 }
             } else {
+
                 // 若没有注册catch类型函数，那么我们让它冒泡到下一个promise
                 reject(prevInstance.value)
             }
@@ -45,6 +49,7 @@ export function then(onFulfilled, onRejected) {
     // 对于pengding状态的promise实例，我们将then上的promise实例方法传递给它
     // 方便调用then的promise实例操作
     const next = new Promise1((resolve, reject) => {
+
         // 此时该promise已执行，进入了pending状态
         prevInstance.thenExecutor = {
             onFulfilled,

@@ -11,9 +11,9 @@ TIP_DIR_MAP.top = TIP_DIR_MAP.bottom = {
 const LEFT = 'left',
     RIGHT = 'right',
     TOP = 'top',
-    BOTTOM = 'bottom'
+    BOTTOM = 'bottom',
 
-const CALC_INFO_MAP = {}
+    CALC_INFO_MAP = {}
 CALC_INFO_MAP.left = CALC_INFO_MAP.right = {
     axis: 'mouseY',
     clientSize: 'innerHeight',
@@ -32,11 +32,15 @@ CALC_INFO_MAP.top = CALC_INFO_MAP.bottom = {
 export class Tip {
     constructor(opt) {
         this.direction = this.originDirection = opt.direction || 'right'
-        this.width = opt.width || 0
-        this.height = opt.height || 0
+
+        /* eslint-disable-next-line */
+      this.width = opt.width || 0
+        /* eslint-disable-next-line */
+      this.height = opt.height || 0
 
         // 误差范围
-        this.boundingRange = opt.boundingRange || 5
+        /* eslint-disable-next-line */
+      this.boundingRange = opt.boundingRange || 5
         this.top = 0
         this.left = 0
         this.targetRect = opt.targetRect
@@ -88,7 +92,9 @@ export class Tip {
         const curDirection = this.direction,
             arrowSize = Tip.ARROW_SIZE
         let currentCalcDir = CALC_INFO_MAP[curDirection],
-            halfTipSize = this[currentCalcDir.tipSize] / 2
+
+            /* eslint-disable-next-line */
+          halfTipSize = this[currentCalcDir.tipSize] / 2;
 
         if (mouseInfo[currentCalcDir.axis] <= halfTipSize) {
             mouseInfo[currentCalcDir.edge] = halfTipSize - arrowSize
@@ -106,52 +112,9 @@ export class Tip {
         // bug处理
         if (curDirection === LEFT || curDirection === TOP) {
             mouseInfo[currentCalcDir.pre] =
-                mouseInfo[currentCalcDir.pre] - arrowSize - 4
+              /* eslint-disable-next-line */
+              mouseInfo[currentCalcDir.pre] - arrowSize - 4;
         }
-
-        // 上面为下面代码的简化
-
-        // if (curDirection === LEFT || curDirection === RIGHT) {
-        //     let halfTipHeight = this.height / 2;
-
-        //     // 鼠标移动到屏幕最上方时
-        //     if (mouseY <= halfTipHeight) {
-        //         top = halfTipHeight - arrowSize;
-
-        //         // 鼠标移动到屏幕最下面时
-        //     } else if (mouseY + halfTipHeight >= window.innerHeight) {
-        //         top = window.innerHeight - halfTipHeight - arrowSize;
-
-        //     // 鼠标移动到中间的情况
-        //     } else {
-        //         top = top - arrowSize;
-        //     }
-
-        //     if (curDirection === LEFT) {
-        //         left = left - arrowSize - 4;
-        //     }
-        // }
-
-        // if (curDirection === TOP || curDirection === BOTTOM) {
-        //     let halfTipWidth = this.width / 2;
-
-        //     // 鼠标移动到屏幕最左方时
-        //     if (mouseX <= halfTipWidth) {
-        //         left = halfTipWidth - arrowSize;
-
-        //         // 鼠标移动到屏幕最右面时
-        //     } else if (mouseX + halfTipWidth >= window.innerWidth) {
-        //         left = window.innerWidth - halfTipWidth - arrowSize;
-
-        //         // 鼠标移动到中间的情况
-        //     } else {
-        //         left = left - arrowSize;
-        //     }
-
-        //     if (curDirection === TOP) {
-        //         top = top - arrowSize - 4;
-        //     }
-        // }
 
         this.top = mouseInfo.top
         this.left = mouseInfo.left

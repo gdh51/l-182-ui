@@ -34,9 +34,10 @@ const SIZE_MAP = new Map()
 export default {
     name: 'LButton',
 
-    mixins: [FormElMixin],
+    mixins: [ FormElMixin ],
 
     props: {
+
         // 按钮样式类型属性，支持eva/text
         type: String,
 
@@ -59,6 +60,7 @@ export default {
     },
 
     computed: {
+
         // 计算按钮尺寸
         _calcBtnSize() {
             return SIZE_MAP.get(this.size) || ''

@@ -8,6 +8,7 @@ const WindowTop = 0
  * 超出边界时返回0
  */
 function calcAbOfEle(event, elRect, el) {
+
     // 提供Rect时，就使用当前的Rect
     elRect = elRect || el.getBoundingClientRect()
     let top = event.clientY - elRect.top,

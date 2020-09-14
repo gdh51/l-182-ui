@@ -29,6 +29,7 @@ export default {
     name: 'SidebarContainer',
     data() {
         return {
+
             // 侧边栏当前的X轴上的位移
             left: 0,
 
@@ -52,6 +53,7 @@ export default {
     },
 
     computed: {
+
         // 获取sidebar的可见性
         wrapperVisibility() {
             return this.state.sideWrapperVisibility
@@ -59,6 +61,7 @@ export default {
 
         // 侧边栏的位移style对象
         slideOffset() {
+
             // 由于我们是通过prop来控制的遮布的样式opacity，这与transition组件逻辑违背。
             // (这里如果我们直接操作prop，在v-show为true时，会导致样式改变先于display，导致动画失败)
             // 所以这里我们这里不能用computed属性来自动同步wrapperOpacity属性
@@ -83,6 +86,7 @@ export default {
     },
 
     created() {
+
         // 存起来方便查询
         this.state = this.$store.state
     },
@@ -104,6 +108,7 @@ export default {
     },
 
     methods: {
+
         // click事件点击收起侧边栏
         slideIn() {
             this.$store.commit('toggleSwVibility', false)
@@ -121,6 +126,7 @@ export default {
 
         // 更新滑动的初始信息
         initSlide(e) {
+
             // 添加滑动时的动画过渡类名
             this.isTap = true
 
@@ -132,6 +138,7 @@ export default {
         },
 
         slideSidebar(e) {
+
             // 计算当前拖动的相对位移，为了方便计算，这里取正值为开始点向左滑动
             let leftOffset = this.startLeftOffset - e.changedTouches[0].clientX
 
@@ -150,6 +157,7 @@ export default {
 
         // 根据当前的滑动的结束位置，自动收起或展开侧边栏
         autoPackupSidebar(e) {
+
             // 自动收回时要执行动画
             this.isTap = false
 

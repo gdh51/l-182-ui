@@ -14,11 +14,14 @@ export function isVNode(node) {
 
 // 生成当前z-index层级关系
 export const generateLevel = (function axisZCache() {
+
     // 存放一个基础z-index等级
-    const state = [ 0 ]
+    /* eslint-disable-next-line */
+  const state = [0];
 
     return function() {
-        const curLevel = state[state.length - 1] + 1
+        /* eslint-disable-next-line */
+      const curLevel = state[state.length - 1] + 1;
         state.push(curLevel)
 
         // 返回一个接口，里面包含当前应该生成的z-index值和销毁函数

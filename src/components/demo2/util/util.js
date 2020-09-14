@@ -1,4 +1,5 @@
 export const BAR_MAP = {
+
     // 垂直
     vertical: {
         axis: 'Y',

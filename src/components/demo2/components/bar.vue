@@ -17,6 +17,7 @@ export default {
     name: 'Bar',
 
     props: {
+
         // 滚动条类型，垂直还是水平
         vertical: {
             type: Boolean,
@@ -38,6 +39,7 @@ export default {
 
     data() {
         return {
+
             // 上一次点击鼠标来拖动滚动条时，点击的位置
             clickPosition: 0,
 
@@ -47,6 +49,7 @@ export default {
     },
 
     computed: {
+
         // 确认滚动条的类型
         bar() {
             return BAR_MAP[this.vertical ? 'vertical' : 'horizontal']
@@ -75,6 +78,8 @@ export default {
                     this.$refs.bar.getBoundingClientRect()[
                         this.bar.rectSize
                     ]) ||
+
+                /* eslint-disable-next-line */
                 0
             )
         },
@@ -82,15 +87,20 @@ export default {
         // 视窗的具体长度
         viewSize() {
             return (
+
+                /* eslint-disable-next-line */
                 (this.viewElement && this.viewElement[this.bar.clientSize]) || 0
             )
         }
     },
 
     methods: {
+
         // 用鼠标拖动进行滚动时的处理函数
         cursorTranslate(e) {
+
             // 鼠标右键进行点击时无效
+            /* eslint-disable-next-line */
             if (e.ctrlKey || e.button === 2) {
                 return
             }
@@ -113,6 +123,7 @@ export default {
         },
 
         mousemoveHandler(e) {
+
             // 以滚动条长度为基计算鼠标的位移的占比
             const offsetPercentage =
                 (e[this.bar.client] - this.clickPosition) / this.spBarSize

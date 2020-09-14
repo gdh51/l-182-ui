@@ -14,6 +14,7 @@ Promise1.reject = function(val) {
 
     // Promise初始化resolve后
     if (instance instanceof Promise1) {
+
         // ...调用回调
         return rejectInstance(val, instance)
     }
@@ -41,6 +42,7 @@ function rejectInstance(val, instance) {
         // reject了一个Promise实例时，要等到其传入的Promise状态改变，
         // 来trigger当前Promise实例的回调函数
         if (val instanceof Promise1) {
+
             // 将Promise最终的值用来继续启动当前promise的任务
             return val.then(
                 handleInnerInstance.bind(null, instance, 'resolve'),
@@ -54,6 +56,7 @@ function rejectInstance(val, instance) {
 
         // 这里只能return, 暂时无法判断Promise内部返回resolve一个promise的情况
         if (!thenExecutor) {
+
             // 如果是内部的未捕获的promise，则跳过
             if (instance.isInternal) {
                 return
@@ -85,6 +88,7 @@ function rejectInstance(val, instance) {
 
             thenExecutor.resolve(result)
         } else {
+
             // 没有设置catch类型的函数时，冒泡到下一个promise
             thenExecutor.reject(instance.value)
         }

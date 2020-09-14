@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 /**
  * 圆形容器，可以选择一个插槽内容，默认情况下原型在容器中贴边，如需自定义位置，
  * 可以传入class来覆盖
@@ -14,7 +15,7 @@
 export default {
     name: 'CircleBox',
 
-    props: ['innerClass']
+    props: [ 'innerClass' ]
 }
 </script>
 

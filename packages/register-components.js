@@ -45,6 +45,7 @@
 // }
 
 import LButton from './button/src/index.vue'
+
 // import Modal from '../../packages/modal/modal.vue'
 // import Wrapper from './components/wrapper/wrapper.vue'
 // import Tip from '../../packages/tip/tip.vue'
@@ -53,7 +54,7 @@ import LButton from './button/src/index.vue'
 // import Icon from './components/icon/index.vue'
 // import CirCleBox from './components/circle-box/index.vue'
 
-const Components = [LButton]
+const Components = [ LButton ]
 
 export function registeComponents(Vue) {
     Components.forEach(component => {

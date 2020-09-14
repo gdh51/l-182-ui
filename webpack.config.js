@@ -1,7 +1,7 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require('path'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    { CleanWebpackPlugin } = require('clean-webpack-plugin'),
+    VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
     mode: 'development',
@@ -26,7 +26,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.js', '.vue', '.json'],
+        extensions: [ '.js', '.vue', '.json' ],
         alias: {
             '@': path.join(__dirname, './src'),
             '@theme': path.join(__dirname, './packages/theme/src')
@@ -35,6 +35,7 @@ module.exports = {
 
     module: {
         rules: [
+
             // 处理.vue单组件文件
             {
                 test: /\.vue$/,
@@ -60,12 +61,12 @@ module.exports = {
             // 处理CSS文件
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [ 'style-loader', 'css-loader' ]
             },
 
             {
                 test: /\.js?$/,
-                loader: ['babel-loader', 'eslint-loader'],
+                loader: [ 'babel-loader', 'eslint-loader' ],
                 exclude: file =>
                     /node_modules/.test(file) && !/\.vue\.js/.test(file)
             },

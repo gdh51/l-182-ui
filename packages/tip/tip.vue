@@ -79,6 +79,8 @@ export default {
     computed: {
         tipPosition() {
             let { dir, side } = TIP_DIR_MAP[this.tip.direction]
+
+            /* eslint-disable-next-line */
             return `${dir}: -${this.tipRect[side] / 2}px;`
         },
 
@@ -109,6 +111,7 @@ export default {
 
         // 封装以复用
         initRect() {
+
             // 这里注册个一次性的watcher用来获取一次元素的大小
             let unwatch = this.$watch('tip.visible', val => {
                 if (val) {

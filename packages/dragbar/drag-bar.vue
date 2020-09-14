@@ -62,6 +62,8 @@ export default {
             return {
                 left:
                     this.progressStart +
+
+                    /* eslint-disable-next-line */
                     (this.progress / 100) * this.barRect.width +
                     'px'
             }
@@ -70,18 +72,27 @@ export default {
 
     methods: {
         initDotSize() {
-            const barRect = (this.barRect = this.$refs.bar.$el.getBoundingClientRect())
+            const barRect =
+                (this.barRect = this.$refs.bar.$el.getBoundingClientRect())
             this.progressStart = -barRect.height
             this.progressDotSize = {
+
+                /* eslint-disable-next-line */
                 width: barRect.height * 2 + 'px',
+
+                /* eslint-disable-next-line */
                 height: barRect.height * 2 + 'px'
             }
         },
 
         changeProgress(offsetPercentage) {
+
             // 防止超出范围
+            /* eslint-disable-next-line */
             if (offsetPercentage <= 0) offsetPercentage = 0
+            /* eslint-disable-next-line */
             if (offsetPercentage >= 1) offsetPercentage = 1
+            /* eslint-disable-next-line */
             this.progress = offsetPercentage * 100
         },
 

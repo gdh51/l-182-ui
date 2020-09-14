@@ -105,7 +105,8 @@ module.exports = {
         'lines-around-comment': [
             2,
             {
-                beforeBlockComment: true
+                beforeBlockComment: true,
+                beforeLineComment: true
             }
         ],
 

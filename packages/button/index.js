@@ -1,6 +1,6 @@
 import LButton from './src/index'
 
-LButton.install = function (Vue) {
+LButton.install = function(Vue) {
     Vue.component(LButton.name, LButton)
 }
 

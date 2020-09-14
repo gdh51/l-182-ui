@@ -1,3 +1,4 @@
+/* eslint-disable */
 !(function (n) {
     var c,
         i =
@@ -15,26 +16,23 @@
             console && console.log(c)
         }
     }
-    !(function (c) {
-        if (document.addEventListener)
-            if (
-                ~['complete', 'loaded', 'interactive'].indexOf(
-                    document.readyState
-                )
+    !(function(c) {
+        if (document.addEventListener) if (
+            ~[ 'complete', 'loaded', 'interactive' ].indexOf(
+                document.readyState
             )
-                setTimeout(c, 0)
-            else {
-                var e = function () {
-                    document.removeEventListener('DOMContentLoaded', e, !1), c()
-                }
-                document.addEventListener('DOMContentLoaded', e, !1)
+        ) setTimeout(c, 0)
+        else {
+            var e = function() {
+                document.removeEventListener('DOMContentLoaded', e, !1), c()
             }
-        else
-            document.attachEvent &&
+            document.addEventListener('DOMContentLoaded', e, !1)
+        }
+        else document.attachEvent &&
                 ((t = c),
                 (s = n.document),
                 (d = !1),
-                (i = function () {
+                (i = function() {
                     try {
                         s.documentElement.doScroll('left')
                     } catch (c) {
@@ -42,7 +40,7 @@
                     }
                     o()
                 })(),
-                (s.onreadystatechange = function () {
+                (s.onreadystatechange = function() {
                     'complete' == s.readyState &&
                         ((s.onreadystatechange = null), o())
                 }))
@@ -50,7 +48,7 @@
             d || ((d = !0), t())
         }
         var t, s, d, i
-    })(function () {
+    })(function() {
         var c, e, o, t, s, d
         ;((c = document.createElement('div')).innerHTML = i),
         (i = null),
@@ -63,7 +61,7 @@
                 (o = e),
                 (t = document.body).firstChild
                     ? ((s = o),
-                    (d = t.firstChild).parentNode.insertBefore(s, d))
+                        (d = t.firstChild).parentNode.insertBefore(s, d))
                     : t.appendChild(o))
     })
 })(window)

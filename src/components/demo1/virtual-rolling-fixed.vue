@@ -71,6 +71,7 @@ export default {
     },
 
     computed: {
+
         // 可视窗口的第一条数据的下标
         startIndex() {
             return Math.floor(this.topOffset / this.itemHeight)
@@ -82,6 +83,7 @@ export default {
         },
 
         viewTranslate() {
+
             // 首先视窗跟随移动，之后要产生相对位置，
             // 所以相对位移则为当前可视区域第一个元素未显示在可视区域部分的高度
             return this.topOffset - (this.topOffset % this.itemHeight)
@@ -90,12 +92,17 @@ export default {
 
     methods: {
         scrolling(e) {
+
             // 获取可视窗口上方到顶部的高度，即滚动条高度
+            /* eslint-disable-next-line */
             this.topOffset = e ? e.target.scrollTop : 0
             this.$nextTick(() => {
+
                 // 将视口区域的数据显示出来
                 this.renderItems = this.listItems.slice(
                     this.startIndex,
+
+                    /* eslint-disable-next-line */
                     this.endIndex + 1
                 )
             })

@@ -2,6 +2,7 @@ import App from './src/App'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { registeComponents } from './packages/register-components'
+
 // import { globalPlugin } from './src/common/global-plugin';
 // import state from './src/global-state/index';
 // import { initAxios } from './src/api/interceptor'
@@ -11,6 +12,7 @@ import { registeComponents } from './packages/register-components'
 
 // Vue.use(ElementUI);
 Vue.use(Vuex)
+
 // Vue.use(globalPlugin);
 // initAxios(Vue);
 

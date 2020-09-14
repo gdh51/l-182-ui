@@ -15,6 +15,7 @@ export function resolve(val) {
 
     // 这里我们通过this来确定上面提到的哪种用法
     if (instance instanceof Promise1) {
+
         // 异步启动promise任务
         return resolveInstance(val, instance)
     }
@@ -36,14 +37,17 @@ export function resolve(val) {
  * 2. Promise实例，待该Promise实例状态改变后在调用then()方法，并传入该Promise的value
  */
 function resolveInstance(val, instance) {
+
     // 通过异步来调度promise任务队列
     timer(() => {
+
         // 定义其后连接的then()方法中的回调函数对象
         let thenExecutor = null
 
         // resolve了一个prmise时，
         // 要等到其传入的promise状态改变再调度then()中的任务
         if (val instanceof Promise1) {
+
             // 所以这里我们直接使用val.then()语句，在其状态改变后
             // 来调度外部的Promise实例的任务队列
             return val.then(
@@ -60,6 +64,7 @@ function resolveInstance(val, instance) {
 
         // 如果当前的外部promise实例无then()处理，那么允许其安全退出。
         if (!thenExecutor) {
+
             // 内部promise实例，无权限清空activePromise，直接退出即可
             if (instance.isInternal) return
 
@@ -69,6 +74,7 @@ function resolveInstance(val, instance) {
 
         // 改变下一个promise实例的状态
         try {
+
             // 对于promise回调函数返回的值，又分为两种情况
             // 1. 一种返回普通值
             // 2. 一种返回promise实例

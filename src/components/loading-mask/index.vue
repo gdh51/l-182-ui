@@ -29,13 +29,17 @@ export default {
     },
 
     render(h) {
+
+        /* eslint-disable-next-line */
         let isMultiple = this.textList.length > 1,
             type =
                 'type-' + (isMultiple ? 'two' : TYPE_MAP[this.type] || 'one'),
             children
 
         if (isMultiple) {
+
             // 为了排版美观仅保留三个
+            /* eslint-disable-next-line */
             let handleList = this.textList.slice(0, 3)
             children = h(
                 'div',
@@ -45,10 +49,14 @@ export default {
 
                 handleList.map((textObj, index) =>
                     h(type, {
+
                         // 为第一个和最后一个项目添加对齐
                         staticClass:
+                            /* eslint-disable-next-line */
                             index === 0
                                 ? 'mask-box-item_first'
+
+                                /* eslint-disable-next-line */
                                 : index === handleList.length - 1
                                     ? 'mask-box-item_last'
                                     : '',

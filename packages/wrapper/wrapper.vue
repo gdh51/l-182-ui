@@ -22,23 +22,25 @@ export default {
     },
 
     render(h) {
-        let { bind, unbind, update } = this.$options.directives.show
+        let {
+                bind, unbind, update
+            } = this.$options.directives.show,
 
-        let options = {
-            staticClass: 'modal_wrapper',
-            style: {
-                opacity: this.opacity
-            },
-            directives: [
-                {
-                    name: 'show',
-                    value: this.visibility && this.visible,
-                    bind,
-                    unbind,
-                    update
-                }
-            ]
-        }
+            options = {
+                staticClass: 'modal_wrapper',
+                style: {
+                    opacity: this.opacity
+                },
+                directives: [
+                    {
+                        name: 'show',
+                        value: this.visibility && this.visible,
+                        bind,
+                        unbind,
+                        update
+                    }
+                ]
+            }
 
         if (this.type !== 'normal') {
             options.style = {
@@ -53,7 +55,7 @@ export default {
                     duration: 300
                 }
             },
-            [h('div', options)]
+            [ h('div', options) ]
         )
     },
     data() {
@@ -66,6 +68,7 @@ export default {
     },
 
     created() {
+
         // 普通的遮布，z-index属性由用户自己定义
         if (this.type === 'normal') return
 
