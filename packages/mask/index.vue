@@ -1,8 +1,8 @@
 <script>
-import { generateLevel } from '../../util/util'
+import { zGenerate } from '@/utils/axis-z'
 
 export default {
-    name: 'Wrapper',
+    name: 'LMask',
 
     props: {
         type: {
@@ -27,10 +27,8 @@ export default {
             } = this.$options.directives.show,
 
             options = {
-                staticClass: 'modal_wrapper',
-                style: {
-                    opacity: this.opacity
-                },
+                staticClass: 'l-mask',
+                style: { opacity: this.opacity },
                 directives: [
                     {
                         name: 'show',
@@ -43,27 +41,19 @@ export default {
             }
 
         if (this.type !== 'normal') {
-            options.style = {
-                zIndex: this.axis.axisZ
-            }
+            options.style = { zIndex: this.axisInterface.axisZ }
         }
 
         return h(
             'transition',
-            {
-                attrs: {
-                    duration: 300
-                }
-            },
+            { attrs: { duration: 300 } },
             [ h('div', options) ]
         )
     },
     data() {
         return {
             visible: true,
-            axis: {
-                axisZ: 999
-            }
+            axisInterface: { axisZ: 999 }
         }
     },
 
@@ -72,7 +62,7 @@ export default {
         // 普通的遮布，z-index属性由用户自己定义
         if (this.type === 'normal') return
 
-        this.axis = generateLevel()
+        this.axisInterface = zGenerate()
 
         // 暴露销毁该遮布的接口
         this.$once('destroy', this._destroy)
@@ -96,7 +86,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.modal_wrapper
+.l-mask
     position fixed
     top 0
     right 0

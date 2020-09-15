@@ -1,8 +1,7 @@
 const BasicIndent = 4,
     ObjectCurlyNewline = {
         multiline: true,
-        minProperties: 3,
-        consistent: true
+        minProperties: 3
     }
 
 module.exports = {
@@ -174,7 +173,7 @@ module.exports = {
         'nonblock-statement-body-position': 'error',
 
         // 对象字面量超过3个字段时换行
-        'object-curly-newline': [ 'warn', {
+        'object-curly-newline': [ 'error', {
             ObjectExpression: ObjectCurlyNewline,
             ObjectPattern: ObjectCurlyNewline,
             ImportDeclaration: ObjectCurlyNewline,

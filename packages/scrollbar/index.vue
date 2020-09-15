@@ -30,7 +30,7 @@ import { lazyHandler } from './util/util'
 import { on } from '../../util/event'
 
 export default {
-    name: 'CustomScrollBar',
+    name: 'LScrollBar',
 
     components: {
         Bar
