@@ -1,0 +1,12 @@
+// 文档：https://code.visualstudio.com/docs/languages/jsconfig
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@theme/*": ["./packages/theme/*"]
+    },
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules", "dist"]
+}
