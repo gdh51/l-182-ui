@@ -8,6 +8,4 @@ Vue.use(Vuex)
 // // 注册全局组件
 registeComponents(Vue)
 
-new Vue({
-    render: h => h(App)
-}).$mount('#app')
+new Vue({ render: h => h(App) }).$mount('#app')

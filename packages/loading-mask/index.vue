@@ -43,9 +43,7 @@ export default {
             let handleList = this.textList.slice(0, 3)
             children = h(
                 'div',
-                {
-                    staticClass: 'mask-box_middle mask-box_wide'
-                },
+                { staticClass: 'mask-box_middle mask-box_wide' },
 
                 handleList.map((textObj, index) =>
                     h(type, {
@@ -79,9 +77,7 @@ export default {
 
         return h(
             'div',
-            {
-                staticClass: 'mask-container'
-            },
+            { staticClass: 'mask-container' },
             [ children ]
         )
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="modal_wrapper" v-if="visible" :style="{ zIndex: axis.axisZ }">
+    <l-mask>
         <div class="modal_box">
             <div class="modal_box-header global-padding">
                 <div class="box_header-title">{{ title }}</div>
@@ -18,7 +18,7 @@
                 <btn @action="_cancelAction" />
             </div>
         </div>
-    </div>
+    </l-mask>
 </template>
 
 <script>
@@ -46,16 +46,12 @@ export default {
         }
     },
 
-    components: {
-        CustomScrollbar
-    },
+    components: { CustomScrollbar },
 
     data() {
         return {
             visible: false,
-            axis: {
-                axisZ: 1
-            }
+            axis: { axisZ: 1 }
         }
     },
 

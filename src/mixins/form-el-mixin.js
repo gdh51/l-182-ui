@@ -1,4 +1,4 @@
-import { isFunction } from '../util/type'
+import { isFunction } from '../utils/type'
 
 export default {
     props: {
@@ -9,9 +9,7 @@ export default {
     },
 
     data() {
-        return {
-            loading: false
-        }
+        return { loading: false }
     },
 
     computed: {

@@ -1,15 +1,14 @@
 <template>
     <div id="app">
-        <l-button type="eva" plain>这是一个按钮</l-button>
+        <l-mask><l-button type="eva">这是一个按钮</l-button></l-mask>
+
     </div>
 </template>
 
 <script>
 import '../packages/theme/common-style.styl'
 
-export default {
-    name: 'App'
-}
+export default { name: 'App' }
 </script>
 
 <style lang="stylus" scoped>

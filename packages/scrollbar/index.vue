@@ -32,9 +32,7 @@ import { on } from '../../util/event'
 export default {
     name: 'LScrollBar',
 
-    components: {
-        Bar
-    },
+    components: { Bar },
 
     props: {
 
