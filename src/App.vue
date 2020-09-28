@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <l-mask><l-button type="eva">这是一个按钮</l-button></l-mask>
-
+        <l-slide-box>
+            sdhdisj
+            <l-slide-plane style="margin: 10px;" class="ss">sdsd</l-slide-plane>
+        </l-slide-box>
     </div>
 </template>
 

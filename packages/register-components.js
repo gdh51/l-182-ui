@@ -1,5 +1,7 @@
 import LButton from './button'
 import LMask from './mask'
+import LBox from './box'
+import LSlideBox from './slide-box'
 
 // import Modal from '../../packages/modal/modal.vue'
 // import Wrapper from './components/wrapper/wrapper.vue'
@@ -9,7 +11,7 @@ import LMask from './mask'
 // import Icon from './components/icon/index.vue'
 // import CirCleBox from './components/circle-box/index.vue'
 
-const Components = [ LButton, LMask ]
+const Components = [ LButton, LMask, LSlideBox, LBox ]
 
 export function registeComponents(Vue) {
     Components.forEach(component => {
