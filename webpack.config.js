@@ -6,9 +6,7 @@ const path = require('path'),
 module.exports = {
     mode: 'development',
 
-    entry: {
-        app: './index.js'
-    },
+    entry: { app: './index.js' },
 
     output: {
         filename: '[name].bundle.js',
@@ -20,15 +18,14 @@ module.exports = {
     devServer: {
         contentBase: './dist',
         hot: true,
-        proxy: {
-            '/upload': 'http://localhost:3000/upload'
-        }
+        proxy: { '/upload': 'http://localhost:3000/upload' }
     },
 
     resolve: {
         extensions: [ '.js', '.vue', '.json' ],
         alias: {
             '@': path.join(__dirname, './src'),
+            '@pack': path.join(__dirname, './packages'),
             '@theme': path.join(__dirname, './packages/theme/src')
         }
     },
@@ -51,9 +48,7 @@ module.exports = {
                     'stylus-loader',
                     {
                         loader: 'stylus-resources-loader',
-                        options: {
-                            resources: './packages/theme/eva-theme.styl'
-                        }
+                        options: { resources: './packages/theme/eva-theme.styl' }
                     }
                 ]
             },
@@ -74,9 +69,7 @@ module.exports = {
             {
                 test: /\.(gif|jpg|jpeg|png|svg)$/,
                 loader: 'url-loader',
-                options: {
-                    limit: 8192
-                }
+                options: { limit: 8192 }
             },
 
             {
