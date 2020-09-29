@@ -26,14 +26,14 @@ export default {
 
     computed: {
         sharedAttrs() {
-            const data = {}
+            const data = this.$attrs
 
             data.style = {
                 width: this.width,
                 height: this.height
             }
 
-            return data
+            return Object.assign({}, $)
         }
     }
 }
