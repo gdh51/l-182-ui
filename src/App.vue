@@ -1,8 +1,11 @@
 <template>
     <div id="app">
-        <l-slide-box>
-            sdhdisj
-            <l-slide-plane style="margin: 10px;" class="ss">sdsd</l-slide-plane>
+        <l-slide-box width="600px" height="300px" direction="vertical">
+            <l-slide-plane>sdsd</l-slide-plane>
+            <l-slide-plane>sdsd</l-slide-plane>
+            <l-slide-plane>sdsd</l-slide-plane>
+            <l-slide-plane>sdsd</l-slide-plane>
+            <l-slide-plane>sdsd</l-slide-plane>
         </l-slide-box>
     </div>
 </template>
