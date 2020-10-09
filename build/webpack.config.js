@@ -16,17 +16,16 @@ module.exports = {
     devtool: 'inline-source-map',
 
     devServer: {
-        contentBase: './dist',
-        hot: true,
-        proxy: { '/upload': 'http://localhost:3000/upload' }
+        contentBase: '../dist',
+        hot: true
     },
 
     resolve: {
         extensions: [ '.js', '.vue', '.json' ],
         alias: {
-            '@': path.join(__dirname, './src'),
-            '@pack': path.join(__dirname, './packages'),
-            '@theme': path.join(__dirname, './packages/theme/src')
+            '@': path.join(__dirname, '../src'),
+            '@pack': path.join(__dirname, '../packages'),
+            '@theme': path.join(__dirname, '../packages/theme/src')
         }
     },
 

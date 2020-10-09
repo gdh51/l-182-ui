@@ -5,8 +5,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "webpack-dev-server --hot --open",
-        "build": "webpack",
+        "dev": "webpack-dev-server --hot --open --config build/webpack.config.js",
+        "build": "webpack --config build/webpack.config.js",
         "lint": "eslint ./ --fix"
     },
     "author": "",
@@ -36,10 +36,23 @@
         "eslint-plugin-vue": "^7.0.0-beta.3",
         "html-webpack-plugin": "^3.2.0",
         "postcss-loader": "^3.0.0",
+        "progress-bar-webpack-plugin": "^2.1.0",
         "style-loader": "^1.2.1",
         "stylint": "^2.0.0",
         "stylus-resources-loader": "0.0.4",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0"
-    }
+    },
+    "files": [
+        "lib",
+        "src",
+        "packages"
+    ],
+    "keywords": [
+        "l-ui",
+        "ui",
+        "lazybones",
+        "vue",
+        "components"
+    ]
 }
