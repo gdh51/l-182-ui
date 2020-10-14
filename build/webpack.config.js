@@ -1,96 +1,24 @@
-const path = require('path'),
-    HtmlWebpackPlugin = require('html-webpack-plugin'),
-    { CleanWebpackPlugin } = require('clean-webpack-plugin'),
-    VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { merge } = require('webpack-merge'),
+    Common = require('./webpack.common'),
+    { resolve } = require('path'),
+    TerserPlugin = require('terser-webpack-plugin')
 
-module.exports = {
-    mode: 'development',
-
-    entry: { app: './index.js' },
-
+// 全部打包入口
+module.exports = merge(Common, {
     output: {
-        filename: '[name].bundle.js',
-        path: path.join(__dirname, 'dist')
+        path: resolve('../lib'),
+        publicPath: '/dist/',
+        filename: '[name].js',
+        chunkFilename: '[id].js',
+        libraryTarget: 'umd',
+        library: 'Lazybones',
+        umdNamedDefine: true,
+        globalObject: 'globalThis'
     },
-
-    devtool: 'inline-source-map',
-
-    devServer: {
-        contentBase: '../dist',
-        hot: true
-    },
-
-    resolve: {
-        extensions: [ '.js', '.vue', '.json' ],
-        alias: {
-            '@': path.join(__dirname, '../src'),
-            '@pack': path.join(__dirname, '../packages'),
-            '@theme': path.join(__dirname, '../packages/theme/src')
-        }
-    },
-
-    module: {
-        rules: [
-
-            // 处理.vue单组件文件
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            },
-
-            // 处理stylus预处理器
-            {
-                test: /\.styl(us)?$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    'stylus-loader',
-                    {
-                        loader: 'stylus-resources-loader',
-                        options: { resources: './packages/theme/eva-theme.styl' }
-                    }
-                ]
-            },
-
-            // 处理CSS文件
-            {
-                test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
-            },
-
-            {
-                test: /\.js?$/,
-                loader: [ 'babel-loader', 'eslint-loader' ],
-                exclude: file =>
-                    /node_modules/.test(file) && !/\.vue\.js/.test(file)
-            },
-
-            {
-                test: /\.(gif|jpg|jpeg|png|svg)$/,
-                loader: 'url-loader',
-                options: { limit: 8192 }
-            },
-
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                loader: 'file-loader'
-            }
+    stats: 'none',
+    optimization: {
+        minimizer: [
+            new TerserPlugin({ terserOptions: { output: { comments: false } } })
         ]
-    },
-
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'several demos',
-            hash: true,
-            template: './src/index.html',
-            meta: {
-                viewport:
-                    'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
-            }
-        }),
-
-        new CleanWebpackPlugin(),
-
-        new VueLoaderPlugin()
-    ]
-}
+    }
+})

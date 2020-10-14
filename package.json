@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "webpack-dev-server --hot --open --config build/webpack.config.js",
+        "dev": "webpack-dev-server --hot --open --config build/webpack.dev.js",
         "build": "webpack --config build/webpack.config.js",
         "lint": "eslint ./ --fix"
     },
@@ -34,14 +34,15 @@
         "eslint": "^7.8.1",
         "eslint-loader": "^4.0.2",
         "eslint-plugin-vue": "^7.0.0-beta.3",
-        "html-webpack-plugin": "^3.2.0",
         "postcss-loader": "^3.0.0",
         "progress-bar-webpack-plugin": "^2.1.0",
         "style-loader": "^1.2.1",
         "stylint": "^2.0.0",
         "stylus-resources-loader": "0.0.4",
+        "terser-webpack-plugin": "^4.2.3",
         "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "^3.11.0",
+        "webpack-merge": "^5.2.0"
     },
     "files": [
         "lib",
