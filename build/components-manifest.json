@@ -1,6 +1,6 @@
 {
     "box": "../packages/box/index.js",
-    "mask": "../packages/modal/index.js",
+    "mask": "../packages/mask/index.js",
     "slide-box": "../packages/slide-box/index.js",
-    "button": "./packages/button/index.js"
+    "button": "../packages/button/index.js"
 }

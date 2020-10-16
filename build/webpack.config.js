@@ -6,7 +6,7 @@ const { merge } = require('webpack-merge'),
 // 全部打包入口
 module.exports = merge(Common, {
     output: {
-        path: resolve('../lib'),
+        path: resolve(__dirname, '../dist'),
         publicPath: '/dist/',
         filename: '[name].js',
         chunkFilename: '[id].js',

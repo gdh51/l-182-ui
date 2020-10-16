@@ -1,8 +1,8 @@
-import App from './src/App'
+import App from '../dev/App.vue'
 import Vue from 'vue'
-import { registeComponents } from '../packages/register-components'
+import { registerComponents } from '../packages/register-components'
 
 // // 注册全局组件
-registeComponents(Vue)
+registerComponents(Vue)
 
 new Vue({ render: h => h(App) }).$mount('#app')

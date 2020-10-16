@@ -1,20 +1,28 @@
-const { merge } = require('webpack-merge'),
+const { mergeWithCustomize, customizeArray } = require('webpack-merge'),
     Common = require('./webpack.common'),
-    { join } = require('path')
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    { resolve } = require('path')
 
-module.exports = merge(Common, {
+module.exports = mergeWithCustomize({ customizeArray: customizeArray({ '*': 'append' }) })(Common, {
     mode: 'development',
     devtool: 'inline-source-map',
 
     devServer: {
-        contentBase: '../dev',
+        http2: true,
+        contentBase: resolve(__dirname, '../dist'),
         hot: true
     },
 
-    entry: { app: './index.js' },
+    entry: { app: resolve(__dirname, '../src/index.js') },
 
     output: {
         filename: '[name].bundle.js',
-        path: join(__dirname, 'dev')
-    }
+        path: resolve(__dirname, '../dist')
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: '组件开发服务器',
+            template: resolve(__dirname, '../dev/index.html')
+        })
+    ]
 })

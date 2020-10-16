@@ -16,7 +16,9 @@ module.exports = {
         path: resolve(process.cwd(), './lib'),
         publicPath: '/dist/',
         filename: 'lazybones-ui.common.js',
-        chunkFileName: '[name].[id].js',
+        chunkFilename: '[name].[id].js',
+
+        // 以export default的方式输出该包
         libraryExport: 'default',
         libraryTarget: 'commonjs2'
     },

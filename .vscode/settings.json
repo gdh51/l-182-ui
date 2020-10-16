@@ -9,6 +9,9 @@
         "source.fixAll.eslint": true
     },
     "cSpell.ignoreWords": [
-        "jsexclude"
+        "jsexclude",
+        "styl",
+        "IIFE",
+        "devtool"
     ]
 }

@@ -14,7 +14,7 @@ import LSlidePlane from './slide-box/src/components/l-slide-plane.vue'
 
 const Components = [ LButton, LMask, LSlideBox, LSlidePlane, LBox ]
 
-export function registeComponents(Vue) {
+export function registerComponents(Vue) {
     Components.forEach(component => {
         Vue.component(component.name, component)
     })
