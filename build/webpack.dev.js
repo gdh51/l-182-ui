@@ -10,7 +10,8 @@ module.exports = mergeWithCustomize({ customizeArray: customizeArray({ '*': 'app
     devServer: {
         http2: true,
         contentBase: resolve(__dirname, '../dist'),
-        hot: true
+        hot: true,
+        stats: 'errors-only'
     },
 
     entry: { app: resolve(__dirname, '../src/index.js') },

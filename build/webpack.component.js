@@ -4,7 +4,9 @@ const { merge } = require('webpack-merge'),
     { resolve } = require('path')
 
 // 统一入口路径
-Reflect.ownKeys(Components).forEach(key => Components[key] = resolve(__dirname, Components[key]))
+Reflect
+    .ownKeys(Components)
+    .forEach(key => Components[key] = resolve(__dirname, Components[key]))
 
 console.log(Components)
 

@@ -14,7 +14,8 @@ module.exports = {
     entry: { app: [ './src/index.js' ] },
     output: {
         path: resolve(process.cwd(), './lib'),
-        publicPath: '/dist/',
+
+        // publicPath: '/dist/',
         filename: 'lazybones-ui.common.js',
         chunkFilename: '[name].[id].js',
 
