@@ -1,12 +1,6 @@
 <template>
     <div id="app">
-        <l-slide-box width="600px" height="300px" direction="vertical">
-            <l-slide-plane>sdsd</l-slide-plane>
-            <l-slide-plane>sdsd</l-slide-plane>
-            <l-slide-plane>sdsd</l-slide-plane>
-            <l-slide-plane>sdsd</l-slide-plane>
-            <l-slide-plane>sdsd</l-slide-plane>
-        </l-slide-box>
+        <l-suspended-card style="width: 350px; height: 500px;">sdsd</l-suspended-card>
     </div>
 </template>
 

@@ -1,17 +1,11 @@
 {
     // 保存时自动格式化(通过插件)
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
 
     // 保存时执行的动作
     "editor.codeActionsOnSave": {
-        
         // For ESLint
         "source.fixAll.eslint": true
     },
-    "cSpell.ignoreWords": [
-        "jsexclude",
-        "styl",
-        "IIFE",
-        "devtool"
-    ]
+    "cSpell.ignoreWords": ["jsexclude", "styl", "IIFE", "devtool"]
 }

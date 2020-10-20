@@ -1,7 +1,7 @@
-import LContainer from './src/index.vue'
+import LSuspendedCard from './src/index'
 
-LContainer.install = function(Vue) {
-    Vue.component(LContainer.name, LContainer)
+LSuspendedCard.install = function(Vue) {
+    Vue.component(LSuspendedCard.name, LSuspendedCard)
 }
 
-export default LContainer
+export default LSuspendedCard
