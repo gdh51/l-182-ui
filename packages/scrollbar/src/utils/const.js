@@ -20,15 +20,3 @@ export const BAR_MAP = {
         class: 'is-horizontal'
     }
 }
-
-// 节流函数
-export function lazyHandler(fn, time, ctx) {
-    let timer
-
-    return function(...arg) {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
-            fn.call(ctx, ...arg)
-        }, time)
-    }
-}

@@ -26,11 +26,11 @@
 
 <script>
 import Bar from './components/bar'
-import { lazyHandler } from './util/util'
-import { on } from '../../util/event'
+import { debounce } from '@/utils/lazy'
+import { on } from '@/utils/event'
 
 export default {
-    name: 'LScrollBar',
+    name: 'LScrollbar',
 
     components: { Bar },
 
@@ -94,7 +94,7 @@ export default {
                 'resize',
 
                 /* eslint-disable-next-line */
-                lazyHandler(this.updateScrollbar, 500, this)
+                debounce(this.updateScrollbar, 500, this)
             )
     },
 

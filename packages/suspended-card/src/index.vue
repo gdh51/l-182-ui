@@ -1,17 +1,21 @@
-<template functional>
-    <l-card class="l-suspended-card" v-bind="data.$attrs" v-on="listeners">
-        <slot />
-    </l-card>
-</template>
-
 <script>
 import LCard from '@pack/card'
 
 export default {
     name: 'LSuspendedCard',
     components: { LCard },
-    data() {
-        return {}
+    functional: true,
+    render(h, { data, children }) {
+        const { staticClass } = data,
+              originalClass = 'l-suspended-card'
+
+        if (staticClass) {
+            data.staticClass += ` ${originalClass}`
+        } else {
+            data.staticClass = originalClass
+        }
+
+        return h('l-card', data, [ children ])
     }
 }
 </script>

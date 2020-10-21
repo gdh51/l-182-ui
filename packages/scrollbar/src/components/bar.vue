@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import { on, off } from '../../../util/event'
-import { BAR_MAP } from '../util/util'
+import { on, off } from '@/utils/event'
+import { BAR_MAP } from '../utils/const'
 
 export default {
-    name: 'Bar',
+    name: 'LBar',
 
     props: {
 

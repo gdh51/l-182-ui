@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <l-suspended-card style="width: 350px; height: 500px;">sdsd</l-suspended-card>
+            <div class="container">
+                <div></div>
+            </div>
     </div>
 </template>
 
@@ -17,6 +19,10 @@ export default { name: 'App' }
     align-items center
     width 100%
     height 100%
+
+    .container
+        width 0
+        overflow scroll
 
     .app_container
         margin 0 auto
