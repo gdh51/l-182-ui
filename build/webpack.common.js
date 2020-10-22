@@ -55,7 +55,12 @@ module.exports = {
                     'stylus-loader',
                     {
                         loader: 'stylus-resources-loader',
-                        options: { resources: './packages/theme/eva-theme.styl' }
+                        options: {
+                            resources: [
+                                './packages/theme/eva-theme.styl',
+                                './packages/theme/common-variable.styl'
+                            ]
+                        }
                     }
                 ]
             },

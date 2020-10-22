@@ -26,8 +26,8 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
-        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
         'linebreak-style': [ 'error', 'unix' ],
         quotes: [ 'error', 'single', {
@@ -79,11 +79,11 @@ module.exports = {
         } ],
 
         // 对标prettier trailingCommas，最后一个字段或元素是否带,号
-        'comma-dangle': [ 1, 'never' ],
+        'comma-dangle': [ 2, 'never' ],
 
         // 禁止if语句中return后，else/else if继续return
         'no-else-return': [
-            'warn',
+            'error',
             {
                 allowElseIf: true
             }
@@ -113,7 +113,7 @@ module.exports = {
         'eol-last': [ 'error', 'always' ],
 
         // 逗号后面留空格(定义数组或对象)
-        'comma-spacing': [ 'warn', {
+        'comma-spacing': [ 'error', {
             before: false,
             after: true
         } ],
@@ -123,20 +123,20 @@ module.exports = {
         'array-bracket-spacing': [ 'error', 'always' ],
 
         // 对象的动态键名前后保持空格(Class)中除外
-        'computed-property-spacing': ['warn', 'never', {
+        'computed-property-spacing': ['error', 'never', {
             enforceForClassMembers: false
         } ],
 
         // 注释位置
-        'line-comment-position': [ 'warn', {
+        'line-comment-position': [ 'error', {
             position: 'above'
         } ],
 
         // 定义class的字段完后，下一个字段前要换行
-        'lines-between-class-members': [ 'warn', 'always' ],
+        'lines-between-class-members': [ 'error', 'always' ],
 
         // 一行的最大长度
-        'max-len': [ 'warn', {
+        'max-len': [ 'error', {
             code: 80,
             tabWidth: 4,
             comments: 70,
@@ -153,19 +153,19 @@ module.exports = {
         } ],
 
         // 函数定义的参数，最多5个，多了应该考虑对象了
-        'max-params': [ 'warn', 5 ],
+        'max-params': [ 'error', 5 ],
 
         // 链式调用换行，超过3个调用就应该换行了
-        'newline-per-chained-call': [ 'warn', {
+        'newline-per-chained-call': [ 'error', {
             ignoreChainWithDepth: 3
 
         } ],
 
-        'no-lonely-if': 'warn',
+        'no-lonely-if': 'error',
 
         'no-mixed-spaces-and-tabs': 'error',
 
-        'no-trailing-spaces': 'warn',
+        'no-trailing-spaces': 'error',
 
         'no-whitespace-before-property': 'error',
 
@@ -181,7 +181,7 @@ module.exports = {
         } ],
 
         // 对标prettierbracketSpacing，对象{}前后要有空格
-        'object-curly-spacing': [ 'warn', 'always', {
+        'object-curly-spacing': [ 'error', 'always', {
             arraysInObjects: true,
             objectsInObjects: true
         } ],

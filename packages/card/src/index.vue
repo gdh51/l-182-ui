@@ -1,4 +1,6 @@
 <script>
+import { inheritStaticAttr } from '@/utils/functional'
+
 export default {
     name: 'LCard',
     functional: true,
@@ -11,15 +13,8 @@ export default {
     render(h, {
         props: { tag }, children, data
     }) {
-        const { staticClass } = data,
-              originalClass = 'l-card'
 
-        if (staticClass) {
-            data.staticClass += ` ${originalClass}`
-        } else {
-            data.staticClass = originalClass
-        }
-        return h(tag, data, [ children ])
+        return h(tag, inheritStaticAttr(data, 'staticClass', 'l-card'), [ children ])
     }
 }
 </script>

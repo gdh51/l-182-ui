@@ -12,10 +12,10 @@
                 :class="viewClass"
                 :style="viewStyle"
             >
-                <slot></slot>
+                <slot />
             </div>
         </div>
-        <bar :movePercentage="moveY" :barSize="verticalBarHeight" />
+        <bar :movePercentage="moveY" :barSizeRadio="verticalBarHeight" />
         <bar
             :vertical="false"
             :movePercentage="moveX"
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import Bar from './components/bar'
+import Bar from './components/bar-slot'
 import { debounce } from '@/utils/lazy'
 import { on } from '@/utils/event'
 

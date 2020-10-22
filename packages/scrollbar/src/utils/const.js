@@ -1,4 +1,4 @@
-export const BAR_MAP = {
+export const BAR_PROP_MAP = {
 
     // 垂直
     vertical: {
@@ -7,7 +7,8 @@ export const BAR_MAP = {
         rectSize: 'height',
         clientSize: 'clientHeight',
         scrollOffset: 'scrollTop',
-        class: 'is-vertical'
+        class: 'is-vertical',
+        sizeUnit: 'width'
     },
 
     // 水平
@@ -17,6 +18,7 @@ export const BAR_MAP = {
         rectSize: 'width',
         clientSize: 'clientWidth',
         scrollOffset: 'scrollLeft',
-        class: 'is-horizontal'
+        class: 'is-horizontal',
+        sizeUnit: 'height'
     }
 }

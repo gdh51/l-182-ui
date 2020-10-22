@@ -1,21 +1,15 @@
 <script>
 import LCard from '@pack/card'
+import { inheritStaticAttr } from '@/utils/functional'
 
 export default {
     name: 'LSuspendedCard',
     components: { LCard },
     functional: true,
     render(h, { data, children }) {
-        const { staticClass } = data,
-              originalClass = 'l-suspended-card'
-
-        if (staticClass) {
-            data.staticClass += ` ${originalClass}`
-        } else {
-            data.staticClass = originalClass
-        }
-
-        return h('l-card', data, [ children ])
+        return h('l-card', inheritStaticAttr(data, 'staticClass', 'l-suspended-card'), [
+            children
+        ])
     }
 }
 </script>

@@ -1,20 +1,26 @@
 <template>
-    <div class="custom_scrollbar-container" :class="bar.class">
-        <div
-            class="custom_scrollbar"
+    <div class="l-bar-slot" :class="bar.class">
+        <l-bar
+            class="l-bar-slot__scrollbar"
             :style="barPosStyle"
             ref="bar"
             @mousedown="cursorTranslate"
-        ></div>
+        />
     </div>
 </template>
 
 <script>
 import { on, off } from '@/utils/event'
-import { BAR_MAP } from '../utils/const'
+import { BAR_PROP_MAP } from '../utils/const'
+import LBar from '@pack/bar'
 
+/**
+ * @description 滚动条槽
+ */
 export default {
-    name: 'LBar',
+    name: 'LBarSlot',
+
+    components: { LBar },
 
     props: {
 
@@ -31,7 +37,7 @@ export default {
         },
 
         // 滚动条占整个滚动条槽的百分比
-        barSize: {
+        barSizeRadio: {
             type: String,
             default: '100%'
         }
@@ -52,7 +58,7 @@ export default {
 
         // 确认滚动条的类型
         bar() {
-            return BAR_MAP[this.vertical ? 'vertical' : 'horizontal']
+            return BAR_PROP_MAP[this.vertical ? 'vertical' : 'horizontal']
         },
 
         // 滚动条在移动时的位置样式
@@ -60,7 +66,7 @@ export default {
             const style = {},
                   bar = this.bar
 
-            style[bar.rectSize] = this.barSize
+            style[bar.rectSize] = this.barSizeRadio
             style.transform = `translate${bar.axis}(${this.movePercentage}%)`
 
             return style
@@ -72,7 +78,7 @@ export default {
         },
 
         // 滚动条的具体长度
-        spBarSize() {
+        spbarSizeRadio() {
             return (
                 (this.$refs.bar &&
                     this.$refs.bar.getBoundingClientRect()[
@@ -126,7 +132,7 @@ export default {
 
             // 以滚动条长度为基计算鼠标的位移的占比
             const offsetPercentage =
-                (e[this.bar.client] - this.clickPosition) / this.spBarSize
+                (e[this.bar.client] - this.clickPosition) / this.spbarSizeRadio
 
             // 由于滚动条与滚动条槽的比等于视窗比上整个数据视图，所以可以换算为视窗应该移动的距离
             // 这里其实有个小问题，但不会出现问题的原因是scroll超过自己活动范围时，不会有影响
@@ -147,19 +153,16 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.custom_scrollbar-container
+.l-bar-slot
     position absolute
     right 2px
     bottom 2px
     z-index 1
     border-radius 4px
 
-    .custom_scrollbar
+    .l-bar-slot__scrollbar
         position absolute
-        border-radius inherit
-        background-color rgba(144, 147, 153, .3)
         opacity 0
-        cursor pointer
         transition opacity 120ms ease-out
 
 .is-horizontal
