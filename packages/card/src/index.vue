@@ -1,6 +1,8 @@
 <script>
 import { inheritStaticAttr } from '@/utils/functional'
 
+const suspendedClz = ' is-suspended'
+
 export default {
     name: 'LCard',
     functional: true,
@@ -8,13 +10,18 @@ export default {
         tag: {
             type: String,
             default: 'div'
+        },
+        suspended: {
+            type: Boolean,
+            default: false
         }
     },
     render(h, {
-        props: { tag }, children, data
+        props: { tag, suspended }, children, data
     }) {
-
-        return h(tag, inheritStaticAttr(data, 'staticClass', 'l-card'), [ children ])
+        let basicClass = 'l-card'
+        if (suspended) basicClass += suspendedClz
+        return h(tag, inheritStaticAttr(data, 'staticClass', basicClass), [ children ])
     }
 }
 </script>

@@ -16,6 +16,7 @@ function inheritStaticAttr(data, attrStr, rewrite) {
 
         return data
     }
+    data[attrStr] || (data[attrStr] = {})
 
     // 如果有原有属性，则保留不重写
     Object.assign(rewrite, data[attrStr])

@@ -3,13 +3,15 @@
             <!-- <div class="container">
                 <div></div>
             </div> -->
+            <l-bar-slot style="height: 300px;"/>
     </div>
 </template>
 
 <script>
 import '../packages/theme/common-style.styl'
+import LBarSlot from '@pack/scrollbar/src/components/bar-slot'
 
-export default { name: 'App' }
+export default { name: 'App', components: { LBarSlot } }
 </script>
 
 <style lang="stylus" scoped>

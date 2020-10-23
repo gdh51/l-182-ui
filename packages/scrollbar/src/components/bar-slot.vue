@@ -1,8 +1,9 @@
 <template>
-    <div class="l-bar-slot" :class="bar.class">
+    <div class="l-bar-slot" :class="bar.class" ref="bar-slot">
         <l-bar
             class="l-bar-slot__scrollbar"
             :style="barPosStyle"
+            :dir="vertical"
             ref="bar"
             @mousedown="cursorTranslate"
         />
@@ -27,13 +28,9 @@ export default {
         // 滚动条类型，垂直还是水平
         vertical: {
             type: Boolean,
-            default: true
-        },
 
-        // 滚动条相当于自身长度的位移距离
-        movePercentage: {
-            type: Number,
-            default: 0
+            // 默认为垂直
+            default: true
         },
 
         // 滚动条占整个滚动条槽的百分比
@@ -50,7 +47,8 @@ export default {
             clickPosition: 0,
 
             // 当前视窗相当于相对于整个数据的顶部的距离
-            viewPosition: 0
+            viewPosition: 0,
+            movePercentage: 0
         }
     },
 
@@ -72,11 +70,6 @@ export default {
             return style
         },
 
-        // 视窗元素
-        viewElement() {
-            return this.$parent.$refs.view
-        },
-
         // 滚动条的具体长度
         spbarSizeRadio() {
             return (
@@ -88,16 +81,11 @@ export default {
                 /* eslint-disable-next-line */
                 0
             )
-        },
-
-        // 视窗的具体长度
-        viewSize() {
-            return (
-
-                /* eslint-disable-next-line */
-                (this.viewElement && this.viewElement[this.bar.clientSize]) || 0
-            )
         }
+    },
+
+    mounted() {
+
     },
 
     methods: {
@@ -152,31 +140,6 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.l-bar-slot
-    position absolute
-    right 2px
-    bottom 2px
-    z-index 1
-    border-radius 4px
-
-    .l-bar-slot__scrollbar
-        position absolute
-        opacity 0
-        transition opacity 120ms ease-out
-
-.is-horizontal
-    left 2px
-    height 6px
-
-    &>div
-        width 100%
-        height 100%
-
-.is-vertical
-    top 2px
-    width 6px
-
-    &>div
-        width 100%
+<style lang="stylus">
+@import '~@theme/l-bar-slot'
 </style>

@@ -4,7 +4,6 @@ import LBox from './box'
 import LSlideBox from './slide-box'
 import LSlidePlane from './slide-box/src/components/l-slide-plane'
 import LCard from './card'
-import LSuspendedCard from './suspended-card'
 import LScrollbar from './scrollbar'
 import LBar from './bar'
 
@@ -15,7 +14,6 @@ const Components = [
     LSlidePlane,
     LBox,
     LCard,
-    LSuspendedCard,
     LScrollbar,
     LBar
 ]
