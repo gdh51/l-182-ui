@@ -5,11 +5,13 @@
         ref="bar-slot"
         @mouseup="cursorJump"
         @mousedown="saveClickPos"
+        @resize="restoreBarInfo"
     >
         <l-bar
             class="l-bar-slot__scrollbar"
             :style="barPosStyle"
-            :dir="vertical"
+            :dir="!horizontal"
+            :size="slotRectThickness + 'px'"
             ref="bar"
             @mousedown="cursorTranslate"
         />
@@ -35,11 +37,11 @@ export default {
     props: {
 
         // 滚动条类型，垂直还是水平
-        vertical: {
+        horizontal: {
             type: Boolean,
 
             // 默认为垂直
-            default: true
+            default: false
         },
 
         // 滚动条的尺寸，支持百分比
@@ -58,14 +60,19 @@ export default {
             // 滚动槽的长度
             slotRectSize: 0,
 
+            // 滚动槽的厚度
+            slotRectThickness: 0,
+
             // 滚动条的长度
             barRectSize: 0,
 
             // 滚动槽顶部位置(单位px)
             slotRectStart: 0,
 
-            // 滚动条相当于自身长度的位移(单位100%)
+            // 滚动条相当于自身长度的实时位移(单位100%)
             movePercentage: 0,
+
+            startDragPercentage: 0,
 
             // 滚动条可以移动的最大百分比(相对于滚动条自身，以长度为1个单位)
             maxMovePercentage: 0,
@@ -76,7 +83,9 @@ export default {
                 // 最小的值为bar的一半，这个不用去计算
                 min: 50,
                 max: 100
-            }
+            },
+
+            isDragging: false
         }
     },
 
@@ -84,7 +93,7 @@ export default {
 
         // 确认滚动条的类型，以及这个类型中会用到的参数
         barTypeArgs() {
-            return BAR_PROP_MAP[this.vertical ? 'vertical' : 'horizontal']
+            return BAR_PROP_MAP[this.horizontal ? 'horizontal' : 'vertical']
         },
 
         // 滚动条在移动时的位置样式
@@ -98,36 +107,49 @@ export default {
             // 当前bar的位置情况
             style.transform = `translate${barArgs.axis}(${this.movePercentage}%)`
 
+            // 点击跳转时添加动画
+            style.transition = this.isDragging ? '' : 'all .2s linear'
+
             return style
         }
     },
 
     mounted() {
+        this.restoreBarInfo()
+    },
 
-        // 初始化滚动槽和滚动条的真实长度
-        this.calcSlotSize()
-        this.calcBarSize()
-
-        this.maxMovePercentage =
-            ((this.slotRectSize - this.barRectSize) / this.barRectSize) *
-            OneHundredPercent
-
-        // eslint-disable-next-line
-        this.jumpSafeRange.max = (this.slotRectSize - this.barRectSize / 2) 
-            / this.barRectSize *  OneHundredPercent
+    updated() {
+        this.restoreBarInfo()
     },
 
     methods: {
 
+        restoreBarInfo() {
+
+            // 初始化滚动槽和滚动条的真实长度
+            this.calcSlotSize()
+            this.calcBarSize()
+
+            this.maxMovePercentage =
+                ((this.slotRectSize - this.barRectSize) / this.barRectSize) *
+                OneHundredPercent
+
+            // eslint-disable-next-line
+            this.jumpSafeRange.max = (this.slotRectSize - this.barRectSize / 2) 
+                / this.barRectSize *  OneHundredPercent
+        },
+
         // 计算槽的长度
         calcSlotSize() {
 
-            const slotRect = this.$refs['bar-slot'].getBoundingClientRect()
+            const slotRect = this.$refs['bar-slot'].getBoundingClientRect(),
+                  barTypeArgs = this.barTypeArgs
 
             // 计算滚动槽的真实长度(单位px)
-            this.slotRectSize = slotRect[this.barTypeArgs.rectSize]
+            this.slotRectSize = slotRect[barTypeArgs.rectSize]
+            this.slotRectThickness = slotRect[barTypeArgs.thicknessUnit]
 
-            this.slotRectStart = slotRect[this.barTypeArgs.start]
+            this.slotRectStart = slotRect[barTypeArgs.start]
         },
         calcBarSize() {
 
@@ -146,8 +168,8 @@ export default {
                 return
             }
 
-            // 计算点击时鼠标的初始位置
-            this.clickPosition = e[this.barTypeArgs.client]
+            // 记录滚动条的拖拽前位置，之后的相对移动都要在此基础上计算
+            this.startDragPercentage = this.movePercentage
 
             // 记录开始滚动时的视窗的位置
             this.startDrag(e)
@@ -162,23 +184,30 @@ export default {
         },
 
         mousemoveHandler(e) {
+            this.isDragging = true
 
             // 以滚动条长度为基计算鼠标的位移的占比
             const offsetPercentage =
-                ((e[this.barTypeArgs.client] - this.clickPosition) /
-                    this.barRectSize) *
-                OneHundredPercent
+                      ((e[this.barTypeArgs.client] - this.clickPosition) /
+                          this.barRectSize) *
+                      OneHundredPercent,
+
+                  // 计算出来的最终位置
+                  calcMovePercentage =
+                      this.startDragPercentage + offsetPercentage
 
             // 限制滚动条勿超过最大可移动位移。勿小于0
-            this.movePercentage =
-                offsetPercentage > this.maxMovePercentage
-                    ? this.maxMovePercentage
-                    : offsetPercentage > ZeroPercent
-                        ? offsetPercentage
-                        : ZeroPercent
+            this.movePercentage = calcMovePercentage
+                > this.maxMovePercentage
+                ? this.maxMovePercentage
+                : calcMovePercentage > ZeroPercent
+                    ? calcMovePercentage
+                    : ZeroPercent
 
             // 移动时传递当前位置信息
             this.$emit('move', {
+
+                // 移动的绝对距离，相对于上次位置
                 absolute:
                     (offsetPercentage * this.barRectSize) / OneHundredPercent +
                     'px',
@@ -187,15 +216,11 @@ export default {
             })
         },
 
-        mouseupHandler(e) {
-
-            // 确保用户不是要拖拽滚动条
-            if (this.clickPosition === e[this.barTypeArgs.client]) {
-                e.stopImmediatePropagation()
-            }
+        mouseupHandler() {
 
             off(document, 'mousemove', this.mousemoveHandler)
             document.onselectstart = null
+            this.isDragging = false
         },
 
         saveClickPos(e) {
@@ -204,6 +229,8 @@ export default {
 
         // 点击槽某个位置的直接跳转
         cursorJump(e) {
+            if (this.isDragging) return
+
             const offsetPercentage = (e['page' + this.barTypeArgs.axis] - this.slotRectStart) /
                       this.barRectSize * OneHundredPercent,
                   { min, max } = this.jumpSafeRange

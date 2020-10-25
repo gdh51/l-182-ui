@@ -24,11 +24,11 @@ export default {
         dir = BAR_PROP_MAP[dir] ? dir : DEFAULT_DIR
 
         // 使用的厚度单位
-        const sizeUnit = BAR_PROP_MAP[dir].sizeUnit
+        const thicknessUnit = BAR_PROP_MAP[dir].thicknessUnit
 
         // 提供使用者通过sytle/class重写的机会
         inheritStaticAttr(data, 'staticStyle', {
-            [sizeUnit]: isCandy ? CANDY_SIZE : size,
+            [thicknessUnit]: isCandy ? CANDY_SIZE : size,
             'border-radius': size
         })
 

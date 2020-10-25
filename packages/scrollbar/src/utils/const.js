@@ -16,7 +16,7 @@ export const BAR_PROP_MAP = {
         class: 'is-vertical',
 
         // 条的厚度单位
-        sizeUnit: 'width',
+        thicknessUnit: 'width',
 
         // 条的顶部使用的单位
         start: 'top'
@@ -30,7 +30,7 @@ export const BAR_PROP_MAP = {
         clientSize: 'clientWidth',
         scrollOffset: 'scrollLeft',
         class: 'is-horizontal',
-        sizeUnit: 'height',
+        thicknessUnit: 'height',
 
         start: 'left'
     }
