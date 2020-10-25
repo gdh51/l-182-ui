@@ -3,7 +3,7 @@
             <!-- <div class="container">
                 <div></div>
             </div> -->
-            <l-bar-slot style="height: 300px;"/>
+            <l-bar-slot style="height: 300px;" bar-size-radio="30%"/>
     </div>
 </template>
 
