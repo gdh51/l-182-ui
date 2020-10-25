@@ -153,8 +153,7 @@ export default {
             this.startDrag(e)
         },
 
-        startDrag(e) {
-            e.stopImmediatePropagation()
+        startDrag() {
             on(document, 'mousemove', this.mousemoveHandler)
             on(document, 'mouseup', this.mouseupHandler)
 
@@ -188,22 +187,23 @@ export default {
             })
         },
 
-        mouseupHandler() {
+        mouseupHandler(e) {
+
+            // 确保用户不是要拖拽滚动条
+            if (this.clickPosition === e[this.barTypeArgs.client]) {
+                e.stopImmediatePropagation()
+            }
+
             off(document, 'mousemove', this.mousemoveHandler)
             document.onselectstart = null
         },
 
         saveClickPos(e) {
             this.clickPosition = e[this.barTypeArgs.client]
-            console.log(this.clickPosition)
         },
 
         // 点击槽某个位置的直接跳转
         cursorJump(e) {
-
-            // 确保用户不是要拖拽滚动条
-            if (this.clickPosition !== e[this.barTypeArgs.client]) return
-
             const offsetPercentage = (e['page' + this.barTypeArgs.axis] - this.slotRectStart) /
                       this.barRectSize * OneHundredPercent,
                   { min, max } = this.jumpSafeRange
