@@ -6,6 +6,7 @@ import LSlidePlane from './slide-box/src/components/l-slide-plane'
 import LCard from './card'
 import LScrollbar from './scrollbar'
 import LBar from './bar'
+import LBarSlot from './bar-slot'
 
 const Components = [
     LButton,
@@ -15,7 +16,8 @@ const Components = [
     LBox,
     LCard,
     LScrollbar,
-    LBar
+    LBar,
+    LBarSlot
 ]
 
 export function registerComponents(Vue) {

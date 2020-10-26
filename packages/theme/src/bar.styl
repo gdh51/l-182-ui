@@ -1,11 +1,14 @@
 .l-bar
     border-radius 15px
-    background-color $lw1 + 20%
+    background-color $lg1
     cursor pointer
     transition opacity 120ms ease-out
 
     &.is-candy
+        overflow visible
         box-sizing content-box
         border 2px dashed $lg2
         background-color $lo2
-        overflow visible
+
+    &.is-eva
+        background-color $g2

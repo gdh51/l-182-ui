@@ -1,7 +1,7 @@
 <template>
     <div
         class="l-bar-slot"
-        :class="barTypeArgs.class"
+        :class="[ barTypeArgs.class, type ? `is-${type}` : '' ]"
         ref="bar-slot"
         @mouseup="cursorJump"
         @mousedown="saveClickPos"
@@ -10,6 +10,7 @@
         <l-bar
             class="l-bar-slot__scrollbar"
             :style="barPosStyle"
+            :type="type"
             :dir="!horizontal"
             :size="slotRectThickness + 'px'"
             ref="bar"
@@ -20,7 +21,7 @@
 
 <script>
 import { on, off } from '@/utils/event'
-import { BAR_PROP_MAP } from '../utils/const'
+import { BAR_PROP_MAP } from '../../scrollbar/src/utils/const'
 import LBar from '@pack/bar'
 
 const OneHundredPercent = 100,
@@ -48,7 +49,9 @@ export default {
         barSize: {
             type: String,
             default: '30%'
-        }
+        },
+
+        type: { type: String }
     },
 
     data() {

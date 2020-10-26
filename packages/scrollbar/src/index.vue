@@ -15,24 +15,21 @@
                 <slot />
             </div>
         </div>
-        <bar :movePercentage="moveY" :barSizeRadio="verticalBarHeight" />
-        <bar
-            :vertical="false"
-            :movePercentage="moveX"
-            :barSize="horizontalBarWidth"
-        />
+        <l-bar-slot  />
+        <l-bar-slot horizontal/>
     </div>
 </template>
 
 <script>
-import Bar from './components/bar-slot'
+import LBarSlot from '@pack/bar-slot'
 import { debounce } from '@/utils/lazy'
 import { on } from '@/utils/event'
+import { getScrollbarWidth } from './utils/native-scrollbar'
 
 export default {
     name: 'LScrollbar',
 
-    components: { Bar },
+    components: { LBarSlot },
 
     props: {
 

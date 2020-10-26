@@ -2,7 +2,12 @@
 import { inheritStaticAttr } from '@/utils/functional'
 import { BAR_PROP_MAP } from '../../scrollbar/src/utils/const'
 
-const CANDY = 'candy',
+// 可用官网样式map
+const TYPE_MAP = {
+          candy: ' is-candy',
+          eva: ' is-eva'
+      },
+      CANDY = 'candy',
       CANDY_SIZE = 0,
       DEFAULT_DIR = 'horizontal'
 
@@ -12,15 +17,20 @@ const CANDY = 'candy',
 export default {
     name: 'LBar',
     functional: true,
-    render(h, {
+    render(
+        h,
+        {
 
-        // 默认推荐厚度为10px，水平方向
-        props: {
-            type, dir, size = '10px'
-        }, children, data
-    }) {
+            // 默认推荐厚度为10px，水平方向
+            props: {
+                type, dir, size = '10px'
+            },
+            children,
+            data
+        }
+    ) {
         let clz = 'l-bar'
-        const isCandy = (type === CANDY)
+        const isCandy = type === CANDY
         dir = BAR_PROP_MAP[dir] ? dir : DEFAULT_DIR
 
         // 使用的厚度单位
@@ -32,7 +42,7 @@ export default {
             'border-radius': size
         })
 
-        if (isCandy) clz += (' is-' + CANDY)
+        if (TYPE_MAP[type]) clz += TYPE_MAP[type]
 
         inheritStaticAttr(data, 'staticClass', clz)
 

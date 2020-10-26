@@ -1,17 +1,21 @@
 <template>
     <div id="app">
-            <!-- <div class="container">
-                <div></div>
-            </div> -->
-            <l-bar-slot style="width: 300px;" bar-size-radio="30%" horizontal />
+        <!-- <div class="container">
+            <div></div>
+        </div> -->
+        <l-scrollbar style="height: 100px;width: 200px;">
+            <div style="height: 400px;width: 200px;background: red;" />
+        </l-scrollbar>
+        <div style="height: 100px;width: 200px;overflow: scroll;">
+            <div style="height: 400px;width: 200px;background: blue;" />
+        </div>
     </div>
 </template>
 
 <script>
 import '../packages/theme/common-style.styl'
-import LBarSlot from '@pack/scrollbar/src/components/bar-slot'
 
-export default { name: 'App', components: { LBarSlot } }
+export default { name: 'App' }
 </script>
 
 <style lang="stylus" scoped>
