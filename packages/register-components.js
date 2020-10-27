@@ -2,7 +2,7 @@ import LButton from './button'
 import LMask from './mask'
 import LBox from './box'
 import LSlideBox from './slide-box'
-import LSlidePlane from './slide-box/src/components/l-slide-plane'
+import LSlidePanel from './slide-box/src/components/l-slide-plane'
 import LCard from './card'
 import LScrollbar from './scrollbar'
 import LBar from './bar'
@@ -12,7 +12,7 @@ const Components = [
     LButton,
     LMask,
     LSlideBox,
-    LSlidePlane,
+    LSlidePanel,
     LBox,
     LCard,
     LScrollbar,

@@ -1,14 +1,20 @@
 <template>
     <div id="app">
-        <!-- <div class="container">
-            <div></div>
-        </div> -->
-        <l-scrollbar style="height: 100px;width: 200px;">
-            <div style="height: 400px;width: 200px;background: red;" />
-        </l-scrollbar>
-        <div style="height: 100px;width: 200px;overflow: scroll;">
-            <div style="height: 400px;width: 200px;background: blue;" />
-        </div>
+        <el-scrollbar
+            viewStyle="height: 100px; width: 200px;"
+            wrapStyle="height: 100px; width: 200px;"
+        >
+            <div style="height: 400px;width: 200px;background: blue;">sdsds</div>
+        </el-scrollbar>
+        <!-- <div style="width: 200px;height: 100px;">
+            <div>
+                <div style="overflow: auto;height: 100px;margin-left: -16px;">
+                    <div
+                        style="height: 400px;width: 200px;background: blue;"
+                    >sdsds</div>
+                </div>
+            </div>
+        </div>-->
     </div>
 </template>
 
@@ -27,8 +33,8 @@ export default { name: 'App' }
     height 100%
 
     .container
-        width 0
         overflow scroll
+        width 0
 
     .app_container
         margin 0 auto

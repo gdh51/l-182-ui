@@ -4,7 +4,7 @@ import { hyphenate } from '@/utils/hyphenate'
 import { Direction, DirToShape } from '@/utils/is-slide/constants'
 import { initSlideHelper } from '@/utils/is-slide'
 
-const LBoxPlane = 'l-slide-plane'
+const LBoxPanel = 'l-slide-plane'
 
 export default {
     name: 'LSlideBox',
@@ -25,39 +25,45 @@ export default {
 
     data() {
         return {
-            viewSize: {}, planesNum: 0, slider: null
+            viewSize: {},
+            planesNum: 0,
+            slider: null
         }
     },
 
     render(h) {
-
         // 过滤非l-box-plane元素
-        const LSlidePlanes = (this.$slots.default || [])
-            .filter(node => {
-                const { componentOptions, data } = node,
-                      { tag } = (componentOptions || {}),
-                      isPlane = tag && hyphenate(tag) === LBoxPlane
+        const LSlidePanels = (this.$slots.default || []).filter(node => {
+            const { componentOptions, data } = node,
+                { tag } = componentOptions || {},
+                isPanel = tag && hyphenate(tag) === LBoxPanel
 
-                if (!isPlane) return false
+            if (!isPanel) return false
 
-                // 继承slide-box上的样式，优先保留子组件上样式
-                if (data) {
-                    data.style = Object.assign(this.sharedStyle, data.style || {})
-                } else {
-                    node.data = { style: this.sharedStyle }
-                }
-                return true
-            })
-        this.planesNum = LSlidePlanes.length
+            // 继承slide-box上的样式，优先保留子组件上样式
+            if (data) {
+                data.style = Object.assign(this.sharedStyle, data.style || {})
+            } else {
+                node.data = { style: this.sharedStyle }
+            }
+            return true
+        })
+        this.planesNum = LSlidePanels.length
 
-        return h('div', {
-            style: this.sharedStyle, ref: 'view', staticClass: 'l-slide-box'
-        }, LSlidePlanes)
+        return h(
+            'div',
+            {
+                style: this.sharedStyle,
+                ref: 'view',
+                staticClass: 'l-slide-box'
+            },
+            LSlidePanels
+        )
     },
 
     mounted() {
         const { view } = this.$refs,
-              { width, height } = view.getBoundingClientRect()
+            { width, height } = view.getBoundingClientRect()
 
         this.viewSize = { width, height }
 
@@ -67,12 +73,14 @@ export default {
         })
 
         // 监听options变化重新绑定事件监听器
-        this.$on('hook:destroy', this.$watch('sliderOptions', 'restoreListerner', { deep: true }))
+        this.$on(
+            'hook:destroy',
+            this.$watch('sliderOptions', 'restoreListerner', { deep: true })
+        )
     },
 
     computed: {
         sharedStyle() {
-
             return {
                 width: this.width,
                 height: this.height
@@ -99,8 +107,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.l-slide-box {
+.l-slide-box
     overflow scroll
     background-color aqua
-}
 </style>
