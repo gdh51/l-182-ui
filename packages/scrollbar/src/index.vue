@@ -1,22 +1,21 @@
 <template>
-    <div
-        class="scrollbar_wrap-container"
-        ref="wrap"
-        :style="wrapStyle"
-        :class="wrapClass"
-    >
+    <div class="l-scrollbar" ref="view">
         <!-- 包装内容的容器，该容器用于呈现滚动条，利用神奇的margin将其隐藏 -->
-        <div class="scrollbar_wrap-content" @scroll="scrolling" ref="view">
-            <div
-                class="scrollbar_view-box"
-                :class="viewClass"
-                :style="viewStyle"
-            >
-                <slot />
-            </div>
+        <div
+            :class="[ 'l-scrollbar__wrap', wrapClass ]"
+            :style="finalStyle"
+            @scroll="scrolling"
+            ref="wrap"
+        >
+            <slot />
         </div>
-        <l-bar-slot  />
-        <l-bar-slot horizontal/>
+        <!-- 横向竖向都需要一个，因为我们不能确定两个方向都出来滚动条 -->
+        <l-bar-slot class="l-scrollbar__bar" v-if="isShowVertical" />
+        <l-bar-slot
+            horizontal
+            class="l-scrollbar__bar"
+            v-if="isShowHorizontal"
+        />
     </div>
 </template>
 
@@ -26,6 +25,9 @@ import { debounce } from '@/utils/lazy'
 import { on } from '@/utils/event'
 import { getScrollbarWidth } from './utils/native-scrollbar'
 
+// 获取原生滚动条厚度
+const nativeBarWidth = getScrollbarWidth()
+
 export default {
     name: 'LScrollbar',
 
@@ -34,23 +36,8 @@ export default {
     props: {
 
         // 视窗样式
-        viewStyle: {
-            type: Object,
-            default() {
-                return {}
-            }
-        },
-
-        viewClass: {
-            type: [ Array, String ],
-            default() {
-                return ''
-            }
-        },
-
-        // 外层的包裹样式
         wrapStyle: {
-            type: Object,
+            type: [ Object, String ],
             default() {
                 return {}
             }
@@ -62,8 +49,6 @@ export default {
                 return ''
             }
         }
-
-        // 当包裹大小 小于 视窗时，就会出现滚动条
     },
 
     data() {
@@ -73,29 +58,74 @@ export default {
             verticalBarHeight: '0',
             horizontalBarWidth: '0',
             moveY: 0,
-            moveX: 0
+            moveX: 0,
+            isShowVertical: false,
+
+            isShowHorizontal: false
         }
     },
 
     computed: {
-        viewElement() {
-            return this.$refs.view
+
+        // 合并用户样式与修正滚动条位置的样式
+        finalStyle() {
+            let wrapStyle = this.wrapStyle
+
+            // 处理字符串形式值
+            if (typeof this.wrapStyle === 'string') {
+                wrapStyle = wrapStyle.split(';').reduce((f, style) => {
+
+                    // 无样式直接返回
+                    if (!style) return f
+                    const [ key, val ] = style.split(':')
+                    f[key.trim()] = val.trim()
+
+                    return f
+                }, {})
+            }
+
+            return [ wrapStyle, {
+                marginRight: this.isShowVertical && `-${nativeBarWidth}px`,
+                marginBottom: this.isShowHorizontal && `-${nativeBarWidth}px`
+            } ]
         }
     },
 
     mounted() {
-        this.updateScrollbar()
-        this.$refs.wrap &&
-            on(
-                this.$refs.wrap,
-                'resize',
+        this.calcViewInfo()
 
-                /* eslint-disable-next-line */
-                debounce(this.updateScrollbar, 500, this)
-            )
+        // this.updateScrollbar()
+        // this.$refs.wrap &&
+        //     on(
+        //         this.$refs.wrap,
+        //         'resize',
+
+        //         /* eslint-disable-next-line */
+        //         debounce(this.updateScrollbar, 500, this)
+        //     )
     },
 
     methods: {
+
+        // 计算视窗的信息，包括是否显示滚动条，显示哪个滚动条
+        calcViewInfo() {
+            const { view, wrap } = this.$refs,
+                  { scrollWidth, scrollHeight } = wrap,
+                  { height, width } = view.getBoundingClientRect()
+
+            // 作为开关，能开也能关
+            if (Math.round(height) < scrollHeight) {
+                this.isShowVertical = true
+            } else {
+                this.isShowVertical = false
+            }
+
+            if (Math.round(width) < scrollWidth) {
+                this.isShowHorizontal = true
+            } else {
+                this.isShowHorizontal = false
+            }
+        },
         scrolling() {
 
             // 视窗元素
@@ -104,13 +134,11 @@ export default {
             // 滚动条能移动的距离的最大范围为scrollTop
             // 所以滚动条能移动的位移比例就是视窗能在整个数据视图移动的比例
             if (this.verticalBarHeight) {
-
                 /* eslint-disable-next-line */
                 this.moveY = (VIEW_ELE.scrollTop * 100) / VIEW_ELE.clientHeight
             }
 
             if (this.horizontalBarWidth) {
-
                 /* eslint-disable-next-line */
                 this.moveX = (VIEW_ELE.scrollLeft * 100) / VIEW_ELE.clientWidth
             }
@@ -129,13 +157,11 @@ export default {
 
             // 计算滚动条占整个滚动条槽的长度,它的占比应该和视窗占整个数据视图的比例一样
             if (viewHeight && totalHeight > viewHeight) {
-
                 /* eslint-disable-next-line */
                 this.verticalBarHeight = (viewHeight * 100) / totalHeight + '%'
             }
 
             if (viewWidth && totalWidth > viewWidth) {
-
                 /* eslint-disable-next-line */
                 this.horizontalBarWidth = (viewWidth * 100) / totalWidth + '%'
             }
@@ -144,23 +170,6 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.scrollbar_wrap-container
-    position relative
-    overflow hidden
-
-    .scrollbar_wrap-content
-        overflow scroll
-        margin-right -17px // 滚动条的宽度
-        margin-bottom -17px
-
-    &:hover >>> .custom_scrollbar
-        position relative
-        overflow hidden
-        opacity 1
-
-        .scrollbar_wrap-content
-            overflow scroll
-            margin-right -17px
-            margin-bottom -17px
+<style lang="stylus">
+@import '~@theme/scrollbar.styl'
 </style>

@@ -1,20 +1,8 @@
 <template>
     <div id="app">
-        <el-scrollbar
-            viewStyle="height: 100px; width: 200px;"
-            wrapStyle="height: 100px; width: 200px;"
-        >
-            <div style="height: 400px;width: 200px;background: blue;">sdsds</div>
-        </el-scrollbar>
-        <!-- <div style="width: 200px;height: 100px;">
-            <div>
-                <div style="overflow: auto;height: 100px;margin-left: -16px;">
-                    <div
-                        style="height: 400px;width: 200px;background: blue;"
-                    >sdsds</div>
-                </div>
-            </div>
-        </div>-->
+        <l-scrollbar wrapStyle="height: 100px">
+            <div style="height: 400px;background: blue;">sdsds</div>
+        </l-scrollbar>
     </div>
 </template>
 

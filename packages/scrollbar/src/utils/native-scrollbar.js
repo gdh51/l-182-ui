@@ -8,13 +8,14 @@ function getScrollbarWidth() {
     if (Vue.prototype.$isServer) return scrollbarWidth
     if (scrollbarWidth) return scrollbarWidth
 
-    const { createElement } = document,
-        outer = createElement('div')
+    const inner = document.createElement('div'),
+        outer = document.createElement('div')
 
-    outer.style.overflow = 'scroll'
+    inner.style.overflow = 'scroll'
     outer.style.visibility = 'hidden'
     outer.style.position = 'absolute'
     outer.style.top = '-9999px'
+    outer.appendChild(inner)
     document.body.appendChild(outer)
 
     scrollbarWidth = outer.scrollWidth
