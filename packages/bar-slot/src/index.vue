@@ -51,7 +51,14 @@ export default {
             default: '30%'
         },
 
-        type: { type: String }
+        type: { type: String },
+
+        // 滚动条相当于自身长度的实时位移(单位100%)
+        movePercentage: {
+            type: Number,
+            default: 0,
+            required: true
+        }
     },
 
     data() {
@@ -71,9 +78,6 @@ export default {
 
             // 滚动槽顶部位置(单位px)
             slotRectStart: 0,
-
-            // 滚动条相当于自身长度的实时位移(单位100%)
-            movePercentage: 0,
 
             startDragPercentage: 0,
 
@@ -197,15 +201,17 @@ export default {
 
                   // 计算出来的最终位置
                   calcMovePercentage =
-                      this.startDragPercentage + offsetPercentage
+                      this.startDragPercentage + offsetPercentage,
 
-            // 限制滚动条勿超过最大可移动位移。勿小于0
-            this.movePercentage = calcMovePercentage
-                > this.maxMovePercentage
-                ? this.maxMovePercentage
-                : calcMovePercentage > ZeroPercent
-                    ? calcMovePercentage
-                    : ZeroPercent
+                  // 限制滚动条勿超过最大可移动位移。勿小于0
+                  movePercentage = calcMovePercentage
+                      > this.maxMovePercentage
+                      ? this.maxMovePercentage
+                      : calcMovePercentage > ZeroPercent
+                          ? calcMovePercentage
+                          : ZeroPercent
+
+            this.$emit('update:movePercentage', movePercentage)
 
             // 移动时传递当前位置信息
             this.$emit('move', {
@@ -214,7 +220,6 @@ export default {
                 absolute:
                     (offsetPercentage * this.barRectSize) / OneHundredPercent +
                     'px',
-                relative: offsetPercentage,
                 relativeTargetSize: this.barRectSize
             })
         },
@@ -238,16 +243,20 @@ export default {
                       this.barRectSize * OneHundredPercent,
                   { min, max } = this.jumpSafeRange
 
+            let movePercentage
+
             // 安全范围内跳转至点击位置
             if (offsetPercentage < max && offsetPercentage > min) {
-                this.movePercentage = offsetPercentage - min
+                movePercentage = offsetPercentage - min
 
             // 其余位置跳转至底部或顶部
             } else if (offsetPercentage < min) {
-                this.movePercentage = ZeroPercent
+                movePercentage = ZeroPercent
             } else {
-                this.movePercentage = this.maxMovePercentage
+                movePercentage = this.maxMovePercentage
             }
+
+            this.$emit('update:movePercentage', movePercentage)
 
             // 放出当前点击位置的信息
             this.$emit('jump', {
@@ -256,7 +265,6 @@ export default {
                 absolute:
                     (this.movePercentage * this.barRectSize) /
                     OneHundredPercent + 'px',
-                relative: this.movePercentage,
                 relativeTargetSize: this.barRectSize
             })
         }

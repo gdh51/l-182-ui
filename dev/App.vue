@@ -9,7 +9,12 @@
 <script>
 import '../packages/theme/common-style.styl'
 
-export default { name: 'App' }
+export default {
+    name: 'App',
+    data() {
+        return { a: 0 }
+    }
+}
 </script>
 
 <style lang="stylus" scoped>

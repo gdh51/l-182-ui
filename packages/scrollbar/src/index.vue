@@ -10,11 +10,16 @@
             <slot />
         </div>
         <!-- 横向竖向都需要一个，因为我们不能确定两个方向都出来滚动条 -->
-        <l-bar-slot class="l-scrollbar__bar" v-if="isShowVertical" />
+        <l-bar-slot
+            class="l-scrollbar__bar"
+            v-if="isShowVertical"
+            :move-percentage.sync="moveY"
+        />
         <l-bar-slot
             horizontal
             class="l-scrollbar__bar"
             v-if="isShowHorizontal"
+            :move-percentage.sync="moveX"
         />
     </div>
 </template>
@@ -22,7 +27,7 @@
 <script>
 import LBarSlot from '@pack/bar-slot'
 import { debounce } from '@/utils/lazy'
-import { on } from '@/utils/event'
+import { on, off } from '@/utils/event'
 import { getScrollbarWidth } from './utils/native-scrollbar'
 
 // 获取原生滚动条厚度
@@ -53,12 +58,10 @@ export default {
 
     data() {
         return {
-
-            // 垂直和水平滚动条所占滚动条槽的长度
-            verticalBarHeight: '0',
-            horizontalBarWidth: '0',
             moveY: 0,
             moveX: 0,
+            viewHeight: 0,
+            viewWidth: 0,
             isShowVertical: false,
 
             isShowHorizontal: false
@@ -129,42 +132,22 @@ export default {
         scrolling() {
 
             // 视窗元素
-            const VIEW_ELE = this.viewElement
+            const viewElement = this.viewElement
 
             // 滚动条能移动的距离的最大范围为scrollTop
             // 所以滚动条能移动的位移比例就是视窗能在整个数据视图移动的比例
             if (this.verticalBarHeight) {
                 /* eslint-disable-next-line */
-                this.moveY = (VIEW_ELE.scrollTop * 100) / VIEW_ELE.clientHeight
+                this.moveY = viewElement.scrollTop / VIEW_ELE.clientHeight* 100
             }
 
             if (this.horizontalBarWidth) {
                 /* eslint-disable-next-line */
-                this.moveX = (VIEW_ELE.scrollLeft * 100) / VIEW_ELE.clientWidth
+                this.moveX = viewElement.scrollLeft / VIEW_ELE.clientWidth * 100
             }
         },
 
         updateScrollbar() {
-            const VIEW_ELE = this.viewElement,
-
-                  // 整个数据视图的大小
-                  totalHeight = VIEW_ELE.scrollHeight,
-                  totalWidth = VIEW_ELE.scrollWidth,
-
-                  // 我们能看见的视窗的大小
-                  viewHeight = VIEW_ELE.clientHeight,
-                  viewWidth = VIEW_ELE.clientWidth
-
-            // 计算滚动条占整个滚动条槽的长度,它的占比应该和视窗占整个数据视图的比例一样
-            if (viewHeight && totalHeight > viewHeight) {
-                /* eslint-disable-next-line */
-                this.verticalBarHeight = (viewHeight * 100) / totalHeight + '%'
-            }
-
-            if (viewWidth && totalWidth > viewWidth) {
-                /* eslint-disable-next-line */
-                this.horizontalBarWidth = (viewWidth * 100) / totalWidth + '%'
-            }
         }
     }
 }
