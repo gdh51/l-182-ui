@@ -1,5 +1,5 @@
 <template>
-    <div class="l-scrollbar" ref="view">
+    <div class="l-scrollbar" ref="view" @resize="calcViewInfo">
         <!-- 包装内容的容器，该容器用于呈现滚动条，利用神奇的margin将其隐藏 -->
         <div
             :class="[ 'l-scrollbar__wrap', wrapClass ]"
@@ -14,12 +14,20 @@
             class="l-scrollbar__bar"
             v-if="isShowVertical"
             :move-percentage.sync="moveY"
+            :barSize="verticalSize"
+            :disableJump="true"
+            @jump="watchUnrolledMove('vertical', $event, true)"
+            @drag="watchUnrolledMove('vertical', $event)"
         />
         <l-bar-slot
             horizontal
             class="l-scrollbar__bar"
             v-if="isShowHorizontal"
             :move-percentage.sync="moveX"
+            :barSize="horizontalSize"
+            :disableJump="true"
+            @jump="watchUnrolledMove('horizontal',$event, true)"
+            @drag="watchUnrolledMove('horizontal',$event)"
         />
     </div>
 </template>
@@ -27,11 +35,12 @@
 <script>
 import LBarSlot from '@pack/bar-slot'
 import { debounce } from '@/utils/lazy'
-import { on, off } from '@/utils/event'
 import { getScrollbarWidth } from './utils/native-scrollbar'
+import { BAR_PROP_MAP } from './utils/const'
 
 // 获取原生滚动条厚度
-const nativeBarWidth = getScrollbarWidth()
+const nativeBarWidth = getScrollbarWidth(),
+      OneHundredPercent = 100
 
 export default {
     name: 'LScrollbar',
@@ -64,7 +73,9 @@ export default {
             viewWidth: 0,
             isShowVertical: false,
 
-            isShowHorizontal: false
+            isShowHorizontal: false,
+            verticalSize: '1%',
+            horizontalSize: '1%'
         }
     },
 
@@ -87,67 +98,80 @@ export default {
                 }, {})
             }
 
-            return [ wrapStyle, {
-                marginRight: this.isShowVertical && `-${nativeBarWidth}px`,
-                marginBottom: this.isShowHorizontal && `-${nativeBarWidth}px`
-            } ]
+            return [
+                wrapStyle,
+                {
+                    marginRight: this.isShowVertical && `-${nativeBarWidth}px`,
+                    marginBottom:
+                        this.isShowHorizontal && `-${nativeBarWidth}px`
+                }
+            ]
         }
     },
 
     mounted() {
         this.calcViewInfo()
-
-        // this.updateScrollbar()
-        // this.$refs.wrap &&
-        //     on(
-        //         this.$refs.wrap,
-        //         'resize',
-
-        //         /* eslint-disable-next-line */
-        //         debounce(this.updateScrollbar, 500, this)
-        //     )
     },
 
     methods: {
 
         // 计算视窗的信息，包括是否显示滚动条，显示哪个滚动条
-        calcViewInfo() {
+        calcViewInfo: debounce(function() {
             const { view, wrap } = this.$refs,
                   { scrollWidth, scrollHeight } = wrap,
                   { height, width } = view.getBoundingClientRect()
 
+            // 存储视窗信息用于等会滚动计算
+            this.viewHeight = height
+            this.viewWidth = width
+
             // 作为开关，能开也能关
             if (Math.round(height) < scrollHeight) {
                 this.isShowVertical = true
+                this.verticalSize =
+                    (height / scrollHeight) * OneHundredPercent + '%'
             } else {
                 this.isShowVertical = false
             }
 
             if (Math.round(width) < scrollWidth) {
                 this.isShowHorizontal = true
+                this.horizontalSize =
+                    (width / scrollWidth) * OneHundredPercent + '%'
             } else {
                 this.isShowHorizontal = false
             }
-        },
+
+            // eslint-disable-next-line
+        }, 666),
         scrolling() {
+            const wrap = this.$refs.wrap
 
-            // 视窗元素
-            const viewElement = this.viewElement
-
-            // 滚动条能移动的距离的最大范围为scrollTop
-            // 所以滚动条能移动的位移比例就是视窗能在整个数据视图移动的比例
-            if (this.verticalBarHeight) {
-                /* eslint-disable-next-line */
-                this.moveY = viewElement.scrollTop / VIEW_ELE.clientHeight* 100
+            if (this.isShowVertical) {
+                this.moveY =
+                    (wrap.scrollTop / this.viewHeight) * OneHundredPercent
             }
 
-            if (this.horizontalBarWidth) {
-                /* eslint-disable-next-line */
-                this.moveX = viewElement.scrollLeft / VIEW_ELE.clientWidth * 100
+            if (this.isShowHorizontal) {
+                this.moveX =
+                    (wrap.scrollLeft / this.viewWidth) * OneHundredPercent
             }
         },
 
-        updateScrollbar() {
+        // 监听非滚动带来的变动
+        watchUnrolledMove(type, { relative }, isJump) {
+
+            const {
+                      viewSize, scrollOffset, start
+                  } = BAR_PROP_MAP[type],
+                  moveDis =
+                      (relative * this[viewSize]) / OneHundredPercent
+            if (!isJump) {
+                return (this.$refs.wrap[scrollOffset] = moveDis)
+            }
+
+            // 跳转时，使用scroll函数平滑跳转
+            this.$refs.wrap.scrollTo({ [start]: moveDis, behavior: 'smooth' })
         }
     }
 }

@@ -58,6 +58,14 @@ export default {
             type: Number,
             default: 0,
             required: true
+        },
+
+        // 是否内部禁止点击跳转的功能，转交给外部控制，
+        // 因为如果外部想做和外部同步的动画行为，使用内部跳转功能将会不同步
+        disableJump: {
+
+            type: Boolean,
+            default: false
         }
     },
 
@@ -115,7 +123,7 @@ export default {
             style.transform = `translate${barArgs.axis}(${this.movePercentage}%)`
 
             // 点击跳转时添加动画
-            style.transition = this.isDragging ? '' : 'all .2s linear'
+            style.transition = (this.disableJump || this.isDragging) ? '' : 'all .2s linear'
 
             return style
         }
@@ -214,13 +222,15 @@ export default {
             this.$emit('update:movePercentage', movePercentage)
 
             // 移动时传递当前位置信息
-            this.$emit('move', {
+            this.$emit('drag', {
 
                 // 移动的绝对距离，相对于上次位置
                 absolute:
                     (offsetPercentage * this.barRectSize) / OneHundredPercent +
                     'px',
-                relativeTargetSize: this.barRectSize
+                relativeTargetSize: this.barRectSize,
+
+                relative: movePercentage
             })
         },
 
@@ -255,8 +265,8 @@ export default {
             } else {
                 movePercentage = this.maxMovePercentage
             }
+            if (!this.disableJump) this.$emit('update:movePercentage', movePercentage)
 
-            this.$emit('update:movePercentage', movePercentage)
 
             // 放出当前点击位置的信息
             this.$emit('jump', {
@@ -265,6 +275,7 @@ export default {
                 absolute:
                     (this.movePercentage * this.barRectSize) /
                     OneHundredPercent + 'px',
+                relative: movePercentage,
                 relativeTargetSize: this.barRectSize
             })
         }

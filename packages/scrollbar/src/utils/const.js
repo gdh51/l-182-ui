@@ -13,6 +13,7 @@ export const BAR_PROP_MAP = {
         rectSize: 'height',
         clientSize: 'clientHeight',
         scrollOffset: 'scrollTop',
+        viewSize: 'viewHeight',
         class: 'is-vertical',
 
         // 条的厚度单位
@@ -29,6 +30,7 @@ export const BAR_PROP_MAP = {
         rectSize: 'width',
         clientSize: 'clientWidth',
         scrollOffset: 'scrollLeft',
+        viewSize: 'viewWidth',
         class: 'is-horizontal',
         thicknessUnit: 'height',
 
