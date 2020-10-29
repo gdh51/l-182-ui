@@ -2,7 +2,7 @@
     <div class="l-scrollbar" ref="view" @resize="calcViewInfo">
         <!-- 包装内容的容器，该容器用于呈现滚动条，利用神奇的margin将其隐藏 -->
         <div
-            :class="[ 'l-scrollbar__wrap', wrapClass ]"
+            :class="[ 'l-scrollbar__wrap', wrapClass, gutterClass ]"
             :style="finalStyle"
             @scroll="scrolling"
             ref="wrap"
@@ -75,7 +75,12 @@ export default {
 
             isShowHorizontal: false,
             verticalSize: '1%',
-            horizontalSize: '1%'
+            horizontalSize: '1%',
+
+            // 有些滚动条不参与盒子计算，比如Mac
+            gutterClass: getScrollbarWidth()
+                ? ''
+                : 'l-scrollbar__wrap--hidden-default'
         }
     },
 
@@ -160,12 +165,10 @@ export default {
 
         // 监听非滚动带来的变动
         watchUnrolledMove(type, { relative }, isJump) {
-
             const {
                       viewSize, scrollOffset, start
                   } = BAR_PROP_MAP[type],
-                  moveDis =
-                      (relative * this[viewSize]) / OneHundredPercent
+                  moveDis = (relative * this[viewSize]) / OneHundredPercent
             if (!isJump) {
                 return (this.$refs.wrap[scrollOffset] = moveDis)
             }

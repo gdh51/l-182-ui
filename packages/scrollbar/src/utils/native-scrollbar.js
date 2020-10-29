@@ -1,12 +1,13 @@
 import Vue from 'vue'
+import { isUndefined } from 'lodash'
 
 // eslint-disable-next-line
-let scrollbarWidth = 0
+let scrollbarWidth
 
 // 获取当前环境下原生滚动条的宽度
 function getScrollbarWidth() {
     if (Vue.prototype.$isServer) return scrollbarWidth
-    if (scrollbarWidth) return scrollbarWidth
+    if (!isUndefined(scrollbarWidth)) return scrollbarWidth
 
     const inner = document.createElement('div'),
         outer = document.createElement('div')
