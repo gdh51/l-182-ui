@@ -25,5 +25,4 @@ function getScrollbarWidth() {
     return scrollbarWidth
 }
 
-
 export { getScrollbarWidth }

@@ -1,46 +1,14 @@
-<template>
-    <div class="l-scrollbar" ref="view" @resize="calcViewInfo">
-        <!-- 包装内容的容器，该容器用于呈现滚动条，利用神奇的margin将其隐藏 -->
-        <div
-            :class="[ 'l-scrollbar__wrap', wrapClass, gutterClass ]"
-            :style="finalStyle"
-            @scroll="scrolling"
-            ref="wrap"
-        >
-            <slot />
-        </div>
-        <!-- 横向竖向都需要一个，因为我们不能确定两个方向都出来滚动条 -->
-        <l-bar-slot
-            class="l-scrollbar__bar"
-            v-if="isShowVertical"
-            :move-percentage.sync="moveY"
-            :barSize="verticalSize"
-            :disableJump="true"
-            @jump="watchUnrolledMove('vertical', $event, true)"
-            @drag="watchUnrolledMove('vertical', $event)"
-        />
-        <l-bar-slot
-            horizontal
-            class="l-scrollbar__bar"
-            v-if="isShowHorizontal"
-            :move-percentage.sync="moveX"
-            :barSize="horizontalSize"
-            :disableJump="true"
-            @jump="watchUnrolledMove('horizontal',$event, true)"
-            @drag="watchUnrolledMove('horizontal',$event)"
-        />
-    </div>
-</template>
-
 <script>
 import LBarSlot from '@pack/bar-slot'
 import { debounce } from '@/utils/lazy'
-import { getScrollbarWidth } from './utils/native-scrollbar'
-import { BAR_PROP_MAP } from './utils/const'
+import {
+    BAR_PROP_MAP, getScrollbarWidth, genSlotbar
+} from './utils'
 
 // 获取原生滚动条厚度
 const nativeBarWidth = getScrollbarWidth(),
-      OneHundredPercent = 100
+      OneHundredPercent = 100,
+      WatiTime = 666
 
 export default {
     name: 'LScrollbar',
@@ -65,6 +33,42 @@ export default {
         }
     },
 
+    render(h) {
+
+        // 有些滚动条不参与盒子计算，比如Mac
+        const gutterClass = nativeBarWidth
+                  ? ''
+                  : 'l-scrollbar__wrap--hidden-default',
+
+              // 容器元素，用来做大小限制，滚动
+              wrap = h(
+                  'div',
+                  {
+                      class: [ 'l-scrollbar__wrap', this.wrapClass, gutterClass ],
+                      ref: 'wrap',
+                      on: { scroll: this.scrolling },
+                      style: this.mergedStyle
+                  },
+                  [ this.$slots.default ]
+              ),
+              viewChildNodes = [ wrap ]
+
+        this.isShowVertical &&
+            viewChildNodes.push(genSlotbar('vertical', h, this)),
+        this.isShowHorizontal &&
+            viewChildNodes.push(genSlotbar('horizontal', h, this))
+
+        return h(
+            'div',
+            {
+                staticClass: 'l-scrollbar',
+                ref: 'view',
+                on: { resize: this.calcViewInfo }
+            },
+            viewChildNodes
+        )
+    },
+
     data() {
         return {
             moveY: 0,
@@ -72,22 +76,18 @@ export default {
             viewHeight: 0,
             viewWidth: 0,
             isShowVertical: false,
+            isScrolling: false,
 
             isShowHorizontal: false,
             verticalSize: '1%',
-            horizontalSize: '1%',
-
-            // 有些滚动条不参与盒子计算，比如Mac
-            gutterClass: getScrollbarWidth()
-                ? ''
-                : 'l-scrollbar__wrap--hidden-default'
+            horizontalSize: '1%'
         }
     },
 
     computed: {
 
         // 合并用户样式与修正滚动条位置的样式
-        finalStyle() {
+        mergedStyle() {
             let wrapStyle = this.wrapStyle
 
             // 处理字符串形式值
@@ -146,11 +146,10 @@ export default {
             } else {
                 this.isShowHorizontal = false
             }
-
-            // eslint-disable-next-line
-        }, 666),
+        }, WatiTime),
         scrolling() {
             const wrap = this.$refs.wrap
+            this.delayRestore()
 
             if (this.isShowVertical) {
                 this.moveY =
@@ -163,8 +162,20 @@ export default {
             }
         },
 
+        delayRestore: debounce(
+            function() {
+                this.isScrolling = false
+            },
+            WatiTime,
+            {
+                pre: function() {
+                    this.isScrolling = true
+                }
+            }
+        ),
+
         // 监听非滚动带来的变动
-        watchUnrolledMove(type, { relative }, isJump) {
+        watchUnrolledMove(type, isJump, { relative }) {
             const {
                       viewSize, scrollOffset, start
                   } = BAR_PROP_MAP[type],

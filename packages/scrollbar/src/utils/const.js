@@ -11,7 +11,6 @@ export const BAR_PROP_MAP = {
 
         // 条的尺寸单位
         rectSize: 'height',
-        clientSize: 'clientHeight',
         scrollOffset: 'scrollTop',
         viewSize: 'viewHeight',
         class: 'is-vertical',
@@ -28,7 +27,6 @@ export const BAR_PROP_MAP = {
         axis: 'X',
         client: 'clientX',
         rectSize: 'width',
-        clientSize: 'clientWidth',
         scrollOffset: 'scrollLeft',
         viewSize: 'viewWidth',
         class: 'is-horizontal',
