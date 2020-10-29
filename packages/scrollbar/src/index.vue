@@ -62,7 +62,6 @@ export default {
             'div',
             {
                 staticClass: 'l-scrollbar',
-                ref: 'view',
                 on: { resize: this.calcViewInfo }
             },
             viewChildNodes
@@ -122,9 +121,10 @@ export default {
 
         // 计算视窗的信息，包括是否显示滚动条，显示哪个滚动条
         calcViewInfo: debounce(function() {
-            const { view, wrap } = this.$refs,
+            const { wrap } = this.$refs,
                   { scrollWidth, scrollHeight } = wrap,
-                  { height, width } = view.getBoundingClientRect()
+                  height = wrap.clientHeight,
+                  width = wrap.clientWidth
 
             // 存储视窗信息用于等会滚动计算
             this.viewHeight = height
@@ -148,6 +148,7 @@ export default {
             }
         }, WatiTime),
         scrolling() {
+            console.log('scrolling')
             const wrap = this.$refs.wrap
             this.delayRestore()
 

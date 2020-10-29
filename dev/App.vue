@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <l-scrollbar wrapStyle="width: 100px;height:100px">
-            <div style="width: 400px;"><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div></div>
+            <div style="width: 400px;background: aqua;"><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div></div>
         </l-scrollbar>
     </div>
 </template>
