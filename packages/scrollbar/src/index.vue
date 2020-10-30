@@ -61,7 +61,7 @@ export default {
         return h(
             'div',
             {
-                staticClass: 'l-scrollbar',
+                class: [ 'l-scrollbar', this.pending ? 'is-pending' : '' ],
                 on: { resize: this.calcViewInfo }
             },
             viewChildNodes
@@ -75,11 +75,15 @@ export default {
             viewHeight: 0,
             viewWidth: 0,
             isShowVertical: false,
-            isScrolling: false,
 
             isShowHorizontal: false,
             verticalSize: '1%',
-            horizontalSize: '1%'
+            horizontalSize: '1%',
+            isVerticalScrolling: false,
+            isHorizontalScrolling: false,
+
+            // 由于计算方式问题，在window下滚动条会闪现，所以我们需要做个处理
+            pending: true
         }
     },
 
@@ -110,6 +114,16 @@ export default {
                         this.isShowHorizontal && `-${nativeBarWidth}px`
                 }
             ]
+        }
+    },
+
+    // 滚动时显示滚动条
+    watch: {
+        moveX() {
+            this.delayRestoreH()
+        },
+        moveY() {
+            this.delayRestoreV()
         }
     },
 
@@ -146,11 +160,11 @@ export default {
             } else {
                 this.isShowHorizontal = false
             }
+
+            this.pending = false
         }, WatiTime),
         scrolling() {
-            console.log('scrolling')
             const wrap = this.$refs.wrap
-            this.delayRestore()
 
             if (this.isShowVertical) {
                 this.moveY =
@@ -163,14 +177,26 @@ export default {
             }
         },
 
-        delayRestore: debounce(
+        delayRestoreV: debounce(
             function() {
-                this.isScrolling = false
+                this.isVerticalScrolling = false
             },
             WatiTime,
             {
                 pre: function() {
-                    this.isScrolling = true
+                    this.isVerticalScrolling = true
+                }
+            }
+        ),
+
+        delayRestoreH: debounce(
+            function() {
+                this.isHorizontalScrolling = false
+            },
+            WatiTime,
+            {
+                pre: function() {
+                    this.isHorizontalScrolling = true
                 }
             }
         ),

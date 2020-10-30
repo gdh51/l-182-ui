@@ -1,13 +1,13 @@
 import { BAR_PROP_MAP } from './const'
 import { getScrollbarWidth } from './native-scrollbar'
+import { upperFirst } from 'lodash'
 
 function genSlotbar(type, h, vm) {
-    const { isScrolling } = vm,
-        { axis } = BAR_PROP_MAP[type],
+    const { axis } = BAR_PROP_MAP[type],
         isHorizontal = type === 'horizontal'
 
     return h('l-bar-slot', {
-        class: [ 'l-scrollbar__bar', { 'is-scrolling': isScrolling } ],
+        class: [ 'l-scrollbar__bar', { 'is-scrolling': vm['is' + upperFirst(type) + 'Scrolling'] } ],
         props: {
             movePercentage: vm[`move${axis}`],
             barSize: vm[`${type}Size`],
