@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <el-scrollbar wrapStyle="width: 100px;height:100px">
-            <div style="width: 400px;background: aqua;"><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div></div>
-        </el-scrollbar>
+        <l-card style="width: 150px;height: 200px;">
+            <l-button>点我</l-button>
+        </l-card>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ import '../packages/theme/common-style.styl'
 export default {
     name: 'App',
     data() {
-        return { a: 0 }
+        return {}
     }
 }
 </script>

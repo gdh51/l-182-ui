@@ -31,6 +31,7 @@ button-plain($border, $background, $color)
     font-size 14px
     line-height 1
     cursor pointer
+    transition box-shadow .3s ease
 
     &_text
         padding-right 0
@@ -54,6 +55,9 @@ button-plain($border, $background, $color)
             border-color $o
             background-color $p + 10%
 
+        &:active
+            box-shadow 0 0 0 3px $p + 5%
+
         &.disabled
             button-disabled($g, $p, $g)
 
@@ -72,6 +76,9 @@ button-plain($border, $background, $color)
             border-color $p + 60%
             background-color $p + 80%
             color $p
+
+        &:active
+            box-shadow 0 0 0 3px $p + 50%
 
         &.disabled
             button-disabled($p + 80%, #fff, $p + 15%)
