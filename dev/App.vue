@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-        <l-card style="width: 150px;height: 200px;">
-            <l-button>点我</l-button>
-        </l-card>
+        <l-modal>我是傻逼</l-modal>
     </div>
 </template>
 

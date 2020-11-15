@@ -14,7 +14,8 @@ export default {
         opacity: {
             type: Number,
             default: 0.4
-        }
+        },
+        type: String
     },
 
     render(h) {
@@ -25,7 +26,7 @@ export default {
               } = this.$options.directives.show,
 
               options = {
-                  staticClass: 'l-mask',
+                  staticClass: this.type === 'eva' ? 'l-mask is-eva' : 'l-mask',
                   style: {
                       opacity: this.opacity,
                       zIndex: this.axisInterface.axisZ
@@ -83,6 +84,6 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 @import "../../theme/src/mask"
 </style>
