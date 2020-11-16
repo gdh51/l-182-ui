@@ -1,5 +1,9 @@
 <template>
-    <l-mask class="l-modal__container">
+    <l-mask
+        class="l-modal__container"
+        @click.native="handleMaskClick"
+        :visible="visible"
+    >
         <l-card class="l-modal" :class="modalSizeClz">
             <div class="l-modal__header">
                 <slot name="header">
@@ -13,8 +17,14 @@
             <div class="l-modal__footer">
                 <slot name="footer">
                     <div class="l-modal__footer_default">
-                        <l-button>{{cancel}}</l-button>
-                        <l-button>{{confirm}}</l-button>
+                        <l-button
+                            v-if="cancel"
+                            @click="handleBtnClick('cancel')"
+                        >{{cancel}}</l-button>
+                        <l-button
+                            v-if="confirm"
+                            @click="handleBtnClick('confirm')"
+                        >{{confirm}}</l-button>
                     </div>
                 </slot>
             </div>
@@ -28,10 +38,15 @@
 // import { zGenerate } from '@/utils/axis-z'
 import LMask from '@pack/mask'
 import LIcon from '@pack/icon'
+import LButton from '@pack/button'
 
 export default {
     name: 'LModal',
-    components: { LMask, LIcon },
+    components: {
+        LMask,
+        LIcon,
+        LButton
+    },
 
     props: {
         title: {
@@ -70,7 +85,22 @@ export default {
                 return true
             },
             default: '取消'
-        }
+        },
+
+        closeByMask: {
+            type: Boolean,
+            default: true
+        },
+
+        once: {
+            type: Boolean,
+            default: true
+        },
+        beforeClose: Function
+    },
+
+    data() {
+        return { visible: true }
     },
 
     computed: {
@@ -79,7 +109,44 @@ export default {
         }
     },
 
-    methods: {}
+    methods: {
+
+        // 如果传入beforeClose，则将关闭行为转交给用户
+        closePreCheck(type) {
+            if (this.beforeClose) {
+                this.beforeClose(type, this, this.hide.bind(this))
+                return true
+            }
+            return false
+        },
+        handleMaskClick() {
+            if (!this.handleMaskClick) return
+            !this.closePreCheck() && this.hide()
+        },
+
+        handleBtnClick(type) {
+
+            // 传入beforeClose时
+            if (!this.closePreCheck(type)) {
+                this.hide()
+            }
+
+            // 其他情况放出对应事件后关闭
+            this.$emit(type, this)
+            this.hide()
+        },
+
+        hide() {
+            this.visible = false
+
+            // 销毁实例，不可复用
+            if (this.once) this.$nextTick(() => this.$destroy())
+        }
+    },
+
+    destroyed() {
+        this.$el.remove()
+    }
 }
 </script>
 
