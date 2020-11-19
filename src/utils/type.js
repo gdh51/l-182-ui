@@ -10,6 +10,10 @@ function toType(val) {
     return Object.prototype.toString.call(val).slice(8, -1)
 }
 
+function isObject(val) {
+    return toType(val) === 'Object'
+}
+
 function isFunction(val) {
     return toType(val) === 'Function'
 }
@@ -41,5 +45,6 @@ export {
     isString,
     isNumber,
     isVNode,
+    isObject,
     hasOwn
 }

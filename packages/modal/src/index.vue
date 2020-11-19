@@ -4,26 +4,26 @@
         @click.native="handleMaskClick"
         :visible="visible"
     >
-        <l-card class="l-modal" :class="modalSizeClz">
-            <div class="l-modal__header">
+        <l-card class="l-modal" :class="modalSizeClz" :style="modalStyle">
+            <div class="l-modal__header" v-if="header">
                 <slot name="header">
                     <span class="l-modal__title">{{ title }}</span>
                     <l-icon icon="close" />
                 </slot>
             </div>
-            <div class="l-modal__content">
-                <slot>{{ content }}</slot>
-            </div>
-            <div class="l-modal__footer">
+            <slot>
+                <div class="l-modal__content">{{ content }}</div>
+            </slot>
+            <div class="l-modal__footer" v-if="footer">
                 <slot name="footer">
                     <div class="l-modal__footer_default">
                         <l-button
                             v-if="cancel"
-                            @click="handleBtnClick('cancel')"
+                            @click="handleClick('cancel')"
                         >{{cancel}}</l-button>
                         <l-button
                             v-if="confirm"
-                            @click="handleBtnClick('confirm')"
+                            @click="handleClick('confirm')"
                         >{{confirm}}</l-button>
                     </div>
                 </slot>
@@ -33,12 +33,10 @@
 </template>
 
 <script>
-
-// import { config } from './utils'
-// import { zGenerate } from '@/utils/axis-z'
 import LMask from '@pack/mask'
 import LIcon from '@pack/icon'
 import LButton from '@pack/button'
+import { preDefinedProps } from './utils/pre-defined-props'
 
 export default {
     name: 'LModal',
@@ -48,59 +46,10 @@ export default {
         LButton
     },
 
-    props: {
-        title: {
-            type: String,
-            default: '标题'
-        },
-
-        type: {
-            type: String,
-            default: 'cancel'
-        },
-
-        content: {
-            type: String,
-            default: '该弹框暂时未有内容'
-        },
-        size: {
-            type: String,
-            validator(val) {
-                return val === 'large' || val === 'small'
-            },
-            default: 'small'
-        },
-        confirm: {
-            type: [ Boolean, String ],
-            validator(val) {
-                if (val === true) return new Error('It display by default.')
-                return true
-            },
-            default: '确定'
-        },
-        cancel: {
-            type: [ Boolean, String ],
-            validator(val) {
-                if (val === true) return new Error('It display by default.')
-                return true
-            },
-            default: '取消'
-        },
-
-        closeByMask: {
-            type: Boolean,
-            default: true
-        },
-
-        once: {
-            type: Boolean,
-            default: true
-        },
-        beforeClose: Function
-    },
+    props: preDefinedProps,
 
     data() {
-        return { visible: true }
+        return { visible: false }
     },
 
     computed: {
@@ -110,34 +59,28 @@ export default {
     },
 
     methods: {
-
-        // 如果传入beforeClose，则将关闭行为转交给用户
-        closePreCheck(type) {
-            if (this.beforeClose) {
-                this.beforeClose(type, this, this.hide.bind(this))
-                return true
-            }
-            return false
-        },
         handleMaskClick() {
-            if (!this.handleMaskClick) return
-            !this.closePreCheck() && this.hide()
+            this.handleClick('mask')
         },
 
-        handleBtnClick(type) {
-
-            // 传入beforeClose时
-            if (!this.closePreCheck(type)) {
-                this.hide()
-            }
+        handleClick(type) {
 
             // 其他情况放出对应事件后关闭
-            this.$emit(type, this)
-            this.hide()
+            this.$emit(type, {
+                hide: this.hide.bind(this),
+                instance: this,
+                type
+            })
+        },
+
+        show() {
+            this.visible = true
+            this.$emit('show')
         },
 
         hide() {
             this.visible = false
+            this.$emit('hide', this.once)
 
             // 销毁实例，不可复用
             if (this.once) this.$nextTick(() => this.$destroy())
