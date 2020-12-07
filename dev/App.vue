@@ -6,11 +6,16 @@
 
 <script>
 import '../packages/theme/common-style.styl'
+import { modal } from '@pack/modal/src/functional'
+import C from './C'
 
 export default {
     name: 'App',
     data() {
         return {}
+    },
+    created() {
+        modal({ title: 'ss', content: C })
     }
 }
 </script>

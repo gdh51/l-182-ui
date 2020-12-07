@@ -7,10 +7,7 @@ export const preDefinedProps =  {
     },
 
     //  弹框的内容文本
-    content: {
-        type: String,
-        default: '该弹框暂时未有内容'
-    },
+    content: { type: String },
 
     // 弹框的默认宽度，你可以通过重写modalStyle来自定义其width
     size: {

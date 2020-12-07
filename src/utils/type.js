@@ -30,12 +30,20 @@ function isArray(val) {
     return toType(val) === 'Array'
 }
 
+function isUndefined(val) {
+    return toType(val) === 'Undefined'
+}
+
+function isPromise(val) {
+    return isObject(val) && isFunction(val.then)
+}
+
 // 检查是否为Vnode
 function isVNode(node) {
     return (
         node !== null &&
-    typeof node === 'object' &&
-    hasOwn(node, 'componentOptions')
+        typeof node === 'object' &&
+        hasOwn(node, 'componentOptions')
     )
 }
 
@@ -46,5 +54,7 @@ export {
     isNumber,
     isVNode,
     isObject,
+    isUndefined,
+    isPromise,
     hasOwn
 }
