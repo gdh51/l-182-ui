@@ -144,7 +144,9 @@ export class Modal {
                     h: this.instance.$createElement
                 })
 
-                this.instance.$slots[slotName === 'content' ? 'default' : slotName] = slots[slotName]
+                this.instance.$slots[
+                    slotName === 'content' ? 'default' : slotName
+                ] = slots[slotName]
             }
         })
     }

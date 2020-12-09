@@ -14,17 +14,13 @@
             <slot>
                 <div class="l-modal__content">{{ content }}</div>
             </slot>
-            <div class="l-modal__footer" v-if="footer">
+            <div class="l-modal__footer" v-if="footer && buttonTypeEnum.length">
                 <slot name="footer">
                     <div class="l-modal__footer_default">
-                        <l-button
-                            v-if="cancel"
-                            @click="handleClick('cancel')"
-                        >{{cancel}}</l-button>
-                        <l-button
-                            v-if="confirm"
-                            @click="handleClick('confirm')"
-                        >{{confirm}}</l-button>
+                        <l-button v-for="type in buttonTypeEnum"
+                        @click="handleClick(type)" :key="type">
+                            {{ type }}
+                        </l-button>
                     </div>
                 </slot>
             </div>
@@ -55,6 +51,15 @@ export default {
     computed: {
         modalSizeClz() {
             return 'l-modal_' + this.size
+        },
+
+        // 计算有用到几个按钮
+        buttonTypeEnum() {
+            const typeEnum = []
+            this.cancel && typeEnum.push('cancel')
+            this.confirm && typeEnum.push('confirm')
+            this.buttonReverse && typeEnum.reverse()
+            return typeEnum
         }
     },
 
