@@ -46,20 +46,19 @@ export class Modal {
     _initState() {
         this.state = { /* visible */ }
 
-        const {
-            footer, content, header
-        } = this.options
         this.slots = {
-            footer,
+            footer: undefined,
             content: null,
-            header
+            header: undefined
         }
+        ;[ 'content', 'header', 'footer' ].forEach(slotName => {
 
-        // content插槽允许使用字符串，使用时不将其作为插槽
-        if (isObject(content)) {
-            this.slots.content = content
-            delete this.options.content
-        }
+            // content插槽允许使用字符串，使用时不将其作为插槽
+            if (isObject(this.options[slotName])) {
+                this.slots[slotName] = this.options[slotName]
+                delete this.options[slotName]
+            }
+        })
 
         this.props = { ...this.options.props }
 
@@ -134,6 +133,7 @@ export class Modal {
             if (slotContent) {
 
                 // 组件插槽在使用props时，优先会使用具有命名的props
+                // 未定义命名插槽时， 会直接传入当前已有的插槽
                 const props = this.options.props[slotName] || this.options.props
 
                 resolveSlot({

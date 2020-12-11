@@ -17,9 +17,12 @@
             <div class="l-modal__footer" v-if="footer && buttonTypeEnum.length">
                 <slot name="footer">
                     <div class="l-modal__footer_default">
-                        <l-button v-for="type in buttonTypeEnum"
-                        @click="handleClick(type)" :key="type">
-                            {{ type }}
+                        <l-button
+                            v-for="type in buttonTypeEnum"
+                            @click="handleClick(type)"
+                            :key="type"
+                        >
+                        {{ type }}
                         </l-button>
                     </div>
                 </slot>

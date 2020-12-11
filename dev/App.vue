@@ -15,7 +15,11 @@ export default {
         return {}
     },
     created() {
-        modal({ title: 'ss', content: C })
+        window.m = modal({
+            title: 'ss', content: C, header: C, footer: C,
+            props: { d: 1 },
+            once: false
+        })
     }
 }
 </script>
