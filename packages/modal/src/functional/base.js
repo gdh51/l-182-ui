@@ -18,7 +18,7 @@ const DEFAULT_OPTIONS = {
         cancelCb: () => {},
         buttonReverse: false
     },
-    SLOTS_NAMES = [ 'footer', 'header', 'content' ]
+    SLOTS_NAMES = [ 'header', 'content', 'footer' ]
 
 Object.freeze(DEFAULT_OPTIONS)
 
@@ -51,7 +51,8 @@ export class Modal {
             content: null,
             header: undefined
         }
-        ;[ 'content', 'header', 'footer' ].forEach(slotName => {
+
+        SLOTS_NAMES.forEach(slotName => {
 
             // content插槽允许使用字符串，使用时不将其作为插槽
             if (isObject(this.options[slotName])) {
@@ -66,7 +67,11 @@ export class Modal {
         this.instance = null
 
         // 如果content使用组件，使用组件时的实例
-        this.slotInstance = null
+        this.slotInstance = {
+            header: null,
+            content: null,
+            footer: null
+        }
         this._resolve = null
         this._reject = null
 
@@ -104,12 +109,20 @@ export class Modal {
                 this.$on('confirm', modal.options.confirmCb)
             },
 
-            mounted() {
-                modal.slotInstance = modal.slots.header
-                    ? this.$children[1]
-                    : this.$children[0]
-                        ? this.$children[0]
-                        : null
+            updated() {
+                const slotInstances = this.$children[0].$children
+
+                // eslint-disable-next-line
+                let handledSlotCount = 0
+
+                SLOTS_NAMES.forEach(slotName => {
+                    if (modal.slots[slotName]) {
+                        modal.slotInstance[slotName] =
+                            slotInstances[handledSlotCount]
+                        handledSlotCount++
+                    }
+                })
+                console.log(modal)
             }
         })
 
@@ -159,6 +172,12 @@ export class Modal {
     // 使用实例的方法，该方法会合适的时候自主的销毁实例
     hide() {
         this.instance.hide()
+        if (this.options.once) this.destroy()
         return this
+    }
+
+    destroy() {
+        this.instance = null
+        this.slotInstance = {}
     }
 }

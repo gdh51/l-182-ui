@@ -17,8 +17,7 @@ export default {
     created() {
         window.m = modal({
             title: 'ss', content: C, header: C, footer: C,
-            props: { d: 1 },
-            once: false
+            props: { d: 1 }
         })
     }
 }
