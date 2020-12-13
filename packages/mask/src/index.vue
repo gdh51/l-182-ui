@@ -22,31 +22,36 @@ export default {
 
         // 使用内部的v-show指令
         const {
-                  bind, unbind, update
-              } = this.$options.directives.show,
+            bind, unbind, update
+        } = this.$options.directives.show
 
-              options = {
-                  staticClass: this.type === 'eva' ? 'l-mask is-eva' : 'l-mask',
-                  style: {
-                      opacity: this.opacity,
-                      zIndex: this.axisInterface.axisZ
-                  },
-                  directives: [
-                      {
-                          name: 'show',
-                          value: this.visible && this.priorityVisible,
-                          bind,
-                          unbind,
-                          update
-                      }
-                  ]
-              }
-
-        return h(
-            'transition',
-            { attrs: { duration: 300 } },
-            [ h('div', options, [  this.$slots.default  ]) ]
-        )
+        return h('transition', { attrs: { duration: 300 }, props: { name: 'fade' } }, [
+            h(
+                'div',
+                {
+                    staticClass: 'l-mask',
+                    style: { zIndex: this.axisInterface.axisZ },
+                    directives: [
+                        {
+                            name: 'show',
+                            value: this.visible && this.priorityVisible,
+                            bind,
+                            unbind,
+                            update
+                        }
+                    ]
+                },
+                [
+                    h('div', {
+                        staticClass: `${
+                            this.type === 'eva' ? 'is-eva' : 'is-default'
+                        } l-mask__bg`,
+                        style: { opacity: this.opacity }
+                    }),
+                    this.$slots.default
+                ]
+            )
+        ])
     },
     data() {
         return {
@@ -85,5 +90,5 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "../../theme/src/mask"
+@import '~@theme/mask'
 </style>

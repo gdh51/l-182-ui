@@ -1,13 +1,10 @@
 <template>
     <div id="app">
-        <l-modal>我是傻逼</l-modal>
     </div>
 </template>
 
 <script>
 import '../packages/theme/common-style.styl'
-import { modal } from '@pack/modal/src/functional'
-import C from './C'
 
 export default {
     name: 'App',
@@ -15,10 +12,6 @@ export default {
         return {}
     },
     created() {
-        window.m = modal({
-            title: 'ss', content: C, header: C, footer: C,
-            props: { d: 1 }
-        })
     }
 }
 </script>

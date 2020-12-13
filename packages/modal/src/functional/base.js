@@ -2,7 +2,7 @@ import Vue from 'vue'
 import LModal from '../index'
 import { resolveSlot } from './slot-resolve'
 import { isObject } from '@/utils/type'
-import { beforeCloseWrapper } from './events'
+import { beforeCloseWrapper } from './event'
 
 const DEFAULT_OPTIONS = {
         title: '我是标题',
@@ -107,6 +107,7 @@ export class Modal {
             created() {
                 this.$on('cancel', modal.options.cancelCb)
                 this.$on('confirm', modal.options.confirmCb)
+                modal.options.closeByMask && this.$on('mask-click', modal.options.cancelCb)
             },
 
             updated() {
@@ -122,7 +123,6 @@ export class Modal {
                         handledSlotCount++
                     }
                 })
-                console.log(modal)
             }
         })
 
@@ -177,7 +177,9 @@ export class Modal {
     }
 
     destroy() {
+        this.$el = null
         this.instance = null
+        this.slots = {}
         this.slotInstance = {}
     }
 }

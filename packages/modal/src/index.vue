@@ -21,9 +21,7 @@
                             v-for="type in buttonTypeEnum"
                             @click="handleClick(type)"
                             :key="type"
-                        >
-                        {{ type }}
-                        </l-button>
+                        >{{ type }}</l-button>
                     </div>
                 </slot>
             </div>
@@ -36,6 +34,9 @@ import LMask from '@pack/mask'
 import LIcon from '@pack/icon'
 import LButton from '@pack/button'
 import { preDefinedProps } from './utils/pre-defined-props'
+
+// 三秒的过渡时间
+const TRANSITION_TIME = 300
 
 export default {
     name: 'LModal',
@@ -59,8 +60,8 @@ export default {
         // 计算有用到几个按钮
         buttonTypeEnum() {
             const typeEnum = []
-            this.cancel && typeEnum.push('cancel')
-            this.confirm && typeEnum.push('confirm')
+            this.cancel && typeEnum.push(this.cancel)
+            this.confirm && typeEnum.push(this.confirm)
             this.buttonReverse && typeEnum.reverse()
             return typeEnum
         }
@@ -68,7 +69,7 @@ export default {
 
     methods: {
         handleMaskClick() {
-            this.handleClick('mask')
+            this.handleClick('mask-click')
         },
 
         handleClick(type) {
@@ -83,12 +84,14 @@ export default {
 
         show() {
             this.visible = true
-            this.$emit('show')
+
+            // 保证在事件触发时，获取的数据是最新的数据
+            this.$nextTick(() => this.$emit('show'))
         },
 
         hide() {
             this.visible = false
-            this.$emit('hide', this.once)
+            this.$nextTick(() => this.$emit('hide', this.once))
 
             // 销毁实例，不可复用
             if (this.once) this.$nextTick(() => this.$destroy())
@@ -96,7 +99,9 @@ export default {
     },
 
     destroyed() {
-        this.$el.remove()
+
+        // 预留动画时间
+        setTimeout(() => this.$el.remove(), TRANSITION_TIME)
     }
 }
 </script>

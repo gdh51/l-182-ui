@@ -4,7 +4,24 @@
     right 0
     bottom 0
     left 0
-    background-color #000
 
-    &.is-eva
+    &.fade-enter-active,
+    &.fade-leave-active
+        transition opacity .3s
+
+    &.fade-enter,
+    &.fade-leave-to
+        opacity 0
+
+    .l-mask__bg
+        position absolute
+        top 0
+        right 0
+        bottom 0
+        left 0
+
+    .is-default
+        background-color #000
+
+    .is-eva
         background-color $p
