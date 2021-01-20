@@ -1,7 +1,7 @@
-import LContainer from './src/index.vue'
+import LBox from './src/index.vue'
 
-LContainer.install = function(Vue) {
-    Vue.component(LContainer.name, LContainer)
+LBox.install = function(Vue) {
+    Vue.component(LBox.name, LBox)
 }
 
-export default LContainer
+export default LBox

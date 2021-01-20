@@ -1,8 +1,8 @@
 export const on = (function() {
     if (document.addEventListener) {
-        return function(el, event, handler, bubbles) {
+        return function(el, event, handler, useCapture) {
             if (el && event && handler) {
-                el.addEventListener(event, handler, !!bubbles)
+                el.addEventListener(event, handler, !!useCapture)
             }
         }
     }

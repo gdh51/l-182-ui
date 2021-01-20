@@ -1,5 +1,20 @@
 <template>
     <div id="app">
+        <!-- <full-page :options="options">
+            <div class="section">
+                <button class="next">Next</button>
+                Section 1
+            </div>
+            <div class="section">
+                <button class="prev">Prev</button>
+                Section 2
+            </div>
+        </full-page>-->
+        <l-slide-box direction="vertical">
+            <l-slide-panel>sdsd</l-slide-panel>
+            <l-slide-panel>xxxx</l-slide-panel>
+            <l-slide-panel>1111</l-slide-panel>
+        </l-slide-box>
     </div>
 </template>
 
@@ -9,9 +24,12 @@ import '../packages/theme/common-style.styl'
 export default {
     name: 'App',
     data() {
-        return {}
+        return { options: { afterLoad: this.afterLoad, licenseKey: '231' } }
     },
-    created() {
+    methods: {
+        afterLoad() {
+            console.log("Emitted 'after load' event.")
+        }
     }
 }
 </script>
