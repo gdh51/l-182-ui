@@ -13,7 +13,8 @@ const LSlidePanel = 'l-slide-panel',
       ORIGIN_INDEX = 0,
 
       // 滚动的容错值，有时即使不同方向上的滚动，会导致实际滚动方向上的值有偏差
-      TOLERANCE = 1
+      TOLERANCE = 1,
+      ONE_SECOND = 1000
 
 export default {
     name: 'LSlideBox',
@@ -29,6 +30,12 @@ export default {
             validator(val) {
                 return Direction[val]
             }
+        },
+
+        // 过渡时间
+        transitionTime: {
+            default: 700,
+            type: Number
         }
     },
 
@@ -117,7 +124,7 @@ export default {
         // 当前页面位移的样式
         wrapperStyles() {
             let translateStr
-            const styles = {}
+            const styles = { transition: `${this.transitionTime / ONE_SECOND}s ease all` }
 
             if (this.direction === Horizontal) {
                 translateStr = `${this.offsetRanges[this.activeIndex]}px, 0px`
@@ -125,7 +132,7 @@ export default {
             } else {
                 translateStr = `0px, ${this.offsetRanges[this.activeIndex]}px`
             }
-            styles.transform =  `translate3d(${translateStr}, 0)`
+            styles.transform = `translate3d(${translateStr}, 0)`
 
             return styles
         }
@@ -212,10 +219,5 @@ export default {
 </script>
 
 <style lang="stylus">
-.l-slide-box
-    overflow hidden
-    background-color aqua
-
-    .l-slide-box__ctx-wrapper
-        transition .7s ease all
+@import '~@theme/slide-box'
 </style>

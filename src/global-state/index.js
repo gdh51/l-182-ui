@@ -1,7 +1,5 @@
 export default {
-    state: {
-        sideWrapperVisibility: false
-    },
+    state: { sideWrapperVisibility: false },
 
     mutations: {
         toggleSwVibility(state, payload) {

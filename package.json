@@ -1,5 +1,5 @@
 {
-    "name": "l-ui",
+    "name": "l-182-ui",
     "version": "1.0.0",
     "description": "lazybones ui library.",
     "main": "index.js",
@@ -50,6 +50,7 @@
     "files": [
         "lib",
         "src",
+        "dist",
         "packages"
     ],
     "keywords": [

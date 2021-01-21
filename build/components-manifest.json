@@ -2,5 +2,11 @@
     "box": "../packages/box/index.js",
     "mask": "../packages/mask/index.js",
     "slide-box": "../packages/slide-box/index.js",
-    "button": "../packages/button/index.js"
+    "button": "../packages/button/index.js",
+    "bar": "../packages/bar/index.js",
+    "bar-slot": "../packages/bar-slot/index.js",
+    "icon": "../packages/icon/index.js",
+    "scrollbar": "../packages/scrollbar/index.js",
+    "card": "../packages/card/index.js",
+    "modal": "../packages/modal/index.js"
 }
