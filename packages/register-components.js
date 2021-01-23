@@ -24,7 +24,7 @@ const Components = [
     LIcon
 ]
 
-export function registerComponents(Vue) {
+export default function registerComponents(Vue) {
     Components.forEach(component => {
         Vue.component(component.name, component)
     })

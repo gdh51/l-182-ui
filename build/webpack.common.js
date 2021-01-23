@@ -11,12 +11,10 @@ const {
 
 module.exports = {
     mode: 'production',
-    entry: { app: [ './src/index.js' ] },
+    entry: { 'l-182-ui': [ './packages/register-components.js' ] },
     output: {
         path: resolve(process.cwd(), './lib'),
-
-        // publicPath: '/dist/',
-        filename: 'lazybones-ui.common.js',
+        filename: 'l-182-ui.common.js',
         chunkFilename: '[name].[id].js',
 
         // 以export default的方式输出该包

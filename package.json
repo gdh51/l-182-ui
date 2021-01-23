@@ -1,8 +1,8 @@
 {
     "name": "l-182-ui",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "lazybones ui library.",
-    "main": "index.js",
+    "main": "./lib/l-182-ui.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack-dev-server --hot --open --config build/webpack.dev.js",
@@ -50,7 +50,6 @@
     "files": [
         "lib",
         "src",
-        "dist",
         "packages"
     ],
     "keywords": [

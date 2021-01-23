@@ -8,8 +8,6 @@ Reflect
     .ownKeys(Components)
     .forEach(key => Components[key] = resolve(__dirname, Components[key]))
 
-console.log(Components)
-
 module.exports = merge(Common, {
     entry: Components,
     output: {
