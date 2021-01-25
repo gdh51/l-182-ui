@@ -1,13 +1,12 @@
 {
     "name": "l-182-ui",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "lazybones ui library.",
     "main": "./lib/l-182-ui.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack-dev-server --hot --open --config build/webpack.dev.js",
-        "build": "webpack --config build/webpack.config.js",
-        "build:lib": "webpack --config build/webpack.component.js",
+        "build": "webpack --config build/webpack.component.js",
         "lint": "eslint ./ --fix"
     },
     "author": "",

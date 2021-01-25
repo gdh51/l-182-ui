@@ -24,6 +24,17 @@ export default {
         width: { default: '100vw ', type: String },
 
         height: { default: '100vh', type: String },
+
+        wrapperStyles: {
+            type: Object,
+            default() {
+                return {
+                    width: this.width,
+                    height: this.height
+                }
+            }
+        },
+
         direction: {
             default: 'horizontal',
             type: String,
@@ -98,7 +109,7 @@ export default {
 
                         // 整个承载内容的容器
                         staticClass: 'l-slide-box__ctx-wrapper',
-                        style: { ...this.wrapperStyles },
+                        style: { ...this.mergedWrapperStyles },
                         on: { transitionend: this.transitionendHandler }
                     },
                     LSlidePanels
@@ -122,9 +133,12 @@ export default {
         },
 
         // 当前页面位移的样式
-        wrapperStyles() {
+        mergedWrapperStyles() {
             let translateStr
-            const styles = { transition: `${this.transitionTime / ONE_SECOND}s ease all` }
+            const styles = {
+                transition: `${this.transitionTime / ONE_SECOND}s ease all`,
+                ...this.wrapperStyles
+            }
 
             if (this.direction === Horizontal) {
                 translateStr = `${this.offsetRanges[this.activeIndex]}px, 0px`
