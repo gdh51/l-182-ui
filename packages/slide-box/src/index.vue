@@ -100,7 +100,7 @@ export default {
                     click: () => (this.isFocus = true),
                     mousewheel: this.mousewheelHandler
                 },
-                ref: 'view'
+                ref: 'wrapper'
             },
             [
                 h(
@@ -110,7 +110,8 @@ export default {
                         // 整个承载内容的容器
                         staticClass: 'l-slide-box__ctx-wrapper',
                         style: { ...this.mergedWrapperStyles },
-                        on: { transitionend: this.transitionendHandler }
+                        on: { transitionend: this.transitionendHandler },
+                        ref: 'view'
                     },
                     LSlidePanels
                 )
@@ -168,7 +169,7 @@ export default {
 
     methods: {
         restoreBoxInfo() {
-            this.viewBaseOffset = this.$refs.view.getBoundingClientRect()[
+            this.viewBaseOffset = this.$refs.wrapper.getBoundingClientRect()[
                 DirToShape[this.direction]
             ]
 
