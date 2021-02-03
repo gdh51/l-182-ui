@@ -8,6 +8,7 @@ import {
     Horizontal
 } from '@/utils/is-slide/constants'
 import { on, off } from '@/utils/event'
+import { debounce } from '@/utils/lazy'
 
 const LSlidePanel = 'l-slide-panel',
       ORIGIN_INDEX = 0,
@@ -160,6 +161,10 @@ export default {
 
         height() {
             this.restoreBoxInfo()
+        },
+
+        boxCount() {
+            this.restoreBoxInfo()
         }
     },
 
@@ -217,6 +222,10 @@ export default {
             this.isSliding = true
         },
 
+        resizeHandler: debounce(function() {
+            this.restoreBoxInfo()
+        }, 300),
+
         // 动画执行完毕后还原
         transitionendHandler() {
             this.isSliding = false
@@ -225,10 +234,12 @@ export default {
 
     created() {
         on(window, 'click', this.unFocus, true)
+        on(window, 'resize', this.resizeHandler)
     },
 
     destroyed() {
         off(window, 'click', this.unFocus)
+        off(window, 'resize', this.resizeHandler)
     }
 }
 </script>
