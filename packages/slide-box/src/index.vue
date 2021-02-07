@@ -185,6 +185,9 @@ export default {
             this.offsetRanges = Array.from({ length: this.boxCount }).map(
                 (_, index) => -(index * this.viewBaseOffset)
             )
+
+            // 自动跳转到首页
+            this.activeIndex = ORIGIN_INDEX
         },
         unFocus() {
             this.isFocus = false
