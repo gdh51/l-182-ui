@@ -129,6 +129,9 @@ export default {
 
             if (this.direction === Horizontal) {
                 styles.display = 'inline-block'
+
+                // 在某些布局下(grid)，会出现奇怪的换行
+                styles.verticalAlign = 'top'
             }
 
             return styles
