@@ -10,6 +10,8 @@ import LBar from './bar'
 import LBarSlot from './bar-slot'
 import LIcon from './icon'
 
+import { $alert, $modal } from './modal/src/functional'
+
 const Components = [
     LButton,
     LMask,
@@ -29,3 +31,5 @@ export default function registerComponents(Vue) {
         Vue.component(component.name, component)
     })
 }
+
+export { $alert, $modal }
