@@ -4,11 +4,14 @@ import LModal from './modal'
 import LBox from './box'
 import LSlideBox from './slide-box'
 import LSlidePanel from './slide-box/src/components/slide-panel'
+import LCollapseBox from './collapse-box'
 import LCard from './card'
 import LScrollbar from './scrollbar'
 import LBar from './bar'
 import LBarSlot from './bar-slot'
 import LIcon from './icon'
+import LMenu from './menu'
+import LMenuItem from './menu/src/components/menu-item'
 
 import { $alert, $modal } from './modal/src/functional'
 
@@ -18,12 +21,15 @@ const Components = [
     LSlideBox,
     LSlidePanel,
     LBox,
+    LCollapseBox,
     LCard,
     LScrollbar,
     LBar,
     LBarSlot,
     LModal,
-    LIcon
+    LIcon,
+    LMenu,
+    LMenuItem
 ]
 
 export default function registerComponents(Vue) {

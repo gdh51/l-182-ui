@@ -5,26 +5,21 @@ const {
     ProgressBarPlugin = require('progress-bar-webpack-plugin'),
     { CleanWebpackPlugin } = require('clean-webpack-plugin'),
     VueLoaderPlugin = require('vue-loader/lib/plugin'),
-    {
-        alias, jsexclude, vue
-    } = require('./shared-config')
+    { alias, jsexclude, vue } = require('./shared-config')
 
 module.exports = {
     mode: 'production',
-    entry: { 'l-182-ui': [ './packages/register-components.js' ] },
+    entry: { 'l-182-ui': ['./packages/register-components.js'] },
     output: {
         path: resolve(process.cwd(), './lib'),
         filename: 'l-182-ui.common.js',
         chunkFilename: '[name].[id].js',
-
-        // 以export default的方式输出该包
-        libraryExport: 'default',
         libraryTarget: 'commonjs2'
     },
     resolve: {
         alias,
-        modules: [ 'node_modules' ],
-        extensions: [ '.js', '.vue', '.json' ]
+        modules: ['node_modules'],
+        extensions: ['.js', '.vue', '.json']
     },
     externals: { vue },
     performance: { hints: false },
@@ -66,7 +61,7 @@ module.exports = {
             // 处理CSS文件
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(svg|otf|ttf|woff2?|eot|gif|png|jpe?g)(\?\S*)?$/,

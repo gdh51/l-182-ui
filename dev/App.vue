@@ -1,13 +1,9 @@
 <template>
     <div id="app">
-        <l-icon
-            icon="arrow-up"
-            :style="{
-            fontSize: '16px'
-        }"
-            style="color: red;"
-            @click="log"
-        />
+        <l-collapse-box>
+            Blink
+            <template v-slot:hover>182182182</template>
+        </l-collapse-box>
     </div>
 </template>
 
@@ -16,14 +12,11 @@ import '../packages/theme/common-style.styl'
 
 export default {
     name: 'App',
+    components: {},
     data() {
         return {}
     },
-    methods: {
-        log() {
-            console.log('1')
-        }
-    }
+    methods: {}
 }
 </script>
 
@@ -34,6 +27,10 @@ export default {
     align-items center
     width 100%
     height 100%
+    background-color #515254 + 92%
+
+    .box
+        width 800px
 
     .container
         overflow scroll

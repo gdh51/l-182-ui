@@ -1,0 +1,62 @@
+.l-collapse-box
+    font-weight 600
+    cursor pointer
+    user-select none
+
+    .l-collapse-box__default-area
+        display inline-block
+        font-size 24px
+        transition all .3s ease
+
+    .l-collapse-box__hover-area
+        display inline-block
+        padding-left 4px
+        font-size 16px
+
+@keyframes flipInY
+    from
+        opacity 0
+        transform perspective(400px) rotate3d(0, 1, 0, 90deg)
+        animation-timing-function ease-in
+
+    40%
+        transform perspective(400px) rotate3d(0, 1, 0, -20deg)
+        animation-timing-function ease-in
+
+    60%
+        opacity 1
+        transform perspective(400px) rotate3d(0, 1, 0, 10deg)
+
+    80%
+        transform perspective(400px) rotate3d(0, 1, 0, -5deg)
+
+    to
+        transform perspective(400px)
+
+.flipInY-enter-active
+    animation flipInY .5s
+
+.flipInY-leave-active
+    animation flipInY .5s reverse
+
+@keyframes jackInTheBox
+    from
+        opacity 0
+        transform scale(.1) rotate(30deg)
+        transform-origin center bottom
+
+    50%
+        transform rotate(-10deg)
+
+    70%
+        transform rotate(3deg)
+
+    to
+        opacity 1
+        transform scale(1)
+
+.jackInTheBox-enter-active
+    animation jackInTheBox .5s
+
+.jackInTheBox-leave-active
+    animation jackInTheBox .5s reverse

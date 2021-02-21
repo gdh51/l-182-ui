@@ -13,6 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "animate.css": "^4.1.1",
         "element-ui": "^2.13.2",
         "lodash": "^4.17.20",
         "vue": "^2.6.11",
