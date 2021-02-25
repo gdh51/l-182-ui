@@ -8,7 +8,7 @@
             <slot />
         </div>
         <transition name="jackInTheBox" mode="in-out">
-            <div class="l-collapse-box__hover-area" v-show="isShowHover">
+            <div class="l-collapse-box__hover-area" v-show="isShowHover"></div>
                 <slot name="hover" />
             </div>
         </transition>
@@ -16,8 +16,12 @@
 </template>
 
 <script>
+
+// import LFlipTransition from '../../flip-transition'
 export default {
     name: 'LCollapseBox',
+
+    // components: { LFlipTransition },
     props: {
         animateName: {
             type: String,
@@ -32,6 +36,7 @@ export default {
     data() {
         return { isShowHover: false }
     },
+
     methods: {
         showCollapseBox() {
             this.isShowHover = !this.isShowHover

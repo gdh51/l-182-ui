@@ -12,10 +12,10 @@ import '../packages/theme/common-style.styl'
 
 export default {
     name: 'App',
-    components: {},
     data() {
         return {}
     },
+    mounted() {},
     methods: {}
 }
 </script>
@@ -42,4 +42,7 @@ export default {
         width 80%
         height 500px
         background-size cover
+
+.flip-list-move
+    transition transform 1s
 </style>

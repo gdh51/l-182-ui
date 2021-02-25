@@ -12,6 +12,7 @@ import LBarSlot from './bar-slot'
 import LIcon from './icon'
 import LMenu from './menu'
 import LMenuItem from './menu/src/components/menu-item'
+import LFlipTransition from './flip-transition'
 
 import { $alert, $modal } from './modal/src/functional'
 
@@ -29,7 +30,8 @@ const Components = [
     LModal,
     LIcon,
     LMenu,
-    LMenuItem
+    LMenuItem,
+    LFlipTransition
 ]
 
 export default function registerComponents(Vue) {
