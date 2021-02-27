@@ -8,7 +8,7 @@
             <slot />
         </div>
         <transition name="jackInTheBox" mode="in-out">
-            <div class="l-collapse-box__hover-area" v-show="isShowHover"></div>
+            <div class="l-collapse-box__hover-area" v-show="isShowHover">
                 <slot name="hover" />
             </div>
         </transition>
