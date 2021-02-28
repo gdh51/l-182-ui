@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import { useRoute } from '@/utils/implicit-router'
-
 const JUSTIFY_MAP = new Map().set('right', 1).set('left', 1).set('center', 1)
 export default {
     name: 'LMenu',
@@ -18,22 +16,10 @@ export default {
             validator(v) {
                 return JUSTIFY_MAP.has(v)
             }
-        },
-        routeKey: {
-            type: String,
-            default: '182'
         }
     },
-    data() {
-        return { router: null }
-    },
-    mounted() {
-        this.router = useRoute({
-            key: this.routeKey,
-            routes: this.$children.map(({ path }) => ({ path }))
-        })
-
-        this.$on('menu-click', v => this.router.push(v))
+    created() {
+        this.$on('menu-click', path => this.$emit('path-change', path))
     }
 }
 </script>
