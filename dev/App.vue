@@ -1,9 +1,6 @@
 <template>
     <div id="app">
-        <l-collapse-box>
-            Blink
-            <template v-slot:hover>182182182</template>
-        </l-collapse-box>
+        <l-input v-model="a" type="textarea" auto-size />
     </div>
 </template>
 
@@ -13,10 +10,19 @@ import '../packages/theme/common-style.styl'
 export default {
     name: 'App',
     data() {
-        return {}
+        return { a: '' }
     },
     mounted() {},
-    methods: {}
+    methods: {
+        adviceCb(_, cb) {
+            cb(
+                Array.from({ length: 10 }).map((_, i) => ({
+                    label: '标题' + i,
+                    value: `${i}`
+                }))
+            )
+        }
+    }
 }
 </script>
 

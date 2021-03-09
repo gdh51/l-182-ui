@@ -12,7 +12,9 @@ import LBarSlot from './bar-slot'
 import LIcon from './icon'
 import LMenu from './menu'
 import LMenuItem from './menu/src/components/menu-item'
+import LInput from './input'
 import LFlipTransition from './flip-transition'
+import LMagicInput from './magic-input'
 
 import { $alert, $modal } from './modal/src/functional'
 
@@ -31,7 +33,9 @@ const Components = [
     LIcon,
     LMenu,
     LMenuItem,
-    LFlipTransition
+    LFlipTransition,
+    LInput,
+    LMagicInput
 ]
 
 export default function registerComponents(Vue) {

@@ -2,11 +2,17 @@
     "box": "../packages/box/index.js",
     "mask": "../packages/mask/index.js",
     "slide-box": "../packages/slide-box/index.js",
+    "slide-panel": "../packages/slide-box/src/components/slide-panel.vue",
     "button": "../packages/button/index.js",
     "bar": "../packages/bar/index.js",
     "bar-slot": "../packages/bar-slot/index.js",
     "icon": "../packages/icon/index.js",
     "scrollbar": "../packages/scrollbar/index.js",
     "card": "../packages/card/index.js",
-    "modal": "../packages/modal/index.js"
+    "modal": "../packages/modal/index.js",
+    "input": "../packages/input/index.js",
+    "menu": "../packages/menu/index.js",
+    "menu-item": "../packages/menu/src/components/menu-item.vue",
+    "collapse-box": "../packages/collapse-box/index.js",
+    "flip-transition": "../packages/flip-transition/index.js"
 }
