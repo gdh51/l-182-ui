@@ -25,33 +25,38 @@ export default {
             bind, unbind, update
         } = this.$options.directives.show
 
-        return h('transition', { attrs: { duration: 300 }, props: { name: 'fade' } }, [
-            h(
-                'div',
-                {
-                    staticClass: 'l-mask',
-                    style: { zIndex: this.axisInterface.axisZ },
-                    directives: [
-                        {
-                            name: 'show',
-                            value: this.visible && this.priorityVisible,
-                            bind,
-                            unbind,
-                            update
-                        }
+        return h(
+            'transition',
+            { attrs: { duration: 300 }, props: { name: 'fade' } },
+            [
+                h(
+                    'div',
+                    {
+                        staticClass: 'l-mask',
+                        style: { zIndex: this.axisInterface.axisZ },
+                        directives: [
+                            {
+                                name: 'show',
+                                value: this.visible && this.priorityVisible,
+                                bind,
+                                unbind,
+                                update
+                            }
+                        ]
+                    },
+                    [
+                        h('div', {
+                            staticClass: `${
+                                this.type === 'eva' ? 'is-eva' : 'is-default'
+                            } l-mask__bg`,
+                            style: { opacity: this.opacity },
+                            on: { click: () => this.$emit('click') }
+                        }),
+                        this.$slots.default
                     ]
-                },
-                [
-                    h('div', {
-                        staticClass: `${
-                            this.type === 'eva' ? 'is-eva' : 'is-default'
-                        } l-mask__bg`,
-                        style: { opacity: this.opacity }
-                    }),
-                    this.$slots.default
-                ]
-            )
-        ])
+                )
+            ]
+        )
     },
     data() {
         return {

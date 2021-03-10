@@ -5,7 +5,6 @@ const noArgs = 0
 // 统一处理关闭行为
 export function beforeCloseWrapper(handler, type, modal) {
     const confirmClose = payload =>
-
         // 无论关闭还是确认，都会resolve，这样方便使用async函数的用户统一处理
         // 当modal的Promise被resolve后，弹窗会关闭
         modal._resolve({

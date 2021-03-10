@@ -1,14 +1,14 @@
 <template>
     <l-mask
         class="l-modal__container"
-        @click.native="handleMaskClick"
+        @click="handleMaskClick"
         :visible="visible"
     >
         <l-card class="l-modal" :class="modalSizeClz" :style="modalStyle">
             <div class="l-modal__header" v-if="header">
                 <slot name="header">
                     <span class="l-modal__title">{{ title }}</span>
-                    <l-icon icon="close" />
+                    <l-icon icon="close" @click="handleClick('cancel')" />
                 </slot>
             </div>
             <slot>
@@ -18,10 +18,10 @@
                 <slot name="footer">
                     <div class="l-modal__footer_default">
                         <l-button
-                            v-for="type in buttonTypeEnum"
+                            v-for="[ type, name ] in buttonTypeEnum"
                             @click="handleClick(type)"
                             :key="type"
-                        >{{ type }}</l-button>
+                        >{{ name }}</l-button>
                     </div>
                 </slot>
             </div>
@@ -60,8 +60,8 @@ export default {
         // 计算有用到几个按钮
         buttonTypeEnum() {
             const typeEnum = []
-            this.cancel && typeEnum.push(this.cancel)
-            this.confirm && typeEnum.push(this.confirm)
+            this.cancel && typeEnum.push(['cancel', this.cancel])
+            this.confirm && typeEnum.push(['confirm', this.confirm])
             this.buttonReverse && typeEnum.reverse()
             return typeEnum
         }
@@ -73,7 +73,6 @@ export default {
         },
 
         handleClick(type) {
-
             // 其他情况放出对应事件后关闭
             this.$emit(type, {
                 hide: this.hide.bind(this),
@@ -99,7 +98,6 @@ export default {
     },
 
     destroyed() {
-
         // 预留动画时间
         setTimeout(() => this.$el.remove(), TRANSITION_TIME)
     }
