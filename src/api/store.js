@@ -1,7 +1,7 @@
 const STORE_MAP = {}
 
 class Store {
-    constructor(key = '_l-182-ui', type = 'localStorage') {
+    constructor({ key = '_l-182-ui', type = 'localStorage' }) {
         this.type = type
 
         // 对应一个唯一的存储的key值
@@ -38,8 +38,13 @@ class Store {
     }
 }
 
-function useStore(type, key) {
-    const hit = STORE_MAP[key] || (STORE_MAP[key] = new Store(key, type))
+function useStore({ type, key }) {
+    const hit =
+        STORE_MAP[key] ||
+        (STORE_MAP[key] = new Store({
+            key,
+            type
+        }))
     return [hit.$store, hit.updateStore.bind(hit), hit]
 }
 
