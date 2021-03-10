@@ -19,7 +19,7 @@ export function beforeCloseWrapper(handler, type, modal) {
     return function() {
         const pending = handler.bind(modal)(confirmClose, type, {
             instance: modal.instance,
-            slotInstance: modal.slotInstance
+            slotInstances: modal.slotInstances
         })
 
         // 用户定义的回调没有参数时，当其返回undefined时，我们认为它想关闭窗口

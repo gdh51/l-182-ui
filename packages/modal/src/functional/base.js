@@ -18,7 +18,7 @@ const DEFAULT_OPTIONS = {
         cancelCb: () => {},
         buttonReverse: false
     },
-    SLOTS_NAMES = [ 'header', 'content', 'footer' ]
+    SLOTS_NAMES = ['header', 'content', 'footer']
 
 Object.freeze(DEFAULT_OPTIONS)
 
@@ -44,7 +44,9 @@ export class Modal {
     }
 
     _initState() {
-        this.state = { /* visible */ }
+        this.state = {
+            /* visible */
+        }
 
         this.slots = {
             footer: undefined,
@@ -53,7 +55,6 @@ export class Modal {
         }
 
         SLOTS_NAMES.forEach(slotName => {
-
             // content插槽允许使用字符串，使用时不将其作为插槽
             if (isObject(this.options[slotName])) {
                 this.slots[slotName] = this.options[slotName]
@@ -67,7 +68,7 @@ export class Modal {
         this.instance = null
 
         // 如果content使用组件，使用组件时的实例
-        this.slotInstance = {
+        this.slotInstances = {
             header: null,
             content: null,
             footer: null
@@ -107,19 +108,26 @@ export class Modal {
             created() {
                 this.$on('cancel', modal.options.cancelCb)
                 this.$on('confirm', modal.options.confirmCb)
-                modal.options.closeByMask && this.$on('mask-click', modal.options.cancelCb)
+                modal.options.closeByMask &&
+                    this.$on('mask-click', modal.options.cancelCb)
             },
 
             updated() {
-                const slotInstances = this.$children[0].$children
+                const slotInstancess = this.$children[0].$children,
+                    { footer, confirm, cancel } = modal.options
 
                 // eslint-disable-next-line
                 let handledSlotCount = 0
 
+                if (!footer) {
+                    confirm && handledSlotCount++
+                    cancel && handledSlotCount++
+                }
+
                 SLOTS_NAMES.forEach(slotName => {
                     if (modal.slots[slotName]) {
-                        modal.slotInstance[slotName] =
-                            slotInstances[handledSlotCount]
+                        modal.slotInstances[slotName] =
+                            slotInstancess[handledSlotCount]
                         handledSlotCount++
                     }
                 })
@@ -144,7 +152,6 @@ export class Modal {
             const slotContent = this.slots[slotName]
 
             if (slotContent) {
-
                 // 组件插槽在使用props时，优先会使用具有命名的props
                 // 未定义命名插槽时， 会直接传入当前已有的插槽
                 const props = this.options.props[slotName] || this.options.props
@@ -178,8 +185,5 @@ export class Modal {
 
     destroy() {
         this.$el = null
-        this.instance = null
-        this.slots = {}
-        this.slotInstance = {}
     }
 }

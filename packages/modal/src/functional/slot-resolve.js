@@ -1,6 +1,4 @@
-import {
-    isVNode, isArray, isObject
-} from '@/utils/type'
+import { isVNode, isArray, isObject } from '@/utils/type'
 
 /**
  * @description 处理不同类型的插槽类容
@@ -9,20 +7,16 @@ import {
  * @param {Object} slotsState 用于存储转化后的插槽内容
  * @param {Object} props 当插槽为组件时，传递给该组件的props
  */
-function resolveSlot({
-    slotContent, slotName, slotsState, props, h
-}) {
-
+function resolveSlot({ slotContent, slotName, slotsState, props, h }) {
     // 单个节点的时候
     if (isVNode(slotContent)) {
-        this.slots[slotName] = [ slotContent ]
+        slotsState[slotName] = [slotContent]
 
         // 使用数组为节点时，只使用第一个
     } else if (isArray(slotContent) && isVNode(slotContent[0])) {
-        this.slots[slotName] = slotContent
+        slotsState[slotName] = slotContent
     } else if (isObject(slotContent)) {
-
-        slotsState[slotName] = [ h(slotContent, { props }) ]
+        slotsState[slotName] = [h(slotContent, { props })]
     }
 }
 

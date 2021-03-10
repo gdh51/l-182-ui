@@ -1,6 +1,6 @@
 {
     "name": "l-182-ui",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "description": "lazybones ui library.",
     "main": "./lib/l-182-ui.js",
     "scripts": {
