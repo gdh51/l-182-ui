@@ -1,8 +1,19 @@
 <template>
     <div id="app">
-        <el-scrollbar wrapStyle="width: 100px;height:100px">
-            <div style="width: 400px;background: aqua;"><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div><div>sdsds</div></div>
-        </el-scrollbar>
+        <div :style="style">
+            <l-scrollbar wrapStyle="height:100px">
+                <div style="background: aqua;">
+                    <div>sdsds</div>
+                    <div>sdsds</div>
+                    <div>sdsds</div>
+                    <div>sdsds</div>
+                    <div>sdsds</div>
+                    <div>sdsds</div>
+                    <div>sdsds</div>
+                </div>
+            </l-scrollbar>
+        </div>
+        <el-button @click="change" >dia</el-button>
     </div>
 </template>
 
@@ -12,7 +23,16 @@ import '../packages/theme/common-style.styl'
 export default {
     name: 'App',
     data() {
-        return { a: 0 }
+        return {
+            a: 0,
+            style: { width: '100px' }
+        }
+    },
+    methods: {
+        change() {
+            this.style.width = `${Math.floor(Math.random() * 10)}00px`
+            this.style.height = `${Math.floor(Math.random() * 10)}00px`
+        }
     }
 }
 </script>

@@ -12,11 +12,11 @@ module.exports = {
         node: true
     },
 
-    plugins: [ 'vue' ],
+    plugins: ['vue'],
 
     // 推荐规则，优先级从下到上
     extends: [
-    // eslint推荐规则
+        // eslint推荐规则
         'eslint:recommended',
         'plugin:vue/essential'
     ],
@@ -29,57 +29,68 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
-        'linebreak-style': [ 'error', 'unix' ],
-        quotes: [ 'error', 'single', {
-            allowTemplateLiterals: true,
-            avoidEscape: true
-        } ],
-        semi: [ 'error', 'never', {
-            beforeStatementContinuationChars: 'any'
-        } ],
+        'linebreak-style': ['error', 'unix'],
+        quotes: [
+            'error',
+            'single',
+            {
+                allowTemplateLiterals: true,
+                avoidEscape: true
+            }
+        ],
+        semi: [
+            'error',
+            'never',
+            {
+                beforeStatementContinuationChars: 'any'
+            }
+        ],
 
-        indent: [ 'error', BasicIndent, {
+        indent: [
+            'error',
+            BasicIndent,
+            {
+                // switch语句的缩进
+                SwitchCase: 1,
 
-            // switch语句的缩进
-            SwitchCase: 1,
+                // 多个变量声明换行后的缩进
+                VariableDeclarator: 1,
 
-            // 多个变量声明换行后的缩进
-            VariableDeclarator: 1,
+                // IIFE函数中的代码块初始缩进
+                outerIIFEBody: 1,
 
-            // IIFE函数中的代码块初始缩进
-            outerIIFEBody: 1,
+                // 链式调用缩进
+                MemberExpression: 1,
 
-            // 链式调用缩进
-            MemberExpression: 1,
+                // 函数声明的形参与函数体的缩进
+                FunctionDeclaration: {
+                    body: 1,
+                    parameters: 1
+                },
 
-            // 函数声明的形参与函数体的缩进
-            FunctionDeclaration: {
-                body: 1,
-                parameters: 1
-            },
+                // 函数表达式同样的
+                FunctionExpression: {
+                    body: 1,
+                    parameters: 1
+                },
 
-            // 函数表达式同样的
-            FunctionExpression: {
-                body: 1,
-                parameters: 1
-            },
+                // 函数调用同理
+                CallExpression: {
+                    arguments: 1
+                },
 
-            // 函数调用同理
-            CallExpression: {
-                arguments: 1
-            },
+                ArrayExpression: 1,
+                ObjectExpression: 1,
+                ImportDeclaration: 1,
 
-            ArrayExpression: 1,
-            ObjectExpression: 1,
-            ImportDeclaration: 1,
-
-            // 三元表达式记得缩进
-            flatTernaryExpressions: false,
-            offsetTernaryExpressions: true
-        } ],
+                // 三元表达式记得缩进
+                flatTernaryExpressions: false,
+                offsetTernaryExpressions: true
+            }
+        ],
 
         // 对标prettier trailingCommas，最后一个字段或元素是否带,号
-        'comma-dangle': [ 2, 'never' ],
+        'comma-dangle': [2, 'never'],
 
         // 禁止if语句中return后，else/else if继续return
         'no-else-return': [
@@ -110,56 +121,70 @@ module.exports = {
         ],
 
         // 文件末尾必须要空一行
-        'eol-last': [ 'error', 'always' ],
+        'eol-last': ['error', 'always'],
 
         // 逗号后面留空格(定义数组或对象)
-        'comma-spacing': [ 'error', {
-            before: false,
-            after: true
-        } ],
-
+        'comma-spacing': [
+            'error',
+            {
+                before: false,
+                after: true
+            }
+        ],
 
         // 该选项与prettier冲突，请勿选择
-        'array-bracket-spacing': [ 'error', 'always' ],
+        'array-bracket-spacing': ['error', 'always'],
 
         // 对象的动态键名前后保持空格(Class)中除外
-        'computed-property-spacing': ['error', 'never', {
-            enforceForClassMembers: false
-        } ],
+        'computed-property-spacing': [
+            'error',
+            'never',
+            {
+                enforceForClassMembers: false
+            }
+        ],
 
         // 注释位置
-        'line-comment-position': [ 'error', {
-            position: 'above'
-        } ],
+        'line-comment-position': [
+            'error',
+            {
+                position: 'above'
+            }
+        ],
 
         // 定义class的字段完后，下一个字段前要换行
-        'lines-between-class-members': [ 'error', 'always' ],
+        'lines-between-class-members': ['error', 'always'],
 
         // 一行的最大长度
-        'max-len': [ 'error', {
-            code: 80,
-            tabWidth: 4,
-            comments: 70,
+        'max-len': [
+            'error',
+            {
+                code: 80,
+                tabWidth: 4,
+                comments: 70,
 
-            ignoreTrailingComments: true,
+                ignoreTrailingComments: true,
 
-            ignoreUrls: true,
+                ignoreUrls: true,
 
-            ignoreStrings: true,
+                ignoreStrings: true,
 
-            ignoreTemplateLiterals: true,
+                ignoreTemplateLiterals: true,
 
-            ignoreRegExpLiterals: true
-        } ],
+                ignoreRegExpLiterals: true
+            }
+        ],
 
         // 函数定义的参数，最多5个，多了应该考虑对象了
-        'max-params': [ 'error', 5 ],
+        'max-params': ['error', 5],
 
         // 链式调用换行，超过3个调用就应该换行了
-        'newline-per-chained-call': [ 'error', {
-            ignoreChainWithDepth: 3
-
-        } ],
+        'newline-per-chained-call': [
+            'error',
+            {
+                ignoreChainWithDepth: 3
+            }
+        ],
 
         'no-lonely-if': 'error',
 
@@ -173,28 +198,35 @@ module.exports = {
         'nonblock-statement-body-position': 'error',
 
         // 对象字面量超过3个字段时换行
-        'object-curly-newline': [ 'error', {
-            ObjectExpression: ObjectCurlyNewline,
-            ObjectPattern: ObjectCurlyNewline,
-            ImportDeclaration: ObjectCurlyNewline,
-            ExportDeclaration: ObjectCurlyNewline
-        } ],
+        'object-curly-newline': [
+            'error',
+            {
+                ObjectExpression: ObjectCurlyNewline,
+                ObjectPattern: ObjectCurlyNewline,
+                ImportDeclaration: ObjectCurlyNewline,
+                ExportDeclaration: ObjectCurlyNewline
+            }
+        ],
 
         // 对标prettierbracketSpacing，对象{}前后要有空格
-        'object-curly-spacing': [ 'error', 'always', {
-            arraysInObjects: true,
-            objectsInObjects: true
-        } ],
+        'object-curly-spacing': [
+            'error',
+            'always',
+            {
+                arraysInObjects: true,
+                objectsInObjects: true
+            }
+        ],
 
         // 同一作用域中的同类型声明只能写一次
-        'one-var': [ 'error', 'consecutive' ],
+        'one-var': ['error', 'never'],
 
         // 对标prettier quoteProps，对象字段命名只在需要加引号时加引号
-        'quote-props': [ 'error', 'as-needed' ],
+        'quote-props': ['error', 'as-needed'],
 
-        'space-before-blocks': [ 'error', 'always' ],
+        'space-before-blocks': ['error', 'always'],
 
-        'space-before-function-paren': [ 'error', 'never' ],
+        'space-before-function-paren': ['error', 'never'],
 
         'space-unary-ops': [
             2,
@@ -214,10 +246,10 @@ module.exports = {
         'switch-colon-spacing': 'error',
 
         // 对标prettier arrowParens，箭头函数不需要(参数)时就不加
-        'arrow-parens': [ 'error', 'as-needed' ],
+        'arrow-parens': ['error', 'as-needed'],
 
         // template中数组头和尾前后空格1个
-        'vue/array-bracket-spacing': [ 'error', 'always' ],
+        'vue/array-bracket-spacing': ['error', 'always'],
 
         // 箭头函数的箭头前后保持空格
         'vue/arrow-spacing': [
@@ -229,28 +261,28 @@ module.exports = {
         ],
 
         // {}语句块中头尾要有空格
-        'vue/block-spacing': [ 2, 'always' ],
+        'vue/block-spacing': [2, 'always'],
 
         // 组件的命名形式按首字母大写的驼峰形式
-        'vue/component-definition-name-casing': [ 2, 'PascalCase' ],
+        'vue/component-definition-name-casing': [2, 'PascalCase'],
 
         // 模版中的组件名称按连字符形式定义
-        'vue/component-name-in-template-casing': [ 2, 'kebab-case' ],
+        'vue/component-name-in-template-casing': [2, 'kebab-case'],
 
         // .vue文件中，板块的顺序
 
         'vue/component-tags-order': [
             'error',
             {
-                order: [ 'template', 'script', 'style' ]
+                order: ['template', 'script', 'style']
             }
         ],
 
         // 使用.操作符的右x值换行时，.跟随的右值
-        'vue/dot-location': [ 2, 'property' ],
+        'vue/dot-location': [2, 'property'],
 
         // 总是使用===
-        'vue/eqeqeq': [ 2, 'always' ],
+        'vue/eqeqeq': [2, 'always'],
 
         // 书写对象的，键名冒号后跟空格，前不跟
         'vue/key-spacing': [
@@ -263,12 +295,12 @@ module.exports = {
         ],
 
         // 禁止v-slot旧语法
-        'vue/no-deprecated-scope-attribute': [ 2 ],
-        'vue/no-deprecated-slot-attribute': [ 2 ],
-        'vue/no-deprecated-slot-scope-attribute': [ 2 ],
+        'vue/no-deprecated-scope-attribute': [2],
+        'vue/no-deprecated-slot-attribute': [2],
+        'vue/no-deprecated-slot-scope-attribute': [2],
 
         // 禁用原生元素做组件名称
-        'vue/no-reserved-component-names': [ 2 ],
+        'vue/no-reserved-component-names': [2],
 
         // 禁止除字符串、注释外，其他地方出现非法空格
         'vue/no-irregular-whitespace': [
@@ -280,10 +312,10 @@ module.exports = {
         ],
 
         // 禁止在插值表达式语法中使用函数调用
-        'vue/no-restricted-syntax': [ 2 ],
+        'vue/no-restricted-syntax': [2],
 
         // 代码块之间保持换行
-        'vue/padding-line-between-blocks': [ 'error', 'always' ],
+        'vue/padding-line-between-blocks': ['error', 'always'],
 
         // .vue文件中的 script块的起始缩进
         'vue/script-indent': [
@@ -315,7 +347,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: [ '*.vue' ],
+            files: ['*.vue'],
             rules: {
                 indent: 'off'
             }
