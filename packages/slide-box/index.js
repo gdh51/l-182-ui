@@ -1,5 +1,5 @@
-import LSlideBox from './src/index.vue'
-import LSlidePanel from './src/components/l-slide-plane.vue'
+import LSlideBox from './src/index'
+import LSlidePanel from './src/components/slide-panel'
 
 LSlideBox.install = function(Vue) {
     Vue.component(LSlidePanel.name, LSlidePanel)

@@ -9,5 +9,5 @@ export default { name: 'LBox' }
 </script>
 
 <style lang="stylus">
-@import '~@theme/container.styl'
+@import '~@theme/box.styl'
 </style>

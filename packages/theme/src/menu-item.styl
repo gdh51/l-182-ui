@@ -1,0 +1,24 @@
+@import '../shared.styl'
+
+.l-menu-item
+    display flex
+    align-items center
+    padding 0 24px
+    height 60px
+    border 1px dashed transparent
+    border-radius 6px
+    color #262626 + 50%
+    cursor pointer
+    transition all .3s ease
+    user-select none
+
+    &+&
+        margin-left 8px
+
+    &:hover
+        border-color #fff
+        color #fff
+
+    &.no-border
+        border none
+        

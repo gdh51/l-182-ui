@@ -1,5 +1,7 @@
 const {
-        mergeWithCustomize, customizeArray, customizeObject
+        mergeWithCustomize,
+        customizeArray,
+        customizeObject
     } = require('webpack-merge'),
     Common = require('./webpack.common'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
@@ -12,7 +14,7 @@ const {
         devtool: 'inline-source-map',
 
         devServer: {
-            contentBase: resolve(__dirname, '../dist'),
+            contentBase: resolve(__dirname, '../lib'),
             hot: true,
             stats: 'errors-only'
         },
@@ -21,7 +23,7 @@ const {
 
         output: {
             filename: '[name].bundle.js',
-            path: resolve(__dirname, '../dist')
+            path: resolve(__dirname, '../lib')
         },
         plugins: [
             new HtmlWebpackPlugin({

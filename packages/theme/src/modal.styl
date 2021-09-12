@@ -1,0 +1,52 @@
+@import '../shared.styl'
+
+.l-modal__container
+    text-align center
+
+    &::after
+        display inline-block
+        height 100%
+        content ''
+        vertical-align middle
+
+    .l-modal
+        display inline-block
+        background-color $p
+        color $o
+        vertical-align middle
+        text-align initial
+
+        &.l-modal_small
+            width 420px
+
+        &.l-modal_large
+            width 600px
+
+        .l-modal__header
+            comPad()
+            border-bottom 2px dashed $g
+
+            .l-modal__title
+                font-weight 700
+                font-size 20px
+
+            .l-icon_close
+                float right
+                vertical-align middle
+                font-weight 700
+                font-size 24px
+                cursor pointer
+
+                &:hover
+                    color $o2
+
+        .l-modal__footer
+            comPad()
+            border-top 2px dashed $g
+
+            .l-modal__footer_default
+                display flex
+                justify-content flex-end
+
+        .l-modal__content
+            comPad()

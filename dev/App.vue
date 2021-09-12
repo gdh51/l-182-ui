@@ -13,7 +13,7 @@
                 </div>
             </l-scrollbar>
         </div>
-        <el-button @click="change" >dia</el-button>
+        <el-button @click="change">dia</el-button>
     </div>
 </template>
 
@@ -44,6 +44,10 @@ export default {
     align-items center
     width 100%
     height 100%
+    background-color #515254 + 92%
+
+    .box
+        width 800px
 
     .container
         overflow scroll
@@ -55,4 +59,7 @@ export default {
         width 80%
         height 500px
         background-size cover
+
+.flip-list-move
+    transition transform 1s
 </style>

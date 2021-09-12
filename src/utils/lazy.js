@@ -6,14 +6,10 @@
  * @param {Function} pre 防抖函数调用前的前置函数，该函数会在防抖函数每次调用时调用
  * @returns {Function} 防抖函数
  */
-function debounce(fn, time, {
-    ctx,
-    pre
-} = { ctx: null }) {
+function debounce(fn, time, { ctx, pre } = { ctx: null }) {
     let timer
 
     return function(...arg) {
-
         // 若未指定上下文，则使上下文为当前函数调用环境
         ctx || (ctx = this)
         pre && pre.call(ctx, ...arg)

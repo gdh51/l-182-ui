@@ -11,6 +11,7 @@
             circle ? 'is-circle' : ''
         ]"
         :disabled="_disabled"
+        @click="$emit('click')"
     >
         <span>
             <slot></slot>
@@ -92,5 +93,5 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "../../theme/src/button"
+@import '../../theme/src/button'
 </style>

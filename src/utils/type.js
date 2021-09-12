@@ -68,6 +68,10 @@ function isAsyncFunction(v) {
     return toType(v) === TYPE_ASYNC_FUNCTION
 }
 
+function isPromise(val) {
+    return isObject(val) && isFunction(val.then)
+}
+
 // 检查是否为Vnode
 function isVNode(node) {
     return (
@@ -99,5 +103,7 @@ export {
     isNull,
     isBigInt,
     isVNode,
+    isObject,
+    isPromise,
     hasOwn
 }

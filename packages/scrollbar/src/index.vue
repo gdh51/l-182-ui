@@ -1,14 +1,12 @@
 <script>
 import LBarSlot from '@pack/bar-slot'
 import { debounce } from '@/utils/lazy'
-import {
-    BAR_PROP_MAP, getScrollbarWidth, genSlotbar
-} from './utils'
+import { BAR_PROP_MAP, getScrollbarWidth, genSlotbar } from './utils'
 
 // 获取原生滚动条厚度
 const nativeBarWidth = getScrollbarWidth(),
-      OneHundredPercent = 100,
-      WatiTime = 666
+    OneHundredPercent = 100,
+    WatiTime = 182
 
 export default {
     name: 'LScrollbar',
@@ -16,17 +14,16 @@ export default {
     components: { LBarSlot },
 
     props: {
-
         // 视窗样式
         wrapStyle: {
-            type: [ Object, String ],
+            type: [Object, String],
             default() {
                 return {}
             }
         },
 
         wrapClass: {
-            type: [ Array, String ],
+            type: [Array, String],
             default() {
                 return ''
             }
@@ -34,36 +31,31 @@ export default {
     },
 
     render(h) {
-
         // 有些滚动条不参与盒子计算，比如Mac
         const gutterClass = nativeBarWidth
-                  ? ''
-                  : 'l-scrollbar__wrap--hidden-default',
-
-              // 容器元素，用来做大小限制，滚动
-              wrap = h(
-                  'div',
-                  {
-                      class: [ 'l-scrollbar__wrap', this.wrapClass, gutterClass ],
-                      ref: 'wrap',
-                      on: { scroll: this.scrolling },
-                      style: this.mergedStyle
-                  },
-                  [ this.$slots.default ]
-              ),
-              viewChildNodes = [ wrap ]
+                ? ''
+                : 'l-scrollbar__wrap--hidden-default',
+            // 容器元素，用来做大小限制，滚动
+            wrap = h(
+                'div',
+                {
+                    class: ['l-scrollbar__wrap', this.wrapClass, gutterClass],
+                    ref: 'wrap',
+                    on: { scroll: this.scrolling },
+                    style: this.mergedStyle
+                },
+                [this.$slots.default]
+            ),
+            viewChildNodes = [wrap]
 
         this.isShowVertical &&
             viewChildNodes.push(genSlotbar('vertical', h, this)),
-        this.isShowHorizontal &&
-            viewChildNodes.push(genSlotbar('horizontal', h, this))
+            this.isShowHorizontal &&
+                viewChildNodes.push(genSlotbar('horizontal', h, this))
 
         return h(
             'div',
-            {
-                class: [ 'l-scrollbar', this.pending ? 'is-pending' : '' ],
-                on: { resize: this.calcViewInfo }
-            },
+            { class: ['l-scrollbar', this.pending ? 'is-pending' : ''] },
             viewChildNodes
         )
     },
@@ -83,12 +75,14 @@ export default {
             isHorizontalScrolling: false,
 
             // 由于计算方式问题，在window下滚动条会闪现，所以我们需要做个处理
-            pending: true
+            pending: true,
+
+            // 计算视窗的信息，包括是否显示滚动条，显示哪个滚动条
+            calcViewInfo: null
         }
     },
 
     computed: {
-
         // 合并用户样式与修正滚动条位置的样式
         mergedStyle() {
             let wrapStyle = this.wrapStyle
@@ -96,10 +90,9 @@ export default {
             // 处理字符串形式值
             if (typeof this.wrapStyle === 'string') {
                 wrapStyle = wrapStyle.split(';').reduce((f, style) => {
-
                     // 无样式直接返回
                     if (!style) return f
-                    const [ key, val ] = style.split(':')
+                    const [key, val] = style.split(':')
                     f[key.trim()] = val.trim()
 
                     return f
@@ -128,17 +121,11 @@ export default {
     },
 
     mounted() {
-        this.calcViewInfo()
-    },
-
-    methods: {
-
-        // 计算视窗的信息，包括是否显示滚动条，显示哪个滚动条
-        calcViewInfo: debounce(function() {
+        this.calcViewInfo = debounce(() => {
             const { wrap } = this.$refs,
-                  { scrollWidth, scrollHeight } = wrap,
-                  height = wrap.clientHeight,
-                  width = wrap.clientWidth
+                { scrollWidth, scrollHeight } = wrap,
+                height = wrap.clientHeight,
+                width = wrap.clientWidth
 
             // 存储视窗信息用于等会滚动计算
             this.viewHeight = height
@@ -162,7 +149,11 @@ export default {
             }
 
             this.pending = false
-        }, WatiTime),
+        }, WatiTime)
+        this.calcViewInfo()
+    },
+
+    methods: {
         scrolling() {
             const wrap = this.$refs.wrap
 
@@ -178,24 +169,24 @@ export default {
         },
 
         delayRestoreV: debounce(
-            function() {
+            function () {
                 this.isVerticalScrolling = false
             },
             WatiTime,
             {
-                pre: function() {
+                pre: function () {
                     this.isVerticalScrolling = true
                 }
             }
         ),
 
         delayRestoreH: debounce(
-            function() {
+            function () {
                 this.isHorizontalScrolling = false
             },
             WatiTime,
             {
-                pre: function() {
+                pre: function () {
                     this.isHorizontalScrolling = true
                 }
             }
@@ -203,10 +194,8 @@ export default {
 
         // 监听非滚动带来的变动
         watchUnrolledMove(type, isJump, { relative }) {
-            const {
-                      viewSize, scrollOffset, start
-                  } = BAR_PROP_MAP[type],
-                  moveDis = (relative * this[viewSize]) / OneHundredPercent
+            const { viewSize, scrollOffset, start } = BAR_PROP_MAP[type],
+                moveDis = (relative * this[viewSize]) / OneHundredPercent
             if (!isJump) {
                 return (this.$refs.wrap[scrollOffset] = moveDis)
             }

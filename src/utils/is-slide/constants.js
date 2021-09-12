@@ -2,15 +2,19 @@
 const Direction = { horizontal: 1, vertical: 1 },
     Horizontal = 'horizontal',
     Vertical = 'vertical',
-    DirToPosition = {
-        [Horizontal]: 'left',
-        [Vertical]: 'top'
-    },
     DirToShape = {
         [Horizontal]: 'width',
         [Vertical]: 'height'
+    },
+    DirToDelta = {
+        [Horizontal]: 'deltaX',
+        [Vertical]: 'deltaY'
     }
 
 export {
-    Direction, DirToPosition, DirToShape
+    Direction,
+    DirToShape,
+    Horizontal,
+    Vertical,
+    DirToDelta
 }

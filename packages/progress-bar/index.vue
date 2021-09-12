@@ -58,9 +58,7 @@ export default {
 
     computed: {
         progressBarStyle() {
-            return {
-                width: this.progress + '%'
-            }
+            return { width: this.progress + '%' }
         }
     },
 

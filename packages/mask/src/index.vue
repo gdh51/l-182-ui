@@ -14,37 +14,48 @@ export default {
         opacity: {
             type: Number,
             default: 0.4
-        }
+        },
+        type: String
     },
 
     render(h) {
 
         // 使用内部的v-show指令
         const {
-                  bind, unbind, update
-              } = this.$options.directives.show,
-
-              options = {
-                  staticClass: 'l-mask',
-                  style: {
-                      opacity: this.opacity,
-                      zIndex: this.axisInterface.axisZ
-                  },
-                  directives: [
-                      {
-                          name: 'show',
-                          value: this.visible && this.priorityVisible,
-                          bind,
-                          unbind,
-                          update
-                      }
-                  ]
-              }
+            bind, unbind, update
+        } = this.$options.directives.show
 
         return h(
             'transition',
-            { attrs: { duration: 300 } },
-            [ h('div', options, [  this.$slots.default  ]) ]
+            { attrs: { duration: 300 }, props: { name: 'fade' } },
+            [
+                h(
+                    'div',
+                    {
+                        staticClass: 'l-mask',
+                        style: { zIndex: this.axisInterface.axisZ },
+                        directives: [
+                            {
+                                name: 'show',
+                                value: this.visible && this.priorityVisible,
+                                bind,
+                                unbind,
+                                update
+                            }
+                        ]
+                    },
+                    [
+                        h('div', {
+                            staticClass: `${
+                                this.type === 'eva' ? 'is-eva' : 'is-default'
+                            } l-mask__bg`,
+                            style: { opacity: this.opacity },
+                            on: { click: () => this.$emit('click') }
+                        }),
+                        this.$slots.default
+                    ]
+                )
+            ]
         )
     },
     data() {
@@ -83,6 +94,6 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import "../../theme/src/mask"
+<style lang="stylus">
+@import '~@theme/mask'
 </style>
